@@ -3,13 +3,12 @@ import Database.Connector;
 import Database.Manager;
 
 public class Main {
-    private static Connection connection=null;
+
     public static void main(String arg[])
     {
         try {
 
-//            Connector connector = new Connector();
-//            connection = connector.connect();
+
 
 //            Statement statement;
 //            statement = connection.createStatement();

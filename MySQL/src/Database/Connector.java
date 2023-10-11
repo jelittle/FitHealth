@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 public class Connector {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
-    private static final String DATABASE_USER = "eecs3311";
-    private static final String DATABASE_PASSWORD = "eecs3311";
+    private static final String DATABASE_USER = "root";
+    private static final String DATABASE_PASSWORD = "asdasd";
 
     public Connection connect() {
         Connection connection = null;

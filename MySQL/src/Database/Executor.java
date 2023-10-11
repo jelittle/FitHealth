@@ -65,7 +65,7 @@ abstract class Executor {
 
     public static class ExerciseExecutor extends Executor {
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
-            ArrayList<ExerciseLog> exercises = new ArrayList<>();
+            ArrayList<T> exercises = new ArrayList<>();
             int startTime;
             int endTime;
             int duration;
@@ -75,7 +75,7 @@ abstract class Executor {
                 duration=startTime-endTime;
 
             }
-
+        return null;
         }
     }
 
