@@ -1,4 +1,7 @@
 package Database;
+
+import userData.ExerciseLog;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +12,10 @@ import java.util.ArrayList;
  * Created by Joshua Little
  * Abstract class handles all Database Queries
  * Uses Template Method Design Pattern to returned objects
+ *Overloaded methods connect to fake database for testing
+ * Todo: built fake database and test methods,
+ * Todo: build rest of executor methods
+ *
  *
  */
 abstract class Executor {
@@ -17,75 +24,92 @@ abstract class Executor {
     // public abstract void execute(String sql);
     //build object is a submethod of execute
     //returns any object
-    <T> T processRequest(String sql, Connection connection){
+    <T> ArrayList<T> processRequest(String sql, Connection connection){
         try {
+            //execute request
             Statement statement;
             statement = connection.createStatement();
             ResultSet resultSet;
             resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-                    System.out.print(resultSet.getString(i) + " ");
-                }
-                System.out.println();
-            }
+            //build object
 
-//            int code;
-//            String title;
-//            while (resultSet.next()) {
-//                code = resultSet.getInt("id");
-//                title = resultSet.getString("firstname").trim();
-//                System.out.println("Name : " + code
-//                        + "\nTitle : " + title);
-//            }
+            ArrayList<T> ret = buildObjects(resultSet);
+
+
             resultSet.close();
             statement.close();
-//            connection.close();
 
 
-            //return buildObjects(resultSet);
-            return null;
+            return ret;
+
+        } catch (Exception exception) {
+            throw new RuntimeException(exception);
+        }
+
+    }
+
+
+    void processUpdate(String sql, Connection connection) {
+        try {
+            Statement statement = connection.createStatement();
+            int success = statement.executeUpdate(sql);
+            if (success == 0) {
+                throw new RuntimeException("Update failed");
+            }
+
+            statement.close();
+
         } catch (Exception exception) {
             System.out.println(exception);
         }
-        return null;
-    }
-    int processInsert(String sql,Statement statement, Connection connection){
-     return 0;
-    }
-    boolean processUpdate(String sql,Statement statement, Connection connection){
-     return false;
-    }
 
 
+    }
 
 
     abstract <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException;
 
 
-    public static class ExerciseExecutor extends Executor {
+
+    static class ExerciseExecutor extends Executor {
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
-            ArrayList<ExerciseLog> exercises = new ArrayList<>();
+            ArrayList<T> exercises = new ArrayList<>();
             int startTime;
             int endTime;
             int duration;
+            String intensity;
+            String Exercise;
+            int met;
+            int metid;
+            int id;
+
             while (resultSet.next()) {
+                id= resultSet.getInt("exercise_log.id");
                 startTime = resultSet.getInt("starttime");
                 endTime = resultSet.getInt("endtime");
-                duration=startTime-endTime;
+                duration = endTime-startTime;
+                intensity = resultSet.getString("intensity");
+                Exercise = resultSet.getString("exercise_type");
+                met = resultSet.getInt("met");
+                metid= resultSet.getInt("met.id");
 
+                ExerciseLog temp = new ExerciseLog(id,startTime, duration, Exercise, intensity, met,metid);
+                exercises.add((T) temp);
             }
 
+            return exercises;
         }
     }
 
-    public static class SettingsExecutor{
+
+    static class SettingsExecutor {
     }
 
-    public static class UserExecutor{
+    static class UserExecutor {
 
     }
 
-    public static class DietLogExecutor {
+    static class DietLogExecutor {
     }
 }
+

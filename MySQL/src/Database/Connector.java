@@ -6,8 +6,11 @@ import java.sql.SQLException;
 
 //build an abstract connector class to connect to different databases
 
-
-public class Connector {
+/**
+ * Created by Joshua Little
+ * Connects to the database
+ */
+class Connector {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
     private static final String DATABASE_USER = "eecs3311";
     private static final String DATABASE_PASSWORD = "eecs3311";

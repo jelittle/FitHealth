@@ -1,60 +1,93 @@
 package Database;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.ArrayList;
 
 
-public class Manager {
-    private Connection connection;
+/**
+ * Created by Joshua Little
+ * Manages connections and builds sql statements for the Executor execute.
+ * used by Interface classes to get data from the database
+ * if test is true, executor will connect to test executor with fakemethods
+ * Todo:
+ * - add batch methods?
+ * - add more error handling, if connection fails, print in console and swap to overloaded test methods.
+ *
+ */
+class Manager {
+    private static Connection connection;
+    private static final boolean test = false;
+
     public Manager(){
-        Connector connector = new Connector();
-        connection = connector.connect();
+        if(connection ==null) {
+            Connector connector = new Connector();
+            connection = connector.connect();
+        }
     }
-    public void getRecord(String Table, String[] Columns, String[] Conditions){
-        //create sql statement using table, columns, and conditions
-        Executor executor= getExecutor(Table);
-        String sql = "SELECT ";
+    <T> T getRecord(String table, String[] columns, String[] conditions){
+        //create sql statement using tables, columns, and conditions
+        Executor executor= getExecutor(table);
 
-        // Add columns to the SQL statement
-        for(int i = 0; i < Columns.length; i++){
-            sql += Columns[i];
-            if(i < Columns.length - 1){
-                sql += ", ";
-            }
+        String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
+
+        ArrayList<T> Array=executor.processRequest(sql, connection);
+
+        if(Array.size()>1){
+            throw new RuntimeException("Too many records returned");
         }
 
-        // Add table to the SQL statement
-        sql += " FROM " + Table;
 
-        // Add conditions to the SQL statement
-        if(Conditions.length > 0){
-            sql += " WHERE ";
-            for(int i = 0; i < Conditions.length; i++){
-                sql += Conditions[i];
-                if(i < Conditions.length - 1){
-                    sql += " AND ";
-                }
-            }
+        return Array.get(0);
+    }
+
+    <T> ArrayList<T> getRecords(String table, String[] columns, String[] conditions){
+        Executor executor= getExecutor(table);
+
+        String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
+        return executor.processRequest(sql, connection);
+    }
+    public <T> ArrayList<T>  getRecordsSql(String table, String sql){
+        Executor executor= getExecutor(table);
+
+
+        return executor.processRequest(sql, connection);
+    }
+    void updateRecord(String table, String[] columns, String[] Values, String[] conditions){
+        Executor executor= getExecutor(table);
+
+        String sql = QueryBuilder.sqlUpdateBuilder(table, columns, Values, conditions);
+        executor.processUpdate(sql, connection);
+
+    }
+    boolean deleteRecord(String table, String[] conditions){
+        Executor executor= getExecutor(table);
+
+        String sql = QueryBuilder.sqlDeleteBuilder(table, conditions);
+        try {
+            executor.processUpdate(sql, connection);
+        }catch (Exception e){
+            return false;
         }
-
-        executor.processRequest(sql, connection);
-
-        System.out.println(sql);
-    }
-
-    void getRecords(){}
-    void getRecordsSql(String Table, String sql){
-
-
+        return true;
 
     }
-    void updateRecord(){}
-    void deleteRecord(){}
-    void insertRecord(){}
-    //finds the correct executor for the table
-    private Executor getExecutor(String Table){
-        switch (Table){
+    boolean insertRecord(String table, String[] columns, String[] Values ){
+        Executor executor= getExecutor(table);
+
+        String sql = QueryBuilder.sqlInsertBuilder(table, columns, Values);
+
+        try {
+            executor.processUpdate(sql, connection);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return true;
+
+    }
+
+    //finds the correct executor for the columns
+    private Executor getExecutor(String table){
+        switch (table){
 //            case "user":
 //                return new Executor.UserExecutor();
 //            case "diet_log":
@@ -67,7 +100,6 @@ public class Manager {
                 return null;
         }
     }
-
 
 
 }
