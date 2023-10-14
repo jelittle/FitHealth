@@ -10,6 +10,13 @@ class  QueryBuilder {
         String sql = "SELECT ";
 
         // Add columns to the SQL statement
+        // If no columns are specified, select all columns
+        if(columns == null)
+            sql += "*";
+
+        else if(columns.length == 0){
+            sql += "*";
+        }else
         for(int i = 0; i < columns.length; i++){
             sql += columns[i];
             if(i < columns.length - 1){
@@ -24,6 +31,8 @@ class  QueryBuilder {
         if(Conditions.length > 0){
             sql += " WHERE ";
             for(int i = 0; i < Conditions.length; i++){
+                //if condition i is number, don't add quotes
+
                 sql += Conditions[i];
                 if(i < Conditions.length - 1){
                     sql += " AND ";

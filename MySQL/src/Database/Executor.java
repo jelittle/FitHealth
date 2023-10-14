@@ -1,11 +1,9 @@
 package Database;
 
 import userData.ExerciseLog;
+import userData.User;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +28,7 @@ abstract class Executor {
             Statement statement;
             statement = connection.createStatement();
             ResultSet resultSet;
+
             resultSet = statement.executeQuery(sql);
             //build object
 
@@ -79,21 +78,22 @@ abstract class Executor {
             int duration;
             String intensity;
             String Exercise;
-            int met;
+            float met;
             int metid;
             int id;
+            int userId;
 
             while (resultSet.next()) {
                 id= resultSet.getInt("exercise_log.id");
                 startTime = resultSet.getInt("starttime");
                 endTime = resultSet.getInt("endtime");
-                duration = endTime-startTime;
                 intensity = resultSet.getString("intensity");
                 Exercise = resultSet.getString("exercise_type");
-                met = resultSet.getInt("met");
+                met = resultSet.getFloat("met");
                 metid= resultSet.getInt("met.id");
+                userId= resultSet.getInt("exercise_log.userid");
 
-                ExerciseLog temp = new ExerciseLog(id,startTime, duration, Exercise, intensity, met,metid);
+                ExerciseLog temp = new ExerciseLog(id,startTime, endTime, Exercise, intensity, met,metid,userId);
                 exercises.add((T) temp);
             }
 
@@ -102,14 +102,50 @@ abstract class Executor {
     }
 
 
-    static class SettingsExecutor {
+    static class SettingsExecutor extends Executor {
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            return null;
+        }
     }
 
-    static class UserExecutor {
+    static class UserExecutor extends Executor {
 
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            ArrayList<T> users = new ArrayList<>();
+
+            String name;
+            String password;
+            int height;
+            float weight;
+            int age;
+            int id;
+            while(resultSet.next()) {
+
+                name = resultSet.getString("username");
+                password = resultSet.getString("password");
+                height = resultSet.getInt("height");
+                weight = resultSet.getFloat("weight");
+                age = resultSet.getInt("age");
+                id = resultSet.getInt("id");
+
+                User temp = new User(name, password, height, weight, age, id);
+                users.add((T) temp);
+            }
+
+            // Your existing code...
+
+            return users;
+        }
     }
 
-    static class DietLogExecutor {
+
+    static class DietLogExecutor extends Executor {
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            return null;
+        }
     }
 }
 

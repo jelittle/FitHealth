@@ -1,4 +1,6 @@
 package Database;
 
-public class DietInterface {
+interface DietLog{
+
+
 }

@@ -11,12 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExerciseInterfaceTest {
-    private static final User user1 = new User("Joshua", "password", 1.8, 80, 20, 1);
-    private static final ExerciseInterface db = new ExerciseInterface();
-    private static final ExerciseLog exerciseLog1 = new ExerciseLog(2,1696106011, 1320, "walking","low" , 2, 3);
+
+    //this is depricated, was following the existing database rows, were deleted
+    private static final User user1 = new User("Joshua", "password", 180, 80, 20, 1);
+    private static final ExerciseInterface db = new ExerciseLogClient();
+    private static final ExerciseLog exerciseLog1 = new ExerciseLog(2,100, 101, "walking","low" , 2, 3,1);
 
 
-    private static final ExerciseLog exerciseLog2 = new ExerciseLog(3,1696106012, 1319, null,null , 0, 4);
+    private static final ExerciseLog exerciseLog2 = new ExerciseLog(3,100, 101, null,null , 0, 4,1);
     //add user to exerciselog 1 and 2 before every test
     @BeforeAll
     static void setUp(){
@@ -70,7 +72,7 @@ class ExerciseInterfaceTest {
     @Test
     void insertAndDeleteExerciseLog() {
 
-        ExerciseLog exerciseLog = new ExerciseLog(0,1796106011, 1320, "walking","low" , 2, 3);
+        ExerciseLog exerciseLog = new ExerciseLog(0,1796106011, 1320, "walking","low" , 2, 3,1);
         exerciseLog.setUser(user1);
         assertTrue(db.InsertExerciseLog(exerciseLog));
         ExerciseLog exerciseLog2 = db.getExerciseLogsByDateRangeAndUserId(1796106011, 1796107331, 1).get(0);

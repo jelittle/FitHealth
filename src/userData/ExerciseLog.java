@@ -9,24 +9,37 @@ package userData;
 public class ExerciseLog {
     private final int id;
     private final int StartTime;
+    private final int endTime;
     private final int duration;
-    private final double met;
-    private final String Exercise;
-    private final String intensity;
+    private  float met;
+    private String Exercise;
+    private String intensity;
     private User user;
+    private int userid;
     private int CaloriesBurned;
     private final int metid;
-    public ExerciseLog(int id,int StartTime, int duration, String Exercise, String intensity, double met, int metid){
+    public ExerciseLog(int id,int StartTime, int EndTime, String Exercise, String intensity, float met, int metid,int userid){
         this.StartTime = StartTime;
-        this.duration = duration;
+        this.endTime = EndTime;
+        this.duration = EndTime-StartTime;
         this.Exercise = Exercise;
         this.intensity = intensity;
         this.met = met;
         this.metid = metid;
         this.id =id;
-
+        this.userid=userid;
+    }
+    public ExerciseLog(int id, int userid, int startTime, int endTime, int metid){
+        this.id = id;
+        this.userid = userid;
+        this.StartTime = startTime;
+        this.endTime = endTime;
+        this.metid = metid;
+        this.duration = endTime - startTime;
 
     }
+
+
 
     public int getStartTime() {
         return StartTime;
@@ -60,7 +73,7 @@ public class ExerciseLog {
         return CaloriesBurned;
     }
     public int getUserId() {
-        return user.getID();
+        return userid;
     }
 
     public long getEndTime() {

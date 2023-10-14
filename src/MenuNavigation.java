@@ -9,7 +9,7 @@ public class MenuNavigation {
     private static void userMenu(User user, ArrayList<User> userList){
         int action;
         System.out.println("[1] Name: " + user.getName() +  "\n[2] Password: " + user.getPassword() + "\n[3] Height: " + user.getHeight() + 
-        " m\n[4] Weight: " + user.getWeight() + "kg\n[5] Age: " + user.getAge() + "\n[6] ID: " + user.getID() + "\n[7] Delete Profile" + "\n[8] Logout");
+        " cm\n[4] Weight: " + user.getWeight()/1000 + "kg\n[5] Age: " + user.getAge() + "\n[6] ID: " + user.getID() + "\n[7] Delete Profile" + "\n[8] Logout");
         action = Integer.valueOf(reader.nextLine());
         switch(action){
             case 1: 
@@ -22,11 +22,11 @@ public class MenuNavigation {
                 break;
             case 3: 
                 System.out.println("Enter New Height");
-                user.setHeight(Double.valueOf(reader.nextLine())); 
+                user.setHeight(Integer.valueOf(reader.nextLine()));
                 break;
             case 4: 
                 System.out.println("Enter New Weight");
-                user.setWeight(Double.valueOf(reader.nextLine())); 
+                user.setWeight(Float.valueOf(reader.nextLine()));
                 break;
             case 5: 
                 System.out.println("Enter New Age");
@@ -88,7 +88,7 @@ public class MenuNavigation {
         if (user.getPassword().equals(password))
             return true;
         else {
-            System.out.println("Incorrect password, try again or enter BACK to conacel");
+            System.out.println("Incorrect password, try again or enter BACK to cancel");
             password = reader.nextLine();
             if (!password.equals("BACK"))  
                 passwordCheck(user, password);

@@ -3,10 +3,12 @@ package userData;
 public class User{
     private String name;
     private String password;
-    private double height;
-    private double weight;
+    private int height;
+    private float weight;
     private int age; 
-    private int ID;
+    private int id;
+    private ExerciseLogSet exerciseLogs;
+    private DietLogs dietLogs;
 
     public User(){
         name = "";
@@ -14,7 +16,7 @@ public class User{
         height = 0;
         weight = 0;
         age = 0;
-        ID = 0;
+        id = 0;
     }
 
     public User(String name){
@@ -23,16 +25,16 @@ public class User{
         height = 0;
         weight = 0;
         age = 0;
-        ID = 0;
+        id = 0;
     }
 
-    public User(String name, String password, double height, double weight, int age, int ID){
+    public User(String name, String password, int height, float weight, int age, int id){
         this.name = name;
         this.password = password;
         this.height = height;
         this.weight = weight;
         this.age = age;
-        this.ID = ID;
+        this.id = id;
     }
 
 
@@ -50,17 +52,17 @@ public class User{
         return password;
     }
 
-    public void setHeight(double height){
+    public void setHeight(int height){
         this.height = height;
     }
-    public double getHeight(){
+    public int getHeight(){
         return height;
     }
 
-    public void setWeight(double weight){
+    public void setWeight(float weight){
         this.weight = weight;
     }
-    public double getWeight(){
+    public float getWeight(){
         return weight;
     }
 
@@ -71,11 +73,13 @@ public class User{
         return age;
     }
 
-    public void setID(int ID){
-        this.ID = ID;
+    public void setID(int id){
+        this.id = id;
     }
     public int getID(){
-        return ID;
+        return id;
     }
+
+//    public void addExercise(ExerciseLog exerciseLog){ this.exerciseLogs}
 
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * - add more error handling, if connection fails, print in console and swap to overloaded test methods.
  *
  */
-class Manager {
+public class Manager {
     private static Connection connection;
     private static final boolean test = false;
 
@@ -24,29 +24,32 @@ class Manager {
             connection = connector.connect();
         }
     }
-    <T> T getRecord(String table, String[] columns, String[] conditions){
+     <T> T getRecord(String table, String[] columns, String[] conditions){
         //create sql statement using tables, columns, and conditions
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
-
+        System.out.println(sql);
         ArrayList<T> Array=executor.processRequest(sql, connection);
 
         if(Array.size()>1){
             throw new RuntimeException("Too many records returned");
         }
-
+        if(Array.size()==0){
+            return null;
+        }
 
         return Array.get(0);
     }
 
-    <T> ArrayList<T> getRecords(String table, String[] columns, String[] conditions){
+     <T> ArrayList<T> getRecords(String table, String[] columns, String[] conditions){
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
+
         return executor.processRequest(sql, connection);
     }
-    public <T> ArrayList<T>  getRecordsSql(String table, String sql){
+     <T> ArrayList<T>  getRecordsSql(String table, String sql){
         Executor executor= getExecutor(table);
 
 
@@ -88,14 +91,14 @@ class Manager {
     //finds the correct executor for the columns
     private Executor getExecutor(String table){
         switch (table){
-//            case "user":
-//                return new Executor.UserExecutor();
-//            case "diet_log":
-//                return new Executor.DietLogExecutor();
+            case "user":
+                return new Executor.UserExecutor();
+            case "diet_log":
+                return new Executor.DietLogExecutor();
             case "exercise_log":
                 return new Executor.ExerciseExecutor();
-//            case "settings":
-//                return new Executor.SettingsExecutor();
+            case "settings":
+                return new Executor.SettingsExecutor();
             default:
                 return null;
         }
