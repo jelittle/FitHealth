@@ -2,6 +2,7 @@ package Database;
 
 import org.junit.jupiter.api.Test;
 import userData.ExerciseLog;
+import userData.Met;
 import userData.User;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ class TestDatabaseTest {
             //for every execercise log with id==user.getID()
             for (ExerciseLog exerciseLog: exerciseTable){
                 if(exerciseLog.getUserId()==user.getID()){
-                    MetStaticTable.met met=(MetStaticTable.met) db.getTableEntityById("met",exerciseLog.getMetId());
-                    System.out.println(met.getExercise() );
+                    Met met=(Met) db.getTableEntityById("met",exerciseLog.getMetId());
+                    System.out.println(met.exercise() );
                 }
             }
         }

@@ -7,7 +7,7 @@ public class User{
     private float weight;
     private int age; 
     private int id;
-    private ExerciseLogSet exerciseLogs;
+    private ExerciseLogs exerciseLogs;
     private DietLogs dietLogs;
 
     public User(){
