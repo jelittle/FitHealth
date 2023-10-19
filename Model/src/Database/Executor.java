@@ -160,33 +160,30 @@ abstract class Executor {
         @Override
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
 
-//            ArrayList<T> dietLogs = new ArrayList<>();
-//            int id;
-//            int userId;
-//            int calories;
-//            double proteins;
-//            double carbs;
-//            Map<VitaminType, Double> vitamins;
-//            Map<String, Double> otherNutrients;
-//            while(resultSet.next()){
-//                id = resultSet.getInt("id");
-//                userId = resultSet.getInt("userid");
-//                calories = resultSet.getInt("calories");
-//                proteins = resultSet.getDouble("proteins");
-//                carbs = resultSet.getDouble("carbs");
-//                vitamins = (Map<VitaminType, Double>) resultSet.getObject("vitamins");
-//                otherNutrients = (Map<String, Double>) resultSet.getObject("othernutrients");
-//                NutrientInfo nutrientInfo = new NutrientInfo();
-//                nutrientInfo.setCalories(calories);
-//                nutrientInfo.setProteins(proteins);
-//                nutrientInfo.setCarbs(carbs);
-//                nutrientInfo.setVitamins(vitamins);
-//                nutrientInfo.setOtherNutrients(otherNutrients);
-//                DietLog temp = new DietLog(id, userId, nutrientInfo);
-//                dietLogs.add((T) temp);
-//            }
-//            return dietLogs;
-            return null;
+            ArrayList<T> dietLogs = new ArrayList<>();
+            int id;
+            String name;
+            double quantity;
+            String foodGroup;
+            int calories;
+            double proteins;
+            double vitamins;
+
+            while(resultSet.next()) {
+                id = resultSet.getInt("diet_log.id");
+                name = resultSet.getString("name");
+                quantity = resultSet.getDouble("amount");
+                foodGroup = resultSet.getString("foodgroup");
+                calories = resultSet.getInt("calories");
+                proteins = resultSet.getDouble("proteins");
+                vitamins = resultSet.getDouble("vitamin");
+
+                DietLogEntry temp = new DietLogEntry(id, name, quantity, foodGroup, calories, proteins, vitamins);
+
+                dietLogs.add((T) temp);
+            }
+
+            return  dietLogs;
         }
     }
 }
