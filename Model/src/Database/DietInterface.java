@@ -1,6 +1,0 @@
-package Database;
-
-interface DietLog{
-
-
-}

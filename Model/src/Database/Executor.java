@@ -1,14 +1,14 @@
 package Database;
 
-import userData.ExerciseLog;
-import userData.Met;
-import userData.User;
+import userData.*;
+import userData.DietLogEntry;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Joshua Little
@@ -159,6 +159,33 @@ abstract class Executor {
     static class DietLogExecutor extends Executor {
         @Override
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+
+//            ArrayList<T> dietLogs = new ArrayList<>();
+//            int id;
+//            int userId;
+//            int calories;
+//            double proteins;
+//            double carbs;
+//            Map<VitaminType, Double> vitamins;
+//            Map<String, Double> otherNutrients;
+//            while(resultSet.next()){
+//                id = resultSet.getInt("id");
+//                userId = resultSet.getInt("userid");
+//                calories = resultSet.getInt("calories");
+//                proteins = resultSet.getDouble("proteins");
+//                carbs = resultSet.getDouble("carbs");
+//                vitamins = (Map<VitaminType, Double>) resultSet.getObject("vitamins");
+//                otherNutrients = (Map<String, Double>) resultSet.getObject("othernutrients");
+//                NutrientInfo nutrientInfo = new NutrientInfo();
+//                nutrientInfo.setCalories(calories);
+//                nutrientInfo.setProteins(proteins);
+//                nutrientInfo.setCarbs(carbs);
+//                nutrientInfo.setVitamins(vitamins);
+//                nutrientInfo.setOtherNutrients(otherNutrients);
+//                DietLog temp = new DietLog(id, userId, nutrientInfo);
+//                dietLogs.add((T) temp);
+//            }
+//            return dietLogs;
             return null;
         }
     }

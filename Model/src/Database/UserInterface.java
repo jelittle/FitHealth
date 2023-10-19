@@ -3,6 +3,8 @@ package Database;
 
 import userData.User;
 
+
+
 interface UserInterface {
     public User getUserById(int id);
     public void setUser(User user);

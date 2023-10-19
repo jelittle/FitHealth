@@ -21,7 +21,6 @@ abstract class LogTable extends Table{
 
     abstract void BulkCreateforUser(int Id);
 
-
 }
 
 
@@ -368,7 +367,6 @@ class DietTable extends LogTable{
 
     @Override
     void add(Object object) {
-
     }
 
     @Override
@@ -394,6 +392,14 @@ class DietTable extends LogTable{
      */
     @Override
     void deleteEntity(Object object) {
-
+//        DietLog dietLog = (DietLog) object;
+//        for (DietLog dietLog1 : dietList) {
+//            if (dietLog1.getId() == dietLog.getId()) {
+//                dietList.remove(dietLog1);
+//                return;
+//            }
+//        }
+//        throw new IllegalArgumentException("Diet not found");
+//
     }
 }
