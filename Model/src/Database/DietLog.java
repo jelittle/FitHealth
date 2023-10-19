@@ -5,7 +5,7 @@ import userData.DietLogEntry;
 //Interface between anything requiring DietLogEntry objects within the Database
 public interface DietLog{
 
-    public DietLog getDietLogById(int id);
+    public DietLogEntry getDietLogById(int id);
     public boolean setDietLog(DietLogEntry dietLog);
     public void updateDietLog(DietLogEntry dietLog);
     public void deleteDietLog(DietLogEntry dietLog);
@@ -20,9 +20,7 @@ class IDietLogClient implements DietLog {
             manager = new Manager();
     }
 
-    public DietLog getDietLogById(int id) {
-
-        //impossible to get more than 1 with id
+    public DietLogEntry getDietLogById(int id) {
 
         return manager.getRecord("diet_log", null, new String[]{"id = " + id});
     }
@@ -68,8 +66,8 @@ class IdietLogClientTest implements DietLog {
     }
 
     @Override
-    public DietLog getDietLogById(int id) {
-        return (DietLog) db.getTableEntityById("diet_log", id);
+    public DietLogEntry getDietLogById(int id) {
+        return (DietLogEntry) db.getTableEntityById("diet_log", id);
     }
 
     @Override

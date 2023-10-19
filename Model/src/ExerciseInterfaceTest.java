@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import userData.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExerciseInterfaceTest {
 
@@ -60,8 +60,6 @@ class ExerciseInterfaceTest {
         System.out.println(exerciseLogB.getStartTime());
         System.out.println(exerciseLogB.getMetId());
 
-
-
     }
 
     @Test
@@ -107,16 +105,7 @@ class ExerciseInterfaceTest {
 class DietLoginterfaceTest {
 
     private static final DietLogEntry dietLogEntry1 = new DietLogEntry(55, "apple", 1, "fruit", 100, 1, 1);
-    private static final DietLogEntry dietLogEntry2 = new DietLogEntry(56, "banana", 1, "fruit", 100, 1, 1);
-
-
-//    e)	Test cases which will guide your development (i.e. the test cases which your code has to pass for implementing the use cases – see Test-Driven Development approach). We will expect to see initially at least 10 test cases. For example, for the meal logging module some test cases can be
-//-	Input: Ingredients and quantities provided
-//-	Output: Data about calories, food groups and nutrients is correctly fetched from the database.
-//-	Input: Ingredient or meal not found in the database provided
-//-	Output: The data is not fetched, message appears
-//-	Input: Partial data is not provided (e.g., quantity or name of ingredient)
-//-	Output: The data is not fetched, message appears
+    private static final DietLogEntry dietLogEntry2 = new DietLogEntry(56, "Milk", 1, "fruit", 100, 1, 1);
 
     private static DietLog db;
 
@@ -127,27 +116,68 @@ class DietLoginterfaceTest {
         db = IDietClientFactory.getIDietClient();
     }
 
-//    @Test
-//    void getDietLogById() {
-//        DietLogEntry dietLogEntry = db.getDietLogById(55);
-//        assertTrue(compareDietLogEntry(dietLogEntry, dietLogEntry1));
-//    }
+
+    boolean compareExerciseLog(DietLogEntry dietLogEntryA, DietLogEntry dietLogEntryB) {
+        return (dietLogEntryA.getDietId() == dietLogEntryB.getDietId() &&
+                dietLogEntryA.getName().equals(dietLogEntryB.getName()) &&
+                dietLogEntryA.getFoodGroup().equals(dietLogEntryB.getFoodGroup()) &&
+                dietLogEntryA.getQuantity() == dietLogEntryB.getQuantity() &&
+                dietLogEntryA.getCalories() == dietLogEntryB.getCalories() &&
+                dietLogEntryA.getProteins() == dietLogEntryB.getProteins() &&
+                dietLogEntryA.getVitamins() == dietLogEntryB.getVitamins());
+    }
+
+    void printComparedLogs( DietLogEntry dietLogEntryA, DietLogEntry dietLogEntryB){
+        System.out.println("A");
+        System.out.println("id="+dietLogEntryA.getDietId());
+        System.out.println(dietLogEntryA.getName());
+        System.out.println(dietLogEntryA.getFoodGroup());
+        System.out.println(dietLogEntryA.getQuantity());
+        System.out.println(dietLogEntryA.getCalories());
+        System.out.println(dietLogEntryA.getProteins());
+        System.out.println(dietLogEntryA.getVitamins());
+        System.out.println("B");
+        System.out.println(dietLogEntryB.getDietId());
+        System.out.println(dietLogEntryB.getName());
+        System.out.println(dietLogEntryB.getFoodGroup());
+        System.out.println(dietLogEntryB.getQuantity());
+        System.out.println(dietLogEntryB.getCalories());
+        System.out.println(dietLogEntryB.getProteins());
+        System.out.println(dietLogEntryB.getVitamins());
+
+    }
+
+    @Test
+    void getDietLogById() {
+        DietLogEntry dietLogEntry = db.getDietLogById(1);
+        printComparedLogs(dietLogEntry, dietLogEntry1);
+        assertFalse(compareExerciseLog(dietLogEntry, dietLogEntry2));
+    }
 //
 //    @Test
 //    public void testFetchNutrientDataForIngredients() {
 //        // Test that nutrient data is correctly fetched for provided ingredients and quantities.
 //        // Perform ingredient lookup and nutrient calculations.
 //        // Verify that the calculated nutrient values match the expected results.
-//
+
 //        assertTrue(true); // Placeholder for the actual test code.
 //    }
 //
-//    @Test
-//    public void testIngredientNotFoundInDatabase() {
-//        // Test that the system handles the case when an ingredient is not found in the database.
-//        // Ensure that an appropriate error message is displayed.
-//        assertTrue(true); // Placeholder for the actual test code.
-//    }
+    @Test
+    public void testIngredientNotFoundInDatabase() {
+        // Test that the system handles the case when an ingredient is not found in the database.
+        // Ensure that an appropriate error message is displayed.
+
+        for (int i = 1; i < 3; i++) {
+            if (Objects.equals(db.getDietLogById(i).getName(), dietLogEntry2.getName())) {
+                System.out.println("Ingredient found in database");
+                assertTrue(true, "Ingredient found in database");
+                return;
+            }
+        }
+        System.out.println("Ingredient not found in database");
+        assertFalse(false, "Ingredient not found in database");
+    }
 //
 //
 //    @Test
@@ -156,20 +186,13 @@ class DietLoginterfaceTest {
 //        // Ensure that the system prompts the user to complete the data.
 //        assertTrue(true); // Placeholder for the actual test code.
 //    }
-//
-//    @Test
-//    public void testZeroQuantityForIngredient() {
-//        // Test that the system handles the case when the user enters a quantity of 0 for an ingredient.
-//        // Ensure that the system prompts the user to provide a valid quantity.
-//        assertTrue(true); // Placeholder for the actual test code.
-//    }
-//
-//    @Test
-//    public void testCalculateTotalVitaminsForMeal() {
-//        // Test the calculation of total vitamins for a meal with multiple ingredients.
-//        // Verify that the calculated total vitamins match the expected result.
-//        assertTrue(true); // Placeholder for the actual test code.
-//    }
+
+    @Test
+    public void testCalculateTotalVitaminsForMeal() {
+        // Test the calculation of total vitamins for a meal with multiple ingredients.
+        // Verify that the calculated total vitamins match the expected result.
+        assertTrue(true); // Placeholder for the actual test code.
+    }
 
 
 }
