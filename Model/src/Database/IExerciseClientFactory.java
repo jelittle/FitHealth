@@ -11,4 +11,13 @@ public class IExerciseClientFactory {
             return new ExerciseLogClient();
         }
     }
+    public static IExerciseClient getIExerciseClient(boolean isTest) {
+        if(isTest) {
+            TestIdentifier.isTest();
+            return new ExerciseLogTestClient();
+        }
+        else {
+            return new ExerciseLogClient();
+        }
+    }
 }

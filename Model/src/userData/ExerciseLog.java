@@ -8,6 +8,7 @@ package userData;
  */
 public class ExerciseLog {
     private final int id;
+    private float userWeight;
     private int startTime;
     private int endTime;
     private int duration;
@@ -15,7 +16,7 @@ public class ExerciseLog {
     private Met met=null;
 
     private int userid;
-    private int CaloriesBurned;
+    private int CaloriesBurned=0;
     private int metid;
     public ExerciseLog(int id,int startTime, int endTime, int metid,int userid){
         this.startTime = startTime;
@@ -85,6 +86,9 @@ public class ExerciseLog {
     }
 
     public int getCaloriesBurned() {
+        if(CaloriesBurned==0){
+            CaloriesBurned=(int)(getMetValue()*userWeight*getDuration()/60);
+        }
         return CaloriesBurned;
     }
     public int getUserId() {
@@ -114,5 +118,8 @@ public class ExerciseLog {
 
     public void setUserId(int userId) {
         userid = userId;
+    }
+    public void setUserWeight(float userWeight) {
+        this.userWeight = userWeight;
     }
 }

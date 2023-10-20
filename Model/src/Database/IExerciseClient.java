@@ -2,6 +2,7 @@ package Database;
 
 import userData.ExerciseLog;
 import userData.Met;
+import userData.User;
 
 import java.util.ArrayList;
 
@@ -33,8 +34,8 @@ class ExerciseLogClient implements IExerciseClient {
 
             ExerciseLog exerciseLog = manager.getRecord("exercise_log", null, new String[]{"id = " + id});
             //impossible to get more than 1 with id
-
-                exerciseLog.setMet(manager.getRecord("met", null, new String[]{"id = " + exerciseLog.getMetId()}));
+            exerciseLog.setUserWeight(manager.getRecord("user", null, new String[]{"id = " + exerciseLog.getUserId()}));
+            exerciseLog.setMet(manager.getRecord("met", null, new String[]{"id = " + exerciseLog.getMetId()}));
 
             return exerciseLog;
 
@@ -44,7 +45,11 @@ class ExerciseLogClient implements IExerciseClient {
         public ArrayList<ExerciseLog> getExerciseLogsByDateRangeAndUserId(long startDate, long EndDate, int userId) {
             ArrayList<ExerciseLog> array = manager.getRecordsSql("exercise_log", "SELECT * FROM exercise_log JOIN met ON exercise_log.metid = met.id WHERE exercise_log.starttime >= " + startDate + " AND exercise_log.endtime <= " + EndDate
                     + " AND userid=" + userId);
+
+            User user =manager.getRecord("user", null, new String[]{"id = " + userId});
+            float weight=user.getWeight();
             for(ExerciseLog e: array){
+                e.setUserWeight(weight);
                 e.setMet(manager.getRecord("met", null, new String[]{"id = " + e.getMetId()}));
             }
             return array;

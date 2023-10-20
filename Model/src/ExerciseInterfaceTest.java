@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ExerciseInterfaceTest {
+
+    class ExerciseInterfaceTest {
 
 
     private static final User user1 = new User("bjorn", "bjorn", 180, 80, 20, 1);
