@@ -45,8 +45,8 @@ class NutrientInfo {
 public class DietLogEntry {
 
     private int Dietid;
-    private String name;
-    private double quantity;
+    private String name = "";
+    private double quantity = 0;
     private String foodGroup;
 //    private NutrientInfo nutrientInfo;
 
@@ -100,12 +100,20 @@ public class DietLogEntry {
         return calories;
     }
 
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
     public double getFinalCalories() {
         return (getQuantity() / 100) * getCalories();
     }
 
     public double getProteins() {
         return proteins;
+    }
+
+    public void setProteins(double proteins) {
+        this.proteins = proteins;
     }
 
     public double getFinalProteins() {
@@ -116,30 +124,12 @@ public class DietLogEntry {
         return vitamins;
     }
 
+    public void setVitamins(double vitamins) {
+        this.vitamins = vitamins;
+    }
+
     public double getFinalVitamins() {
         return (getQuantity() / 100) * getVitamins();
     }
 
 }
-
-
-//class DietLog {
-//    public static void main(String[] args) {
-//        // Create ingredients with their nutrient information
-//        NutrientInfo tomatoNutrients = new NutrientInfo();
-//        tomatoNutrients.setCalories(22);
-//        tomatoNutrients.setProteins(0.9);
-//        tomatoNutrients.setCarbs(4.8);
-//
-//        Ingredient tomato = new Ingredient("Tomato", 100.0, FoodGroup.Vegetables, tomatoNutrients);
-//
-//        // Create a DietLogEntry for breakfast
-//        DietLogEntry breakfastEntry = new DietLogEntry(22, new Date(), MealType.Breakfast, List.of(tomato));
-//
-//        // Calculate and print the total calories for the breakfast entry
-//        int totalCalories = breakfastEntry.getCalories();
-//        System.out.println("Total Calories for Breakfast: " + totalCalories);
-//
-//        // You can continue to add more ingredients, meals, and functionality as needed.
-//    }
-//}
