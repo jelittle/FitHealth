@@ -8,8 +8,9 @@ public class MenuNavigation {
 
     private static void userMenu(User user, ArrayList<User> userList){
         int action;
-        System.out.println("[1] Name: " + user.getName() +  "\n[2] Password: " + user.getPassword() + "\n[3] Height: " + user.getHeight() + 
-        " cm\n[4] Weight: " + user.getWeight()/1000 + "kg\n[5] Age: " + user.getAge() + "\n[6] ID: " + user.getID() + "\n[7] Delete Profile" + "\n[8] Logout");
+        System.out.println("[1] Name: " + user.getName() +  "\n[2] Password: " + user.getPassword() + "\n[3] Sex: " + user.getSex()
+                + "\n[4] Height: " + user.getHeight() + " cm\n[5] Weight: " + user.getWeight()/1000 + "kg\n[6] Age: " +
+                user.getAge() + "\n[7] ID: " + user.getID() + "\n[8] Delete Profile" + "\n[9] Logout");
         action = Integer.valueOf(reader.nextLine());
         switch(action){
             case 1: 
@@ -20,30 +21,34 @@ public class MenuNavigation {
                 System.out.println("Enter New Password");
                 user.setPassword(reader.nextLine()); 
                 break;
-            case 3: 
+            case 3:
+                System.out.println("Enter New Sex");
+                user.setSex(reader.nextLine());
+                break;
+            case 4:
                 System.out.println("Enter New Height");
                 user.setHeight(Integer.valueOf(reader.nextLine()));
                 break;
-            case 4: 
+            case 5:
                 System.out.println("Enter New Weight");
                 user.setWeight(Float.valueOf(reader.nextLine()));
                 break;
-            case 5: 
+            case 6:
                 System.out.println("Enter New Age");
                 user.setAge(Integer.valueOf(reader.nextLine())); 
                 break;
-            case 6: 
+            case 7:
                 System.out.println("Enter New ID");
                 user.setID(Integer.valueOf(reader.nextLine())); 
                 break;
-            case 7: 
+            case 8:
                 System.out.println("Enter Password");
                 if (passwordCheck(user, reader.nextLine())){
                     userList.remove(user);
                     startScreen(userList);
                 } else 
                     userMenu(user, userList);
-            case 8: startScreen(userList); break;
+            case 9: startScreen(userList); break;
         }
         userMenu(user, userList);
     }
