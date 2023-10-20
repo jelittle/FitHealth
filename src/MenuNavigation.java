@@ -8,6 +8,7 @@ public class MenuNavigation {
 
     private static void userMenu(User user, ArrayList<User> userList){
         int action;
+        System.out.println("Select Option");
         System.out.println("[1] Name: " + user.getName() +  "\n[2] Password: " + user.getPassword() + "\n[3] Sex: " + user.getSex()
                 + "\n[4] Height: " + user.getHeight() + " cm\n[5] Weight: " + user.getWeight()/1000 + "kg\n[6] Age: " +
                 user.getAge() + "\n[7] ID: " + user.getID() + "\n[8] Delete Profile" + "\n[9] Logout");
@@ -38,8 +39,7 @@ public class MenuNavigation {
                 user.setAge(Integer.valueOf(reader.nextLine())); 
                 break;
             case 7:
-                System.out.println("Enter New ID");
-                user.setID(Integer.valueOf(reader.nextLine())); 
+                System.out.println("Cannot Change ID");
                 break;
             case 8:
                 System.out.println("Enter Password");
@@ -71,6 +71,17 @@ public class MenuNavigation {
             System.out.println("Enter Name");
             String name = reader.nextLine();
             User newUser = new User(name);
+            System.out.println("Enter Password");
+            newUser.setPassword(reader.nextLine());
+            System.out.println("Enter Sex");
+            newUser.setSex(reader.nextLine());
+            System.out.println("Enter Height");
+            newUser.setHeight(Integer.valueOf(reader.nextLine()));
+            System.out.println("Enter Weight");
+            newUser.setWeight(Float.valueOf(reader.nextLine()));
+            System.out.println("Enter Age");
+            newUser.setAge(Integer.valueOf(reader.nextLine()));
+            newUser.setID(userList.get(i - 1).getID() + 1);
             userList.add(newUser);
             MenuNavigation.userMenu(userList.get(action - 1), userList);
         } else{

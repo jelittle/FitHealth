@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 public class Main{
     public static void main(String[] args){
-        User Bob = new User();
-        Bob.setName("Bobert");
-        Bob.setPassword("Password");
-        System.out.println(Bob.getName());
-        System.out.println(Bob.getPassword());
+//        User Bob = new User();
+//        Bob.setName("Bobert");
+//        Bob.setPassword("Password");
+//        System.out.println(Bob.getName());
+//        System.out.println(Bob.getPassword());
         // System.out.println("---------------");
         // UserInfo.printAll(Bob);
 
         ArrayList<User> userList = new ArrayList<>();
+        User Bob = new User("Bobert", "Password", "Male", 154, 76.3f, 29, 1);
         userList.add(Bob);
-        userList.add(new User("Bobby"));
-        System.out.println("---------------");
+        userList.add(new User("Bobby", "No", "Male", 172, 56.3f, 24, 2));
+//        System.out.println("---------------");
         MenuNavigation.startScreen(userList);
 
         // System.out.println("---------------");
