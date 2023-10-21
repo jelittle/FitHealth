@@ -1,5 +1,5 @@
 import Database.IExerciseClientFactory;
-import Database.UserClient;
+import Database.UserTestClient;
 import userData.ExerciseLog;
 import userData.User;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ExerciseController
 {
     private static Database.IExerciseClient exerciseTable;
-    private static Database.UserClient userTable;
+    private static Database.UserTestClient userTable;
     private  ArrayList<ExerciseLog> activeExercises;
     private  User client;
 
@@ -25,7 +25,7 @@ public class ExerciseController
         //connect
         exerciseTable= IExerciseClientFactory.getIExerciseClient(true);
         //ideally wont be in next version, will have userid from login
-        userTable= new UserClient();
+        userTable= new UserTestClient();
         getPresetUser();
     }
     /**
@@ -48,10 +48,10 @@ public class ExerciseController
      * @param startDate
      * @param EndDate
      */
-    private void setActiveExercisesByDateRange(ArrayList<Integer> startDate, ArrayList<Integer> EndDate){
+    public void setActiveExercisesByDateRange(ArrayList<Integer> startDate, ArrayList<Integer> EndDate){
         //convert array of year month day to unix time
         int startUnixTime=0;
-        try{
+//        try{
             int year=startDate.get(0);
             int month=startDate.get(1);
             int day=startDate.get(2);
@@ -59,22 +59,22 @@ public class ExerciseController
             int minute=startDate.get(4);
 
             startUnixTime=getUnixTime.getUnixTime(year,month,day,hour,minute);
-        }catch(Exception e){
-            throw new IllegalArgumentException("startDate must be in form year,month,day,hour,minute");
-        }
+//        }catch(Exception e){
+//            throw new IllegalArgumentException("startDate must be in form year,month,day,hour,minute");
+//        }
         int endUnixTime=0;
 
-        try{
-            int year=EndDate.get(0);
-            int month=EndDate.get(1);
-            int day=EndDate.get(2);
-            int hour=EndDate.get(3);
-            int minute=EndDate.get(4);
-
-            endUnixTime=getUnixTime.getUnixTime(year,month,day,hour,minute);
-        }catch(Exception e){
-            throw new IllegalArgumentException("EndDate must be in form year,month,day,hour,minute");
-        }
+//        try{
+//            int year=EndDate.get(0);
+//            int month=EndDate.get(1);
+//            int day=EndDate.get(2);
+//            int hour=EndDate.get(3);
+//            int minute=EndDate.get(4);
+//
+//            endUnixTime=getUnixTime.getUnixTime(year,month,day,hour,minute);
+//        }catch(Exception e){
+//            throw new IllegalArgumentException("EndDate must be in form year,month,day,hour,minute");
+//        }
         //get exercise log from db
 
         activeExercises=exerciseTable.getExerciseLogsByDateRangeAndUserId(client.getID(),startUnixTime,endUnixTime);
@@ -116,7 +116,7 @@ public class ExerciseController
      * calculates calories burned for all active exercises
      * @returns calories burned
      */
-     public ArrayList<Integer> getCaloriesBurned(){
+     public ArrayList<Integer> getActiveExerciseCalories(){
          if(activeExercises==null) {
              throw new IllegalArgumentException("activeExercises must be set before calling this function");
          }
@@ -126,7 +126,7 @@ public class ExerciseController
         }
         return caloriesBurned;
      }
-     public ArrayList<Integer> getDuration(){
+     public ArrayList<Integer> getActiveExerciseDuration(){
          if(activeExercises==null) {
              throw new IllegalArgumentException("activeExercises must be set before calling this function");
          }
@@ -136,7 +136,7 @@ public class ExerciseController
         }
         return duration;
      }
-     public ArrayList<String> getExerciseIntesity(){
+     public ArrayList<String> getExerciseIntensity(){
          if(activeExercises==null) {
              throw new IllegalArgumentException("activeExercises must be set before calling this function");
          }
@@ -145,6 +145,16 @@ public class ExerciseController
             intensity.add(exerciseLog.getIntensity());
         }
         return intensity;
+     }
+     public ArrayList<Integer> getActiveExerciseStartTimes(){
+         if(activeExercises==null) {
+             throw new IllegalArgumentException("activeExercises must be set before calling this function");
+         }
+        ArrayList<Integer> startTimes = new ArrayList<>();
+        for (ExerciseLog exerciseLog : activeExercises) {
+            startTimes.add(exerciseLog.getStartTime());
+        }
+        return startTimes;
      }
 
 

@@ -12,8 +12,10 @@ public class IExerciseClientFactory {
         }
     }
     public static IExerciseClient getIExerciseClient(boolean isTest) {
+        System.out.println("isTest: " + isTest);
         if(isTest) {
-            TestIdentifier.isTest();
+            TestIdentifier.startTest();
+
             return new ExerciseLogTestClient();
         }
         else {
