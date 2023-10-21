@@ -1,21 +1,44 @@
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
-class getUnixTime {
+class UnixTime {
+    static int getUnixTime(int year, int month, int day, int hour, int minute) {
+        // Create a Calendar object
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day, hour, minute, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
 
+        // Convert to Unix time
+        return (int) (calendar.getTimeInMillis() / 1000L);
+    }
+    static int getUnixTime(ArrayList<Integer> dateTime) {
+        // Create a Calendar object
+        if(dateTime.size()!=5){
+            throw new IllegalArgumentException("dateTime must be in form year,month,day,hour,minute");
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dateTime.get(0), dateTime.get(1) - 1, dateTime.get(2), dateTime.get(3), dateTime.get(4), 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-    static int getUnixTime(int year, int month, int day, int hour, int minute){
-        //convert array of year month day to unix time
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
-        c.set(Calendar.HOUR, hour);
-        c.set(Calendar.MINUTE, minute);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        // Convert to Unix time
+        return (int) (calendar.getTimeInMillis() / 1000L);
+    }
+    static int[] fromUnixTime(int unixTime){
+        // Create a Calendar object
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis((long) unixTime * 1000L);
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        return (int) (c.getTimeInMillis() / 1000L);
+        // Extract date and time components
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1; // Months are zero-based in Java
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
 
-
+        return new int[]{year, month, day, hour, minute};
     }
 }

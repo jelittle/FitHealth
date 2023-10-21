@@ -36,13 +36,15 @@ class UserTable extends Table {
     }
     void bulkCreate(){
         if(!bulkcreateUsed) {
+
             userList.add(new User("Bob", "Password", 183, 72.3F, 23, userId++));
             userList.add(new User("Lenny", "12345", 156, 82.4F, 26, userId++));
             userList.add(new User("John", "No", 166, 72.1F, 23, userId++));
             userList.add(new User("Todington", "y4gbp87bqt", 201, 7230.45F, 23, userId++));
             bulkcreateUsed = true;
+        }else {
+            System.out.println("BulkCreate already used");
         }
-        System.out.println("BulkCreate already used");
     }
 
     /**
@@ -208,18 +210,26 @@ class ExerciseTable extends LogTable {
 
     @Override
     <T> ArrayList<T> getByUserId(int id) {
+
         ArrayList<ExerciseLog> returnList = new ArrayList<>();
+        //print list with user id
+
+
         for (ExerciseLog exerciseLog : exerciseList) {
             if (exerciseLog.getUserId() == id) {
                 returnList.add(exerciseLog);
             }
         }
         return (ArrayList<T>) returnList;
+
     }
 
     @Override
     void add(Object object) {
-        exerciseList.add((ExerciseLog) object);
+        ExerciseLog exerciseLog = (ExerciseLog) object;
+        ExerciseLog copy= new ExerciseLog(exerciseId++, exerciseLog.getStartTime(),exerciseLog.getEndTime(), exerciseLog.getMetId(),exerciseLog.getUserId());
+
+        exerciseList.add(copy);
     }
 
 }

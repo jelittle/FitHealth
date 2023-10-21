@@ -1,9 +1,12 @@
 import Database.IExerciseClientFactory;
 import Database.UserTestClient;
 import userData.ExerciseLog;
+import userData.Met;
 import userData.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * logic class for Exercise
@@ -16,6 +19,8 @@ public class ExerciseController
     private static Database.IExerciseClient exerciseTable;
     private static Database.UserTestClient userTable;
     private  ArrayList<ExerciseLog> activeExercises;
+    private int startUnixTime=0;
+    private int endUnixTime=0;
     private  User client;
 
 
@@ -27,14 +32,14 @@ public class ExerciseController
         //ideally wont be in next version, will have userid from login
         userTable= new UserTestClient();
         getPresetUser();
+        System.out.println("Welcome to the exercise window, a default user has been created for you");
     }
     /**
      * get userlist for terminal,wont be in final version
      * @return array of users and names
      */
     private void getPresetUser(){
-       client =userTable.getUserById(1);
-
+       client =userTable.getUserById(2);
 
     }
 
@@ -50,34 +55,35 @@ public class ExerciseController
      */
     public void setActiveExercisesByDateRange(ArrayList<Integer> startDate, ArrayList<Integer> EndDate){
         //convert array of year month day to unix time
-        int startUnixTime=0;
-//        try{
+
+        try{
             int year=startDate.get(0);
             int month=startDate.get(1);
             int day=startDate.get(2);
             int hour=startDate.get(3);
             int minute=startDate.get(4);
 
-            startUnixTime=getUnixTime.getUnixTime(year,month,day,hour,minute);
-//        }catch(Exception e){
-//            throw new IllegalArgumentException("startDate must be in form year,month,day,hour,minute");
-//        }
-        int endUnixTime=0;
+            startUnixTime=UnixTime.getUnixTime(year,month,day,hour,minute);
 
-//        try{
-//            int year=EndDate.get(0);
-//            int month=EndDate.get(1);
-//            int day=EndDate.get(2);
-//            int hour=EndDate.get(3);
-//            int minute=EndDate.get(4);
-//
-//            endUnixTime=getUnixTime.getUnixTime(year,month,day,hour,minute);
-//        }catch(Exception e){
-//            throw new IllegalArgumentException("EndDate must be in form year,month,day,hour,minute");
-//        }
-        //get exercise log from db
+        }catch(Exception e){
+            throw new IllegalArgumentException("startDate must be in form year,month,day,hour,minute");
+        }
 
-        activeExercises=exerciseTable.getExerciseLogsByDateRangeAndUserId(client.getID(),startUnixTime,endUnixTime);
+        try{
+            int year=EndDate.get(0);
+            int month=EndDate.get(1);
+            int day=EndDate.get(2);
+            int hour=EndDate.get(3);
+            int minute=EndDate.get(4);
+
+            endUnixTime=UnixTime.getUnixTime(year,month,day,hour,minute);
+        }catch(Exception e){
+            throw new IllegalArgumentException("EndDate must be in form year,month,day,hour,minute");
+        }
+//        get exercise log from db
+
+        activeExercises=exerciseTable.getExerciseLogsByDateRangeAndUserId(startUnixTime,endUnixTime,client.getID());
+
     }
 
     /**
@@ -156,7 +162,78 @@ public class ExerciseController
         }
         return startTimes;
      }
+     ArrayList<String> getExerciseTypes(){
+
+         ArrayList<Met> met= exerciseTable.getMetTable();
+            ArrayList<String> exerciseTypes = new ArrayList<>();
+            for (Met m : met) {
+                //if not already in the table
+                if (!exerciseTypes.contains(m.exercise()))
+                    exerciseTypes.add(m.exercise());
+            }
+         return exerciseTypes;
+     }
+     public int getMetId(String exerciseName, String intensity) {
+         ArrayList<Met> met = exerciseTable.getMetTable();
+         for (Met m : met) {
+             if (m.exercise().equals(exerciseName) && m.intensity().equals(intensity)) {
+                 return m.id();
+             }
+         }
+         return 0;
+     }
+     public void addExerciseLog(ArrayList<Integer> startTime, int metId,ArrayList<Integer> endTime){
+            int sTime=UnixTime.getUnixTime(startTime);
+            int eTime=UnixTime.getUnixTime(endTime);
+            System.out.println(sTime);
+            System.out.println(eTime);
+            System.out.println("metId");
+            System.out.println(metId);
+            ExerciseLog exerciseLog = new ExerciseLog(0,sTime,eTime,metId,client.getID());
+
+            System.out.println(exerciseTable.InsertExerciseLog(exerciseLog));
+        }
+
+    /**
+     * deletes exercise log by id if log is owned by user
+     * @param id
+     * @return
+     */
+    public boolean DeleteExerciseLog(int id){
+        try {
+            if (!checkValidId(id)){
+            return false;
+            }
+
+            exerciseTable.DeleteExerciseLog(exerciseTable.getExerciseLogById(id));
+        }catch(Exception e){
+            throw new IllegalArgumentException("ExerciseId not found");
+        }
+        return true;
+
+    }
+
+    /**
+     * checks if given id is owned by user
+     * @param id
+     * @return
+     */
+    private boolean checkValidId(int id) {
+
+        return exerciseTable.getExerciseLogById(id).getUserId() == client.getID();
+    }
+
+    public void getGraph() {
+        ExerciseVisualization graph = new ExerciseVisualization();
+        ArrayList<Date> DateList = new ArrayList<>();
+        ArrayList<Integer> Calories = new ArrayList<>();
+        for (ExerciseLog exerciseLog : activeExercises) {
+
+            graph.addData(temp, exerciseLog.getCaloriesBurned());
+        }
 
 
+        graph.plotExerciseData(new Date((long)startUnixTime*1000), new Date((long)endUnixTime*1000));
 
+    }
 }

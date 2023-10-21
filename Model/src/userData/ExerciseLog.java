@@ -87,7 +87,7 @@ public class ExerciseLog {
 
     public int getCaloriesBurned() {
         if(CaloriesBurned==0){
-            CaloriesBurned=(int)(getMetValue()*userWeight*getDuration()/60);
+            CaloriesBurned=(int)((getMetValue()*3.5*userWeight*getDuration()/60)/200);
         }
         return CaloriesBurned;
     }

@@ -16,11 +16,13 @@ public interface IExerciseClient {
 
     ArrayList<ExerciseLog> getExerciseLogsByDateRangeAndUserId(long startDate, long EndDate, int userId);
 
-    boolean InsertExerciseLog(ExerciseLog exerciseLog);
+    int InsertExerciseLog(ExerciseLog exerciseLog);
 
     void DeleteExerciseLog(ExerciseLog exerciseLog);
 
     public Met getMetById(int id);
+
+    ArrayList<Met> getMetTable();
 }
 class ExerciseLogClient implements IExerciseClient {
         static Manager manager;
@@ -55,11 +57,12 @@ class ExerciseLogClient implements IExerciseClient {
             return array;
         }
 
-        public boolean InsertExerciseLog(ExerciseLog exerciseLog) {
+        public int InsertExerciseLog(ExerciseLog exerciseLog) {
             String[] columns = {"userid", "starttime", "endtime", "metid"};
             String[] values = {Integer.toString(exerciseLog.getUserId()), Long.toString(exerciseLog.getStartTime()), Long.toString(exerciseLog.getEndTime()), Integer.toString(exerciseLog.getMetId())};
-
-            return manager.insertRecord("exercise_log", columns, values);
+            manager.insertRecord("exercise_log", columns, values);
+            //return id of inserted record
+            return manager.getRecord("exercise_log", null, new String[]{"userid = " + exerciseLog.getUserId(), "starttime = " + exerciseLog.getStartTime(), "endtime = " + exerciseLog.getEndTime(), "metid = " + exerciseLog.getMetId()});
         }
 
         public void DeleteExerciseLog(ExerciseLog exerciseLog) {
@@ -77,6 +80,14 @@ class ExerciseLogClient implements IExerciseClient {
             return  manager.getRecord("met", null, new String[]{"id = " + id});
 
         }
+
+    /**
+     * @return
+     */
+    @Override
+    public ArrayList<Met> getMetTable() {
+        return null;
+    }
 
 }
 class ExerciseLogTestClient implements IExerciseClient{
@@ -96,15 +107,19 @@ class ExerciseLogTestClient implements IExerciseClient{
         for(Object o: array){
             ExerciseLog e = (ExerciseLog) o;
             if(e.getStartTime() >= startDate && e.getEndTime() <= endDate)
+                e.setMet((Met) db.getTableEntityById("met", e.getMetId()));
+                e.setUserWeight(((User) db.getTableEntityById("user", e.getUserId())).getWeight());
                 exerciseLogs.add(e);
         }
         return exerciseLogs;
 
     }
 
-    public boolean InsertExerciseLog(ExerciseLog exerciseLog) {
+    public int InsertExerciseLog(ExerciseLog exerciseLog) {
         db.InsertTableEntity("exercise_log", exerciseLog);
-        return true;
+        ArrayList<ExerciseLog> table= db.getObjectListByUserId("exercise_log", exerciseLog.getUserId());
+        return table.get(table.size()-1).getId();
+
     }
 
     public void DeleteExerciseLog(ExerciseLog exerciseLog) {
@@ -121,6 +136,9 @@ class ExerciseLogTestClient implements IExerciseClient{
     @Override
     public Met getMetById(int id) {
         return null;
+    }
+    public ArrayList<Met> getMetTable(){
+        return (ArrayList<Met>) db.getTable("met");
     }
 }
 
