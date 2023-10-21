@@ -41,4 +41,15 @@ class UnixTime {
 
         return new int[]{year, month, day, hour, minute};
     }
+    static boolean unixIsSameDate(int first, int last){
+        int[] firstDate=fromUnixTime(first);
+        int[] lastDate=fromUnixTime(last);
+        for(int i=0;i<3;i++){
+            if(firstDate[i]!=lastDate[i]){
+                return false;
+            }
+        }
+        return true;
+
+    }
 }

@@ -138,10 +138,10 @@ class ExerciseTable extends LogTable {
         exerciseList.add(new ExerciseLog(exerciseId++, userid, metid, duration, intensity));
     }
     void BulkCreateforUser(int id){
-        exerciseList.add(new ExerciseLog(exerciseId++,100, 102, 5, id));
-        exerciseList.add(new ExerciseLog(exerciseId++, 100,103,4, id));
-        exerciseList.add(new ExerciseLog(exerciseId++,  3, 10, 7,id));
-        exerciseList.add(new ExerciseLog(exerciseId++, 1, 4, 15, id));
+        exerciseList.add(new ExerciseLog(exerciseId++,10000, 50000, 5, id));
+        exerciseList.add(new ExerciseLog(exerciseId++, 50000,70000,4, id));
+        exerciseList.add(new ExerciseLog(exerciseId++,  100000, 120000, 7,id));
+        exerciseList.add(new ExerciseLog(exerciseId++, 150000, 170000, 15, id));
     }
 
     /**

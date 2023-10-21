@@ -4,7 +4,6 @@ import userData.ExerciseLog;
 import userData.Met;
 import userData.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,7 +31,7 @@ public class ExerciseController
         //ideally wont be in next version, will have userid from login
         userTable= new UserTestClient();
         getPresetUser();
-        System.out.println("Welcome to the exercise window, a default user has been created for you");
+
     }
     /**
      * get userlist for terminal,wont be in final version
@@ -224,16 +223,46 @@ public class ExerciseController
     }
 
     public void getGraph() {
+        System.out.println(activeExercises.size());
         ExerciseVisualization graph = new ExerciseVisualization();
-        ArrayList<Date> DateList = new ArrayList<>();
+        ArrayList<Integer> intList = new ArrayList<>();
         ArrayList<Integer> Calories = new ArrayList<>();
+        int earliest=0;
+        int latest=0;
         for (ExerciseLog exerciseLog : activeExercises) {
+            if (exerciseLog.getStartTime() < earliest || earliest == 0) {
+                earliest = exerciseLog.getStartTime();
+            }
+            if (exerciseLog.getStartTime() > latest || latest == 0) {
+                latest = exerciseLog.getStartTime();
+            }
+            if(intList.isEmpty()){
+                intList.add(exerciseLog.getStartTime());
+                Calories.add(exerciseLog.getCaloriesBurned());
+            }
+            for(int i = 0; i < intList.size(); i++) {
 
-            graph.addData(temp, exerciseLog.getCaloriesBurned());
+                if(UnixTime.unixIsSameDate(intList.get(i), exerciseLog.getStartTime())){
+                    Calories.set(i, Calories.get(i) + exerciseLog.getCaloriesBurned());
+
+                }
+
+            }
+
+
+
+
         }
 
+        for(int i=0;i<intList.size();i++){
+            System.out.println(intList.get(i));
+            System.out.println(Calories.get(i));
+            graph.addData(new Date((long)intList.get(i)*1000), Calories.get(i));
 
-        graph.plotExerciseData(new Date((long)startUnixTime*1000), new Date((long)endUnixTime*1000));
+
+        }
+
+        graph.plotExerciseData(new Date((long)earliest*1000), new Date((long)(latest*1000)+86400000L));
 
     }
 }
