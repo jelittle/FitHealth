@@ -10,8 +10,8 @@ public class MenuNavigation {
         int action;
         System.out.println("Select Option");
         System.out.println("[1] Name: " + user.getName() +  "\n[2] Password: " + user.getPassword() + "\n[3] Sex: " + user.getSex()
-                + "\n[4] Height: " + user.getHeight() + " cm\n[5] Weight: " + user.getWeight()/1000 + "kg\n[6] Age: " +
-                user.getAge() + "\n[7] ID: " + user.getID() + "\n[8] Delete Profile" + "\n[9] Logout");
+                + "\n[4] Height: " + user.getHeight() + " cm\n[5] Weight: " + user.getWeight() + "kg\n[6] Age: " +
+                user.getAge() + "\n[7] BMR: " + user.getBMR() + "\n[8] ID: " + user.getID() + "\n[9] Delete Profile" + "\n[10] Logout");
         action = Integer.valueOf(reader.nextLine());
         switch(action){
             case 1: 
@@ -39,16 +39,19 @@ public class MenuNavigation {
                 user.setAge(Integer.valueOf(reader.nextLine())); 
                 break;
             case 7:
-                System.out.println("Cannot Change ID");
+                System.out.println("Cannot Change BMR\n");
                 break;
             case 8:
+                System.out.println("Cannot Change ID\n");
+                break;
+            case 9:
                 System.out.println("Enter Password");
                 if (passwordCheck(user, reader.nextLine())){
                     userList.remove(user);
                     startScreen(userList);
                 } else 
                     userMenu(user, userList);
-            case 9: startScreen(userList); break;
+            case 10: startScreen(userList); break;
         }
         userMenu(user, userList);
     }
