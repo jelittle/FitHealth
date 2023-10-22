@@ -131,5 +131,10 @@ public class DietLogEntry {
     public double getFinalVitamins() {
         return (getQuantity() / 100) * getVitamins();
     }
+    public void getNutrientBreakdown() {
+        System.out.println("Calories: " + getFinalCalories());
+        System.out.println("Proteins: " + getFinalProteins());
+        System.out.println("Vitamins: " + getFinalVitamins());
+    }
 
 }
