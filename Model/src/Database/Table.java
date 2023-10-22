@@ -36,10 +36,10 @@ class UserTable extends Table {
     }
     void bulkCreate(){
         if(!bulkcreateUsed) {
-            userList.add(new User("Bob", "Password", 183, 72.3F, 23, userId++));
-            userList.add(new User("Lenny", "12345", 156, 82.4F, 26, userId++));
-            userList.add(new User("John", "No", 166, 72.1F, 23, userId++));
-            userList.add(new User("Todington", "y4gbp87bqt", 201, 7230.45F, 23, userId++));
+            userList.add(new User("Bob", "Password", "Male", 183, 72.3F, 23, userId++));
+            userList.add(new User("Lenny", "12345", "Male",156, 82.4F, 26, userId++));
+            userList.add(new User("John", "No", "Male",166, 72.1F, 23, userId++));
+            userList.add(new User("Todington", "y4gbp87bqt", "Female",201, 7230.45F, 23, userId++));
             bulkcreateUsed = true;
         }
         System.out.println("BulkCreate already used");
@@ -72,6 +72,16 @@ class UserTable extends Table {
 
     }
 
+    Object getByName(String name) {
+        for (User user : userList) {
+            if (user.getName() == name) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("User not found");
+
+    }
+
     /**
      * @param object
      */
@@ -85,6 +95,7 @@ class UserTable extends Table {
                 user1.setWeight(user.getWeight());
                 user1.setName(user.getName());
                 user1.setPassword(user.getPassword());
+                user1.setSex(user.getSex());
                 return;
             }
         }
