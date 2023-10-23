@@ -425,7 +425,7 @@ dietList.add(new DietLogEntry(dietId++, "Apple", 1, "Fruit", 100, 0.5, 0.1));
     @Override
     void updateTable(Object object) {
         DietLogEntry dietLog = (DietLogEntry) object;
-        for (DietLogEntry dietLog1 : dietList) {s
+        for (DietLogEntry dietLog1 : dietList) {
             if (dietLog1.getDietId() == dietLog.getDietId()) {
                 dietLog1.setCalories(dietLog.getCalories());
                 dietLog1.setFoodGroup(dietLog.getFoodGroup());
