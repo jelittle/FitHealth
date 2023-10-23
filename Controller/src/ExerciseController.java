@@ -184,13 +184,9 @@ public class ExerciseController
      public void addExerciseLog(ArrayList<Integer> startTime, int metId,ArrayList<Integer> endTime){
             int sTime=UnixTime.getUnixTime(startTime);
             int eTime=UnixTime.getUnixTime(endTime);
-            System.out.println(sTime);
-            System.out.println(eTime);
-            System.out.println("metId");
-            System.out.println(metId);
             ExerciseLog exerciseLog = new ExerciseLog(0,sTime,eTime,metId,client.getID());
 
-            System.out.println(exerciseTable.InsertExerciseLog(exerciseLog));
+
         }
 
     /**
@@ -223,44 +219,53 @@ public class ExerciseController
     }
 
     public void getGraph() {
-        System.out.println(activeExercises.size());
+
         ExerciseVisualization graph = new ExerciseVisualization();
-        ArrayList<Integer> intList = new ArrayList<>();
+        ArrayList<Date> DateList = new ArrayList<>();
         ArrayList<Integer> Calories = new ArrayList<>();
         int earliest=0;
         int latest=0;
         for (ExerciseLog exerciseLog : activeExercises) {
+
+            Date temp = new Date((long) exerciseLog.getStartTime() * 1000);
+
             if (exerciseLog.getStartTime() < earliest || earliest == 0) {
                 earliest = exerciseLog.getStartTime();
             }
             if (exerciseLog.getStartTime() > latest || latest == 0) {
                 latest = exerciseLog.getStartTime();
             }
-            if(intList.isEmpty()){
-                intList.add(exerciseLog.getStartTime());
+            if (DateList.isEmpty()) {
+
+                DateList.add(temp);
                 Calories.add(exerciseLog.getCaloriesBurned());
-            }
-            for(int i = 0; i < intList.size(); i++) {
+            } else {
+                boolean valid = true;
+                for (int i = 0; i < DateList.size(); i++) {
 
-                if(UnixTime.unixIsSameDate(intList.get(i), exerciseLog.getStartTime())){
-                    Calories.set(i, Calories.get(i) + exerciseLog.getCaloriesBurned());
+                    if ((DateList.get(i)).getDate() == temp.getDate()) {//this is deprecated but this code will be deprecated in less than a week so it doesnt matter
 
+                        Calories.set(i, Calories.get(i) + exerciseLog.getCaloriesBurned());
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) {
+                    DateList.add(temp);
+                    Calories.add(exerciseLog.getCaloriesBurned());
                 }
 
             }
+        }
 
 
+        for(int i=0;i<DateList.size();i++){
+
+            graph.addData(DateList.get(i), Calories.get(i));
 
 
         }
-
-        for(int i=0;i<intList.size();i++){
-            System.out.println(intList.get(i));
-            System.out.println(Calories.get(i));
-            graph.addData(new Date((long)intList.get(i)*1000), Calories.get(i));
-
-
-        }
+//        graph.addData(new Date((long)DateList.get(0)+10), Calories.get(i));
 
         graph.plotExerciseData(new Date((long)earliest*1000), new Date((long)(latest*1000)+86400000L));
 

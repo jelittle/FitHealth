@@ -152,7 +152,7 @@ class ExerciseTable extends LogTable {
         ExerciseLog exerciseLog = (ExerciseLog) object;
         for (ExerciseLog exerciseLog1 : exerciseList) {
             if (exerciseLog1.getId() == exerciseLog.getId()) {
-                exerciseLog1.setCaloriesBurned(exerciseLog.getCaloriesBurned());
+
                 exerciseLog1.setEndTime(exerciseLog.getEndTime());
                 exerciseLog1.setStartTime(exerciseLog.getStartTime());
                 exerciseLog1.setDuration(exerciseLog.getDuration());

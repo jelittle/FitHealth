@@ -1,0 +1,52 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>525</x><y>462</y><w>231</w><h>287</h></coordinates><panel_attributes>ExerciseLog
+--
+-id:int
+-userWeight:float
+-startTime:int
+-endTime:int
+-duration:int
+-userId:int
+-caloriesBurned:int
+-metId:int
+--
++ExerciseLog()
++setEndTime
++setDuration
++setMet
++setUserid
++getStartTime
++getDuration
++getMetValue
++getExercise
++getIntesity
++getCaloriesBurned
++getUserId
++getEndTime
++getMetId
++getId
++setUserId
++setUserWeight
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>406</x><y>588</y><w>133</w><h>35</h></coordinates><panel_attributes>lt=&lt;.
+m1=1
+m2=1
+&lt; has
+</panel_attributes><additional_attributes>10;20;170;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>266</x><y>539</y><w>147</w><h>154</h></coordinates><panel_attributes>&lt;&lt;java class&gt;&gt;
+Met
+--
+-id:int
+-Exercise:string
+-Intensity:string
+-metValue:float
+--
++getExercise
++getIntensity
++getMetValue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1337</x><y>224</y><w>175</w><h>21</h></coordinates><panel_attributes>factory/bridge/facade</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1330</x><y>637</y><w>175</w><h>161</h></coordinates><panel_attributes>Template method for database interface
+
+chain of responsibility
+
+observer on user for user Weight
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>889</x><y>714</y><w>70</w><h>21</h></coordinates><panel_attributes>Query</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1064</x><y>721</y><w>70</w><h>21</h></coordinates><panel_attributes>objectBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1015</x><y>735</y><w>98</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>987</x><y>784</y><w>70</w><h>21</h></coordinates><panel_attributes>UserBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1085</x><y>735</y><w>28</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;20;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1071</x><y>777</y><w>70</w><h>28</h></coordinates><panel_attributes>ExerciseBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1155</x><y>770</y><w>70</w><h>21</h></coordinates><panel_attributes>MetBuilder</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1092</x><y>735</y><w>112</w><h>49</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;140;50</additional_attributes></element><element><id>Relation</id><coordinates><x>952</x><y>714</y><w>126</w><h>35</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>160;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>273</y><w>98</w><h>70</h></coordinates><panel_attributes>Client</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>910</x><y>154</y><w>70</w><h>49</h></coordinates><panel_attributes>Facade
+--
+get client
+getExerciseLogs
+Get Met</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1176</x><y>560</y><w>210</w><h>21</h></coordinates><panel_attributes>Exercise Query Builder</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>805</x><y>567</y><w>210</w><h>21</h></coordinates><panel_attributes>ClientQuery</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>938</x><y>609</y><w>210</w><h>21</h></coordinates><panel_attributes>MetQuery</panel_attributes><additional_attributes></additional_attributes></element></diagram>

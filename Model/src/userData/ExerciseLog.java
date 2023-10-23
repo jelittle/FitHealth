@@ -104,10 +104,6 @@ public class ExerciseLog {
     public int getId() {
         return id;
     }
-    public void setCaloriesBurned(int caloriesBurned) {
-        CaloriesBurned = caloriesBurned;
-    }
-
     public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
