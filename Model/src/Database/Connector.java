@@ -11,9 +11,11 @@ import java.sql.SQLException;
  * Connects to the database
  */
 class Connector {
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
-    private static final String DATABASE_USER = "root";
-    private static final String DATABASE_PASSWORD = "asdasd";
+    //Khalifa had port issues, if not connecting, try changing port to 3306
+    //private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:8081/eecs3311";
+    private static final String DATABASE_USER = "eecs3311";
+    private static final String DATABASE_PASSWORD = "eecs3311";
 
     public Connection connect() {
         Connection connection = null;
@@ -21,7 +23,7 @@ class Connector {
             connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
             System.out.println("Successfully connected to the database.");
         } catch (SQLException e) {
-            System.out.println("Error while connecting to the database.");
+            System.out.println("Error while connecting to the database, try changing the port to 3306 in connector file");
             e.printStackTrace();
         }
         return connection;

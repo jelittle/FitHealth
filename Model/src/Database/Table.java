@@ -1,5 +1,6 @@
 package Database;
 
+import userData.DietLogEntry;
 import userData.ExerciseLog;
 import userData.Met;
 import userData.User;
@@ -20,7 +21,6 @@ abstract class LogTable extends Table{
     abstract <T> ArrayList<T> getByUserId(int id);
 
     abstract void BulkCreateforUser(int Id);
-
 
 }
 
@@ -74,6 +74,16 @@ class UserTable extends Table {
 
     }
 
+    Object getByName(String name) {
+        for (User user : userList) {
+            if (user.getName() == name) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("User not found");
+
+    }
+
     /**
      * @param object
      */
@@ -87,6 +97,7 @@ class UserTable extends Table {
                 user1.setWeight(user.getWeight());
                 user1.setName(user.getName());
                 user1.setPassword(user.getPassword());
+                user1.setSex(user.getSex());
                 return;
             }
         }
@@ -352,6 +363,8 @@ class MetStaticTable extends Table {
 
 class DietTable extends LogTable{
     private final String name="diet_log";
+    private static int dietId = 4;
+    private static ArrayList<DietLogEntry> dietList = new ArrayList<>();
 
 
     /**
@@ -364,7 +377,7 @@ class DietTable extends LogTable{
 
     @Override
     ArrayList<?> getTable() {
-        return null;
+        return dietList;
     }
 
     /**
@@ -373,21 +386,36 @@ class DietTable extends LogTable{
      */
     @Override
     Object getById(int id) {
-        return null;
+        for (DietLogEntry dietLog : dietList) {
+            if (dietLog.getDietId() == id) {
+                return dietLog;
+            }
+        }
+        throw new IllegalArgumentException("Diet not found");
     }
 
     @Override
     void add(Object object) {
-
+        dietList.add((DietLogEntry) object);
     }
 
     @Override
     <T> ArrayList<T> getByUserId(int id) {
-        return null;
+        ArrayList<DietLogEntry> returnList = new ArrayList<>();
+        for (DietLogEntry dietLog : dietList) {
+            if (dietLog.getDietId() == id) {
+                returnList.add(dietLog);
+            }
+        }
+        return (ArrayList<T>) returnList;
     }
 
     @Override
     void BulkCreateforUser(int Id) {
+dietList.add(new DietLogEntry(dietId++, "Apple", 1, "Fruit", 100, 0.5, 0.1));
+        dietList.add(new DietLogEntry(dietId++, "Banana", 1, "Fruit", 100, 0.5, 0.1));
+        dietList.add(new DietLogEntry(dietId++, "Orange", 1, "Fruit", 100, 0.5, 0.1));
+        dietList.add(new DietLogEntry(dietId++, "Pear", 1, "Fruit", 100, 0.5, 0.1));
 
     }
 
@@ -396,6 +424,19 @@ class DietTable extends LogTable{
      */
     @Override
     void updateTable(Object object) {
+        DietLogEntry dietLog = (DietLogEntry) object;
+        for (DietLogEntry dietLog1 : dietList) {s
+            if (dietLog1.getDietId() == dietLog.getDietId()) {
+                dietLog1.setCalories(dietLog.getCalories());
+                dietLog1.setFoodGroup(dietLog.getFoodGroup());
+                dietLog1.setName(dietLog.getName());
+                dietLog1.setProteins(dietLog.getProteins());
+                dietLog1.setQuantity(dietLog.getQuantity());
+                dietLog1.setVitamins(dietLog.getVitamins());
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Diet not found");
 
     }
 
@@ -404,6 +445,15 @@ class DietTable extends LogTable{
      */
     @Override
     void deleteEntity(Object object) {
+        DietLogEntry dietLog = (DietLogEntry) object;
+        for (DietLogEntry dietLog1 : dietList) {
+            if (dietLog1.getDietId() == dietLog.getDietId()) {
+                dietList.remove(dietLog1);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Diet not found");
 
     }
+
 }

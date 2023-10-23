@@ -3,9 +3,10 @@ package userData;
 public class User{
     private String name;
     private String password;
+    private String sex;
     private int height;
     private float weight;
-    private int age; 
+    private int age;
     private int id;
     private int bmr;
     private ExerciseLogs exerciseLogs;
@@ -33,6 +34,18 @@ public class User{
     public User(String name, String password, int height, float weight, int age, int id){
         this.name = name;
         this.password = password;
+        this.sex = "";
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
+        this.id = id;
+        calculateBMR();
+    }
+
+    public User(String name, String password, String sex, int height, float weight, int age, int id){
+        this.name = name;
+        this.password = password;
+        this.sex = sex;
         this.height = height;
         this.weight = weight;
         this.age = age;
@@ -63,6 +76,13 @@ public class User{
         return password;
     }
 
+    public void setSex(String sex){
+        this.sex = sex;
+    }
+    public String getSex(){
+        return sex;
+    }
+
     public void setHeight(int height){
         this.height = height;
     }
@@ -89,6 +109,10 @@ public class User{
     }
     public int getID(){
         return id;
+    }
+
+    public int getBMR(){
+        return bmr;
     }
 
 //    public void addExercise(ExerciseLog exerciseLog){ this.exerciseLogs}

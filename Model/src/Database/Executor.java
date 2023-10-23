@@ -1,14 +1,14 @@
 package Database;
 
-import userData.ExerciseLog;
-import userData.Met;
-import userData.User;
+import userData.*;
+import userData.DietLogEntry;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Joshua Little
@@ -159,7 +159,31 @@ abstract class Executor {
     static class DietLogExecutor extends Executor {
         @Override
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
-            return null;
+
+            ArrayList<T> dietLogs = new ArrayList<>();
+            int id;
+            String name;
+            double quantity;
+            String foodGroup;
+            int calories;
+            double proteins;
+            double vitamins;
+
+            while(resultSet.next()) {
+                id = resultSet.getInt("diet_log.id");
+                name = resultSet.getString("name");
+                quantity = resultSet.getDouble("amount");
+                foodGroup = resultSet.getString("foodgroup");
+                calories = resultSet.getInt("calories");
+                proteins = resultSet.getDouble("proteins");
+                vitamins = resultSet.getDouble("vitamin");
+
+                DietLogEntry temp = new DietLogEntry(id, name, quantity, foodGroup, calories, proteins, vitamins);
+
+                dietLogs.add((T) temp);
+            }
+
+            return  dietLogs;
         }
     }
 }
