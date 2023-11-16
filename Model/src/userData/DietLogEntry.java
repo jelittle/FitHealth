@@ -3,65 +3,26 @@ package userData;
 import java.util.Date;
 import java.util.List;
 
-enum MealType {
-    Breakfast, Lunch, Dinner, Snack
-}
-
-//enum FoodGroup {
-//    Grains, Fruits, Vegetables, Protein, Dairy
-//}
-
-class NutrientInfo {
-    private int calories;
-    private double proteins;
-    private double vitamins;
-
-    public int getCalories() {
-        return calories;
-    }
-
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
-
-    public double getProteins() {
-        return proteins;
-    }
-
-    public void setProteins(double proteins) {
-        this.proteins = proteins;
-    }
-
-
-    public double getVitamins() {
-        return vitamins;
-    }
-    public void setVitamins(double vitamins) {
-        this.vitamins = vitamins;
-    }
-
-}
 
 public class DietLogEntry {
 
     private int Dietid;
     private String name = "";
-    private double quantity = 0;
+
     private String foodGroup;
-//    private NutrientInfo nutrientInfo;
 
-    private int calories;
-    private double proteins;
-    private double vitamins;
+    private int dateTime;
 
-    public DietLogEntry(int Dietid, String name, double quantity, String foodGroup, int calories, double proteins, double vitamins) {
+    private int userid;
+
+
+    public DietLogEntry(int Dietid, String name, String foodGroup, int dateTime, int userid) {
         this.Dietid = Dietid;
         this.name = name;
-        this.quantity = quantity;
         this.foodGroup = foodGroup;
-        this.calories = calories;
-        this.proteins = proteins;
-        this.vitamins = vitamins;
+        this.dateTime = dateTime;
+        this.userid = userid;
+
     }
 
     public int getDietId() {
@@ -88,53 +49,20 @@ public class DietLogEntry {
         this.foodGroup = foodGroup;
     }
 
-    public double getQuantity() {
-        return quantity;
+    public int getDateTime() {
+        return dateTime;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setDateTime(int dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public int getCalories() {
-        return calories;
+    public int getUserId() {
+        return userid;
     }
 
-    public void setCalories(int calories) {
-        this.calories = calories;
-    }
-
-    public double getFinalCalories() {
-        return (getQuantity() / 100) * getCalories();
-    }
-
-    public double getProteins() {
-        return proteins;
-    }
-
-    public void setProteins(double proteins) {
-        this.proteins = proteins;
-    }
-
-    public double getFinalProteins() {
-        return (getQuantity() / 100) * getProteins();
-    }
-
-    public double getVitamins() {
-        return vitamins;
-    }
-
-    public void setVitamins(double vitamins) {
-        this.vitamins = vitamins;
-    }
-
-    public double getFinalVitamins() {
-        return (getQuantity() / 100) * getVitamins();
-    }
-    public void getNutrientBreakdown() {
-        System.out.println("Calories: " + getFinalCalories());
-        System.out.println("Proteins: " + getFinalProteins());
-        System.out.println("Vitamins: " + getFinalVitamins());
+    public void setUserId(int userid) {
+        this.userid = userid;
     }
 
 }

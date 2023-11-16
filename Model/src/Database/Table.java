@@ -1,9 +1,6 @@
 package Database;
 
-import userData.DietLogEntry;
-import ExerciseLogs.ExerciseLog;
-import ExerciseLogs.Met;
-import userData.User;
+import userData.*;
 
 import java.util.ArrayList;
 
@@ -403,7 +400,7 @@ class DietTable extends LogTable{
     <T> ArrayList<T> getByUserId(int id) {
         ArrayList<DietLogEntry> returnList = new ArrayList<>();
         for (DietLogEntry dietLog : dietList) {
-            if (dietLog.getDietId() == id) {
+            if (dietLog.getUserId() == id) {
                 returnList.add(dietLog);
             }
         }
@@ -412,11 +409,11 @@ class DietTable extends LogTable{
 
     @Override
     void BulkCreateforUser(int Id) {
-dietList.add(new DietLogEntry(dietId++, "Apple", 1, "Fruit", 100, 0.5, 0.1));
-        dietList.add(new DietLogEntry(dietId++, "Banana", 1, "Fruit", 100, 0.5, 0.1));
-        dietList.add(new DietLogEntry(dietId++, "Orange", 1, "Fruit", 100, 0.5, 0.1));
-        dietList.add(new DietLogEntry(dietId++, "Pear", 1, "Fruit", 100, 0.5, 0.1));
 
+        dietList.add(new DietLogEntry(dietId++, "Apple", "Fruit", 10000, Id));
+        dietList.add(new DietLogEntry(dietId++, "Banana", "Fruit", 50000, Id));
+        dietList.add(new DietLogEntry(dietId++, "Orange", "Fruit", 100000, Id));
+        dietList.add(new DietLogEntry(dietId++, "Pear", "Fruit", 150000, Id));
     }
 
     /**
@@ -427,12 +424,10 @@ dietList.add(new DietLogEntry(dietId++, "Apple", 1, "Fruit", 100, 0.5, 0.1));
         DietLogEntry dietLog = (DietLogEntry) object;
         for (DietLogEntry dietLog1 : dietList) {
             if (dietLog1.getDietId() == dietLog.getDietId()) {
-                dietLog1.setCalories(dietLog.getCalories());
+                dietLog1.setDateTime(dietLog.getDateTime());
                 dietLog1.setFoodGroup(dietLog.getFoodGroup());
                 dietLog1.setName(dietLog.getName());
-                dietLog1.setProteins(dietLog.getProteins());
-                dietLog1.setQuantity(dietLog.getQuantity());
-                dietLog1.setVitamins(dietLog.getVitamins());
+                dietLog1.setUserId(dietLog.getUserId());
                 return;
             }
         }
@@ -456,4 +451,208 @@ dietList.add(new DietLogEntry(dietId++, "Apple", 1, "Fruit", 100, 0.5, 0.1));
 
     }
 
+}
+
+class IngredientTable extends Table {
+
+    private final String name="Ingredient";
+    //table starts at 2 to mimic deleted value in database
+    private static int IngredientId = 5;
+    private static ArrayList<Ingredient> IngredientList = new ArrayList<>();
+
+
+    @Override
+    String getTableName() {
+        return name;
+    }
+
+    @Override
+    ArrayList<?> getTable() {
+        return IngredientList;
+    }
+
+    @Override
+    Object getById(int id) {
+        for (Ingredient ingredient : IngredientList) {
+            if (ingredient.getIngredientId() == id) {
+                return ingredient;
+            }
+        }
+        throw new IllegalArgumentException("Ingredient not found");
+    }
+
+    @Override
+    void updateTable(Object object) {
+        Ingredient ingredient = (Ingredient) object;
+        for (Ingredient ingredient1 : IngredientList) {
+            if (ingredient1.getIngredientId() == ingredient.getIngredientId()) {
+                ingredient1.setIngredientName(ingredient.getIngredientName());
+                return;
+            }
+        }
+
+    }
+
+    @Override
+    void deleteEntity(Object object) {
+        Ingredient ingredient = (Ingredient) object;
+        for (Ingredient ingredient1 : IngredientList) {
+            if (ingredient1.getIngredientId() == ingredient.getIngredientId()) {
+                IngredientList.remove(ingredient1);
+                return;
+            }
+        }
+    }
+
+    @Override
+    void add(Object object) {
+        Ingredient ingredient = (Ingredient) object;
+        Ingredient copy= new Ingredient(IngredientId++, ingredient.getIngredientName());
+        IngredientList.add(copy);
+    }
+}
+
+class NutrientInfoTable extends Table {
+
+    private final String name = "Nutrient";
+    //table starts at 2 to mimic deleted value in database
+    private static int NutrientId = 5;
+    private static int IngredientId = 5;
+
+    private static ArrayList<NutrientInfo> NutrientList = new ArrayList<>();
+
+
+    @Override
+    String getTableName() {
+        return name;
+    }
+
+    @Override
+    ArrayList<?> getTable() {
+        return NutrientList;
+    }
+
+    @Override
+    Object getById(int id) {
+        for (NutrientInfo nutrientInfo : NutrientList) {
+            if (nutrientInfo.getNutrientId() == id) {
+                return nutrientInfo;
+            }
+        }
+        throw new IllegalArgumentException("Nutrient not found");
+    }
+
+    Object getByIngredientId(int id) {
+        for (NutrientInfo nutrientInfo : NutrientList) {
+            if (nutrientInfo.getIngredientId() == id) {
+                return nutrientInfo;
+            }
+        }
+        throw new IllegalArgumentException("Nutrient not found");
+    }
+
+    @Override
+    void updateTable(Object object) {
+        NutrientInfo nutrientInfo = (NutrientInfo) object;
+        for (NutrientInfo nutrientInfo1 : NutrientList) {
+            if (nutrientInfo1.getNutrientId() == nutrientInfo.getNutrientId()) {
+                nutrientInfo1.setIngredientId(nutrientInfo.getIngredientId());
+                nutrientInfo1.setNutrientName(nutrientInfo.getNutrientName());
+                nutrientInfo1.setNutrientValue(nutrientInfo.getNutrientValue());
+                return;
+            }
+        }
+    }
+
+    @Override
+    void deleteEntity(Object object) {
+        NutrientInfo nutrientInfo = (NutrientInfo) object;
+        for (NutrientInfo nutrientInfo1 : NutrientList) {
+            if (nutrientInfo1.getNutrientId() == nutrientInfo.getNutrientId()) {
+                NutrientList.remove(nutrientInfo1);
+                return;
+            }
+        }
+
+    }
+
+    @Override
+    void add(Object object) {
+        NutrientInfo nutrientInfo = (NutrientInfo) object;
+        NutrientInfo copy= new NutrientInfo(NutrientId++, nutrientInfo.getIngredientId(), nutrientInfo.getNutrientName(), nutrientInfo.getNutrientValue());
+        NutrientList.add(copy);
+    }
+}
+
+class MaelIngredientTable extends Table {
+
+    private final String name = "MealIngredient";
+    //table starts at 2 to mimic deleted value in database
+    private static int MealId = 5;
+    private static int IngredientId = 7;
+
+    private static ArrayList<MealIngredients> MealIngredientList = new ArrayList<>();
+
+    @Override
+    String getTableName() {
+        return name;
+    }
+
+    @Override
+    ArrayList<?> getTable() {
+        return MealIngredientList;
+    }
+
+    @Override
+    Object getById(int id) {
+        for (MealIngredients mealIngredients : MealIngredientList) {
+            if (mealIngredients.getMealId() == id ) {
+                return mealIngredients;
+            }
+        }
+        throw new IllegalArgumentException("MealIngredient not found");
+    }
+
+    Object getByIngredientId(int id) {
+        for (MealIngredients mealIngredients : MealIngredientList) {
+            if (mealIngredients.getIngredientId() == id) {
+                return mealIngredients;
+            }
+        }
+        throw new IllegalArgumentException("MealIngredient not found");
+    }
+
+    @Override
+    void updateTable(Object object) {
+        MealIngredients mealIngredients = (MealIngredients) object;
+        for (MealIngredients mealIngredients1 : MealIngredientList) {
+            if (mealIngredients1.getMealId() == mealIngredients.getMealId() && mealIngredients1.getIngredientId() == mealIngredients.getIngredientId()) {
+                mealIngredients1.setIngredientId(mealIngredients.getIngredientId());
+                mealIngredients1.setMealId(mealIngredients.getMealId());
+                mealIngredients1.setQuantityValue(mealIngredients.getQuantityValue());
+                return;
+            }
+        }
+
+    }
+
+    @Override
+    void deleteEntity(Object object) {
+
+        MealIngredients mealIngredients = (MealIngredients) object;
+        for (MealIngredients mealIngredients1 : MealIngredientList) {
+            if (mealIngredients1.getMealId() == mealIngredients.getMealId() && mealIngredients1.getIngredientId() == mealIngredients.getIngredientId() ) {
+                MealIngredientList.remove(mealIngredients1);
+                return;
+            }
+        }
+
+    }
+
+    @Override
+    void add(Object object) {
+        MealIngredients mealIngredients = (MealIngredients) object;
+        MealIngredients copy= new MealIngredients(MealId++, mealIngredients.getIngredientId(), mealIngredients.getQuantityValue());
+        MealIngredientList.add(copy);
+    }
 }

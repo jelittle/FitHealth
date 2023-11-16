@@ -41,7 +41,6 @@ class ExerciseLogClient implements IExerciseClient {
 
             return exerciseLog;
 
-
         }
 
         public ArrayList<ExerciseLog> getExerciseLogsByDateRangeAndUserId(long startDate, long EndDate, int userId) {
