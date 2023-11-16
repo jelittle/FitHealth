@@ -111,6 +111,12 @@ class Manager extends DatabaseManager {
                 return new Executor.SettingsExecutor();
             case "met":
                 return new Executor.MetExecutor();
+            case "Ingredient":
+                return new Executor.IngredientExecutor();
+            case "MealIngredient":
+                return new Executor.MealIngredientExecutor();
+            case "NutrientInfo":
+                return new Executor.NutrientInfoExecutor();
             default:
                 return null;
         }

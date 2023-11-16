@@ -161,30 +161,93 @@ abstract class Executor {
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
 
             ArrayList<T> dietLogs = new ArrayList<>();
-            int id;
+            int Dietid;
             String name;
-            double quantity;
             String foodGroup;
-            int calories;
-            double proteins;
-            double vitamins;
+            int dateTime;
+            int userId;
 
-            while(resultSet.next()) {
-                id = resultSet.getInt("diet_log.id");
+            while (resultSet.next()) {
+                Dietid = resultSet.getInt("diet_log.id");
                 name = resultSet.getString("name");
-                quantity = resultSet.getDouble("amount");
-                foodGroup = resultSet.getString("foodgroup");
-                calories = resultSet.getInt("calories");
-                proteins = resultSet.getDouble("proteins");
-                vitamins = resultSet.getDouble("vitamin");
+                foodGroup = resultSet.getString("food_group");
+                dateTime = resultSet.getInt("datetime");
+                userId = resultSet.getInt("diet_log.userid");
 
-                DietLogEntry temp = new DietLogEntry(id, name, quantity, foodGroup, calories, proteins, vitamins);
-
+                DietLogEntry temp = new DietLogEntry(Dietid, name, foodGroup, dateTime, userId);
                 dietLogs.add((T) temp);
             }
 
-            return  dietLogs;
+            return dietLogs;
+
         }
     }
+
+    static class IngredientExecutor extends Executor {
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            ArrayList<T> ingredients = new ArrayList<>();
+
+           int ingredientId;
+           String ingredientName;
+
+              while (resultSet.next()) {
+                ingredientId = resultSet.getInt("id");
+                ingredientName = resultSet.getString("name");
+
+                Ingredient temp = new Ingredient(ingredientId, ingredientName);
+                ingredients.add((T) temp);
+              }
+
+                return ingredients;
+        }
+    }
+
+    static class MealIngredientExecutor extends Executor {
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            ArrayList<T> mealIngredients = new ArrayList<>();
+
+            int mealId;
+            int ingredientId;
+            float quantity;
+
+            while (resultSet.next()) {
+                mealId = resultSet.getInt("mealid");
+                ingredientId = resultSet.getInt("ingredientid");
+                quantity = resultSet.getFloat("quantity");
+
+                MealIngredients temp = new MealIngredients(mealId, ingredientId, quantity);
+                mealIngredients.add((T) temp);
+            }
+
+            return mealIngredients;
+        }
+    }
+
+    static class NutrientInfoExecutor extends Executor {
+        @Override
+        <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+            ArrayList<T> nutrientInfo = new ArrayList<>();
+
+            int nutrientId;
+            int ingredientId;
+            String nutrientName;
+            float nutrientValue;
+
+            while (resultSet.next()) {
+                nutrientId = resultSet.getInt("nutrientid");
+                ingredientId = resultSet.getInt("ingredientid");
+                nutrientName = resultSet.getString("nutrientname");
+                nutrientValue = resultSet.getFloat("nutrientvalue");
+
+                NutrientInfo temp = new NutrientInfo(nutrientId, ingredientId, nutrientName, nutrientValue);
+                nutrientInfo.add((T) temp);
+            }
+
+            return nutrientInfo;
+        }
+    }
+
 }
 
