@@ -1,8 +1,8 @@
 package Database;
 
 import userData.DietLogEntry;
-import userData.ExerciseLog;
-import userData.Met;
+import ExerciseLogs.ExerciseLog;
+import ExerciseLogs.Met;
 import userData.User;
 
 import java.util.ArrayList;

@@ -3,8 +3,8 @@
 //import Database.TestIdentifier;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;
-//import userData.ExerciseLog;
-//import userData.Met;
+//import ExerciseLogs.ExerciseLog;
+//import ExerciseLogs.Met;
 //import userData.User;
 //
 //import java.util.ArrayList;

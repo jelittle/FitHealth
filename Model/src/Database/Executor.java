@@ -1,5 +1,7 @@
 package Database;
 
+import ExerciseLogs.ExerciseLog;
+import ExerciseLogs.Met;
 import userData.*;
 import userData.DietLogEntry;
 
@@ -8,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by Joshua Little

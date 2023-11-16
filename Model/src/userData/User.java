@@ -1,5 +1,7 @@
 package userData;
 
+import ExerciseLogs.ExerciseLogs;
+
 public class User{
     private String name;
     private String password;

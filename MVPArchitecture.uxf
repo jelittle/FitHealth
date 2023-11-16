@@ -1,0 +1,8 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLGeneric</id><coordinates><x>100</x><y>220</y><w>200</w><h>100</h></coordinates><panel_attributes>symbol=component
+Model
+contains object model
+contains FreeChartJs(?)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>360</x><y>0</y><w>200</w><h>100</h></coordinates><panel_attributes>symbol=component
+View
+Contains App Frontend</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>90</x><y>490</y><w>200</w><h>100</h></coordinates><panel_attributes>Database</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>100</x><y>0</y><w>200</w><h>100</h></coordinates><panel_attributes>symbol=component
+Controller</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>40</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>90</y><w>30</w><h>150</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>310</y><w>30</w><h>200</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;180;10;10</additional_attributes></element></diagram>
