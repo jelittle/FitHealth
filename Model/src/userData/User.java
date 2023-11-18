@@ -1,6 +1,6 @@
 package userData;
 
-import ExerciseLogs.ExerciseLogs;
+import ExerciseLogs.ExerciseLog;
 
 public class User{
     private String name;
@@ -11,7 +11,7 @@ public class User{
     private int age;
     private int id;
     private int bmr;
-    private ExerciseLogs exerciseLogs;
+    private ExerciseLog exerciseLogs;
     private DietLogs dietLogs;
 
     public User(){
