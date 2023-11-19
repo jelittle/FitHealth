@@ -15,12 +15,12 @@ public class ActiveIngredient {
         return ActiveIngredients;
     }
 
-    public void addMealIngredients(MealIngredients mealIngredients){
-        db.addMealIngredients(mealIngredients);
+    public void addMealIngredients(int mealId, int ingredientId, float quantity){
+        db.addMealIngredients(mealId, ingredientId, quantity);
     }
 
-    public void deleteMealIngredients(MealIngredients mealIngredients){
-        db.deleteMealIngredients(mealIngredients);
+    public void deleteMealIngredients(int mealId, int ingredientId){
+        db.deleteMealIngredients(mealId, ingredientId);
     }
 
     public ArrayList<MealIngredients> getActiveIngredients() {

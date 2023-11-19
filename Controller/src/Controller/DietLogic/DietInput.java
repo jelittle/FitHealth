@@ -69,8 +69,7 @@ public class DietInput {
     }
 
     public void addMealIngredients(int mealId, int ingredientId, float quantity) throws Exception {
-        MealIngredients mealIngredients = new MealIngredients(mealId, ingredientId, quantity);
-        db.addMealIngredients(mealIngredients);
+        db.addMealIngredients(mealId, ingredientId, quantity);
     }
 
     public int totalDays(ArrayList<Integer> startDate, ArrayList<Integer> EndDate) {

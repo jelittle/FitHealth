@@ -36,6 +36,10 @@ public class DietDataManager {
         return dietTable.getDietLogById(dietLogId);
     }
 
+    public int getDietLogIdByName(String dietLogName ){
+        return dietTable.getDietLogIdByName(dietLogName );
+    }
+
     public void deleteDietLog(DietLogEntry dietLogEntry){
         dietTable.deleteDietLog(dietLogEntry);
     }
@@ -45,8 +49,8 @@ public class DietDataManager {
         return dietTable.getMealIngredientsTable(mealId);
     }
 
-    public void addMealIngredients(MealIngredients mealIngredients){
-        dietTable.setMealIngredients(mealIngredients);
+    public void addMealIngredients(int mealId, int ingredientId, float quantity){
+        dietTable.setMealIngredients(mealId, ingredientId, quantity);
     }
 
     public void deleteMealIngredients(int mealId, int ingredientId){

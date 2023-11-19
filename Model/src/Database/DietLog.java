@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public interface DietLog{
 
     public DietLogEntry getDietLogById(int id);
+    public  int getDietLogIdByName(String name);
     public boolean setDietLog(DietLogEntry dietLog);
     public void updateDietLog(DietLogEntry dietLog);
     public void deleteDietLog(DietLogEntry dietLog);
@@ -26,7 +27,7 @@ public interface DietLog{
 
     public MealIngredients getMealIngredientsById(int mealId, int ingredientId);
     public ArrayList<MealIngredients> getMealIngredientsTable(int mealId);
-    public boolean setMealIngredients(MealIngredients mealIngredients);
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity);
     public boolean deleteMealIngredients(int mealId, int ingredientId);
 }
 
@@ -45,6 +46,11 @@ class IDietLogClient implements DietLog {
         dietLog.setUserId(manager.getRecord("user", null, new String[]{"id = " + dietLog.getUserId()}));
 
         return dietLog;
+    }
+
+    public int getDietLogIdByName(String name) {
+        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"name = " + name});
+        return dietLog.getDietId();
     }
 
     @Override
@@ -122,9 +128,9 @@ class IDietLogClient implements DietLog {
     }
 
     @Override
-    public boolean setMealIngredients(MealIngredients mealIngredients) {
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
         String[] columns = {"mealid", "ingredientid", "quantity"};
-        String[] values = {Integer.toString(mealIngredients.getMealId()), Integer.toString(mealIngredients.getIngredientId()), Float.toString(mealIngredients.getQuantityValue())};
+        String[] values = {Integer.toString(mealId), Integer.toString(ingredientId), Float.toString(quantity)};
         return manager.insertRecord("MealIngredient", columns, values);
     }
 
@@ -149,6 +155,11 @@ class IdietLogClientTest implements DietLog {
     @Override
     public DietLogEntry getDietLogById(int id) {
         return null;
+    }
+
+    @Override
+    public int getDietLogIdByName(String name) {
+        return 0;
     }
 
     @Override
@@ -197,7 +208,7 @@ class IdietLogClientTest implements DietLog {
     }
 
     @Override
-    public boolean setMealIngredients(MealIngredients mealIngredients) {
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
         return false;
     }
 

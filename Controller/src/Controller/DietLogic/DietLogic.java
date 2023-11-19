@@ -32,14 +32,27 @@ public class DietLogic implements IDietLogic{
 
         ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
 
-        HashMap<String, ArrayList<String>> meals = new HashMap<>();
+        HashMap<String, ArrayList<MealIngredients>> mealIngredients = new HashMap<>();
 
         for (DietLogEntry dietLogEntry : dietLogEntries) {
-            ArrayList<MealIngredients> mealIngredients = activeIngredient.GetActiveMealIngredientsByMealId(dietLogEntry.getDietId());
-
+            mealIngredients.put(dietLogEntry.getName(), activeIngredient.GetActiveMealIngredientsByMealId(dietLogEntry.getDietId()));
         }
 
-// not finished
+        HashMap<String, ArrayList<Ingredient>> mealWithIngredient = new HashMap<>();
+
+        for (String key : mealIngredients.keySet()) {
+            ArrayList<Ingredient> ingredients = new ArrayList<>();
+            for (MealIngredients mealIngredient : mealIngredients.get(key)) {
+                ingredients.add(db.getIngredientById(mealIngredient.getIngredientId()));
+            }
+            mealWithIngredient.put(key, ingredients);
+        }
+
+
+
+
+
+// not finishe
         return null;
     }
 
@@ -107,7 +120,7 @@ public class DietLogic implements IDietLogic{
     }
 
     @Override
-    public void addMeal(String mealName, String mealType, ArrayList<Integer> dateTime, int userId) throws Exception {
+    public HashMap<Integer, String > addMeal(String mealName, String mealType, ArrayList<Integer> dateTime, int userId) throws Exception {
         if (!(dietInput.isDateValid(dateTime))) {
             throw new Exception("Invalid date");
         }
@@ -119,6 +132,13 @@ public class DietLogic implements IDietLogic{
         int dateUnixTime = dietInput.fromArrayListToUnixTime(dateTime);
 
         dietInput.addDietLog(mealName, mealType, dateUnixTime, userId);
+
+        int mealId = db.getDietLogIdByName(mealName);
+
+        HashMap<Integer, String> meal = new HashMap<>();
+        meal.put(mealId, mealName);
+
+        return meal;
     }
 
     @Override
@@ -132,7 +152,7 @@ public class DietLogic implements IDietLogic{
     }
 
     @Override
-    public void addIngredient(int mealId, String ingredientName, float quantity ) throws Exception {
+    public HashMap<String, Float> addIngredient(int mealId, String ingredientName, float quantity ) throws Exception {
         if (ingredientName.equals("")) {
             throw new IllegalArgumentException("ingredientName is empty");
         }
@@ -145,11 +165,16 @@ public class DietLogic implements IDietLogic{
 
         int ingredientId = db.getIngredientIdByName(ingredientName);
 
-        if (db.getIngredientIdByName(ingredientName) == 0) {
+        if (ingredientId== 0) {
             throw new Exception("Ingredient does not exists");
         }
 
-        db.addMealIngredients(new MealIngredients(0, ingredientId, quantity));
+        db.addMealIngredients(mealId, ingredientId, quantity);
+
+        HashMap<String, Float> ingredient = new HashMap<>();
+        ingredient.put(ingredientName, quantity);
+
+        return ingredient;
 
     }
 

@@ -250,8 +250,7 @@ public class DietController {
     }
 
     public void addMealIngredients(int mealId, int ingredientId, int quantity) {
-        MealIngredients mealIngredients = new MealIngredients(mealId, ingredientId, quantity);
-        dietTable.setMealIngredients(mealIngredients);
+        dietTable.setMealIngredients(mealId, ingredientId, quantity);
     }
 //    kkkdsssmdmsmevnxnv
 
