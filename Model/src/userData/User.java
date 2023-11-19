@@ -1,5 +1,6 @@
 package userData;
 
+import DietLogs.DietLogs;
 import ExerciseLogs.ExerciseLogs;
 
 public class User{

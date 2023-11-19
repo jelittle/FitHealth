@@ -1,4 +1,4 @@
-package userData;
+package DietLogs;
 
 public class MealIngredients {
 

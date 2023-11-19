@@ -1,10 +1,17 @@
+package Controller;
+
 import java.util.ArrayList;
+
 import Database.DietLog;
 import Database.IDietClientFactory;
 import Database.UserTestClient;
+import DietLogs.Ingredient;
+import DietLogs.MealIngredients;
+import DietLogs.NutrientInfo;
 import userData.*;
+import DietLogs.*;
 
-import java.util.Date;
+import java.util.HashMap;
 
 public class DietController {
 
@@ -59,7 +66,7 @@ public class DietController {
             int hour=startDate.get(3);
             int minute=startDate.get(4);
 
-            startUnixTime=UnixTime.getUnixTime(year,month,day,hour,minute);
+            startUnixTime= UnixTime.getUnixTime(year,month,day,hour,minute);
 
         }catch(Exception e){
             throw new IllegalArgumentException("startDate must be in form year,month,day,hour,minute");
@@ -177,7 +184,66 @@ public class DietController {
         return totalDays;
     }
 
-//kkkkkkkkkdddddd
+    public float getTotalCalories() {
+        if (ActivednutrientInfo == null) {
+            throw new NullPointerException("ActivednutrientInfo is null");
+        }
+
+        float totalCalories = 0;
+
+        for (NutrientInfo nutrientInfo : ActivednutrientInfo) {
+            if (nutrientInfo.getNutrientName().equals("Calories")) {
+                totalCalories = totalCalories +  nutrientInfo.getNutrientValue();
+            }
+        }
+
+        return totalCalories;
+    }
+
+    public HashMap<String, Float> avrageDailyNutrients() {
+        if (ActivednutrientInfo == null) {
+            throw new NullPointerException("ActivednutrientInfo is null");
+        }
+
+        HashMap<String, Float> avrageDailyNutrients = new HashMap<>();
+
+        for (NutrientInfo nutrientInfo : ActivednutrientInfo) {
+            if (avrageDailyNutrients.containsKey(nutrientInfo.getNutrientName())) {
+                avrageDailyNutrients.put(nutrientInfo.getNutrientName(), avrageDailyNutrients.get(nutrientInfo.getNutrientName()) + (int) nutrientInfo.getNutrientValue());
+            } else {
+                avrageDailyNutrients.put(nutrientInfo.getNutrientName(), nutrientInfo.getNutrientValue());
+            }
+        }
+
+        for (String key : avrageDailyNutrients.keySet()) {
+            avrageDailyNutrients.put(key, avrageDailyNutrients.get(key) / getTotalDays());
+        }
+
+        return avrageDailyNutrients;
+    }
+
+    public HashMap<String, Float> percentageDailyNutrients() {
+        if (ActivednutrientInfo == null) {
+            throw new NullPointerException("ActivednutrientInfo is null");
+        }
+
+        HashMap<String, Float> avrageDailyNutrients = avrageDailyNutrients();
+        float totalNutrients = 0;
+
+        for (String key : avrageDailyNutrients.keySet()) {
+            totalNutrients = totalNutrients + avrageDailyNutrients.get(key);
+        }
+
+        HashMap<String, Float> percentageDailyNutrients = new HashMap<>();
+
+        for (String key : avrageDailyNutrients.keySet()) {
+            percentageDailyNutrients.put(key, (avrageDailyNutrients.get(key) / totalNutrients) * 100);
+        }
+
+        return percentageDailyNutrients;
+    }
+
+    //kkkkkkkkkdddddd
     public void addDietLog(String name, String foodGroup, int dateTime, int userid) {
         DietLogEntry dietLog = new DietLogEntry(0, name, foodGroup, dateTime, userid);
         dietTable.setDietLog(dietLog);

@@ -1,5 +1,8 @@
 package Database;
 
+import DietLogs.Ingredient;
+import DietLogs.MealIngredients;
+import DietLogs.NutrientInfo;
 import userData.*;
 
 import java.util.ArrayList;

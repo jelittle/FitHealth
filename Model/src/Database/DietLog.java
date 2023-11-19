@@ -1,13 +1,13 @@
 package Database;
 
-import userData.DietLogEntry;
-import userData.MealIngredients;
-import userData.Ingredient;
-import userData.NutrientInfo;
+import DietLogs.DietLogEntry;
+import DietLogs.MealIngredients;
+import DietLogs.Ingredient;
+import DietLogs.NutrientInfo;
 
 import java.util.ArrayList;
 
-//Interface between anything requiring DietLogEntry objects within the Database
+//Interface between anything requiring DietLog objects within the Database
 public interface DietLog{
 
     public DietLogEntry getDietLogById(int id);
@@ -21,11 +21,13 @@ public interface DietLog{
 
     public int getIngredientIdByName(String IngredientName);
 
+
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId);
 
     public MealIngredients getMealIngredientsById(int mealId, int ingredientId);
     public ArrayList<MealIngredients> getMealIngredientsTable(int mealId);
     public boolean setMealIngredients(MealIngredients mealIngredients);
+    public boolean deleteMealIngredients(int mealId, int ingredientId);
 }
 
 class IDietLogClient implements DietLog {
@@ -94,6 +96,7 @@ class IDietLogClient implements DietLog {
         return ingredient.getIngredientId();
     }
 
+
     @Override
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
 
@@ -123,6 +126,11 @@ class IDietLogClient implements DietLog {
         String[] columns = {"mealid", "ingredientid", "quantity"};
         String[] values = {Integer.toString(mealIngredients.getMealId()), Integer.toString(mealIngredients.getIngredientId()), Float.toString(mealIngredients.getQuantityValue())};
         return manager.insertRecord("MealIngredient", columns, values);
+    }
+
+    @Override
+    public boolean deleteMealIngredients(int mealId, int ingredientId) {
+        return manager.deleteRecord("MealIngredient", new String[]{"mealid = " + mealId, "ingredientid = " + ingredientId});
     }
 
 }
@@ -192,4 +200,11 @@ class IdietLogClientTest implements DietLog {
     public boolean setMealIngredients(MealIngredients mealIngredients) {
         return false;
     }
+
+    @Override
+    public boolean deleteMealIngredients(int mealId, int ingredientId) {
+        return false;
+    }
+
+
 }

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class UnixTime {
-    static int getUnixTime(int year, int month, int day, int hour, int minute) {
+    public static int getUnixTime(int year, int month, int day, int hour, int minute) {
         // Create a Calendar object
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day, hour, minute, 0);

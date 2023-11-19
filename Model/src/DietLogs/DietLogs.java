@@ -1,7 +1,8 @@
-package userData;
+package DietLogs;
 
 import Database.DietLog;
 import Database.IDietClientFactory;
+import userData.User;
 
 import java.util.ArrayList;
 
