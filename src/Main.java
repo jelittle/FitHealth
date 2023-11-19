@@ -17,7 +17,10 @@ public class Main{
         userList.add(Bob);
         userList.add(new User("Bobby", "No", "Male", 172, 56.3f, 24, 2));
 //        System.out.println("---------------");
-        MenuNavigation.startScreen(userList);
+//        MenuNavigation.startScreen(userList);
+//        System.out.println("HUH");
+//        MenuNavigation currentMenu = new StartScreen();
+//        currentMenu = ((StartScreen) currentMenu).login();
 
         // System.out.println("---------------");
         // UserInfo.startScreen(userList);

@@ -23,6 +23,11 @@ public class UserTestClient implements UserInterface {
         db.userTable.add(user);
     }
 
+    public void setUser(String name, String password, String sex, int height, float weight, int age) {
+        User user = new User(name, password, sex, height, weight, age, db.userTable.getTable().size());
+        db.userTable.add(user);
+    }
+
     public void updateUser(User user) {
         db.userTable.updateTable(user);
 

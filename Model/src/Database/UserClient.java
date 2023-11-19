@@ -25,6 +25,13 @@ public class UserClient implements UserInterface {
         manager.insertRecord("user", columns, values);
     }
 
+    public void setUser(String name, String password, String sex, int height, float weight, int age) {
+        String[] columns = { "username", "password", "height", "weight", "age"};
+        String[] values = {"'" + name + "'", "'" + password + "'",  Integer.toString(height),
+                Float.toString(weight),  Integer.toString(age)};
+        manager.insertRecord("user", columns, values);
+    }
+
     public void updateUser(User user) {
         //columns= columns you want to change
         //values= new values
