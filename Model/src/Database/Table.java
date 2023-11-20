@@ -2,6 +2,9 @@ package Database;
 
 import ExerciseLogs.ExerciseLog;
 import ExerciseLogs.Met;
+import DietLogs.Ingredient;
+import DietLogs.MealIngredients;
+import DietLogs.NutrientInfo;
 import userData.*;
 
 import java.util.ArrayList;

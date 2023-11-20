@@ -1,16 +1,17 @@
 package Database;
 
-import userData.DietLogEntry;
-import userData.MealIngredients;
-import userData.Ingredient;
-import userData.NutrientInfo;
+import DietLogs.DietLogEntry;
+import DietLogs.MealIngredients;
+import DietLogs.Ingredient;
+import DietLogs.NutrientInfo;
 
 import java.util.ArrayList;
 
-//Interface between anything requiring DietLogEntry objects within the Database
+//Interface between anything requiring DietLog objects within the Database
 public interface DietLog{
 
     public DietLogEntry getDietLogById(int id);
+    public  int getDietLogIdByName(String name);
     public boolean setDietLog(DietLogEntry dietLog);
     public void updateDietLog(DietLogEntry dietLog);
     public void deleteDietLog(DietLogEntry dietLog);
@@ -21,11 +22,13 @@ public interface DietLog{
 
     public int getIngredientIdByName(String IngredientName);
 
+
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId);
 
     public MealIngredients getMealIngredientsById(int mealId, int ingredientId);
     public ArrayList<MealIngredients> getMealIngredientsTable(int mealId);
-    public boolean setMealIngredients(MealIngredients mealIngredients);
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity);
+    public boolean deleteMealIngredients(int mealId, int ingredientId);
 }
 
 class IDietLogClient implements DietLog {
@@ -43,6 +46,11 @@ class IDietLogClient implements DietLog {
         dietLog.setUserId(manager.getRecord("user", null, new String[]{"id = " + dietLog.getUserId()}));
 
         return dietLog;
+    }
+
+    public int getDietLogIdByName(String name) {
+        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"name = " + name});
+        return dietLog.getDietId();
     }
 
     @Override
@@ -94,6 +102,7 @@ class IDietLogClient implements DietLog {
         return ingredient.getIngredientId();
     }
 
+
     @Override
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
 
@@ -119,10 +128,15 @@ class IDietLogClient implements DietLog {
     }
 
     @Override
-    public boolean setMealIngredients(MealIngredients mealIngredients) {
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
         String[] columns = {"mealid", "ingredientid", "quantity"};
-        String[] values = {Integer.toString(mealIngredients.getMealId()), Integer.toString(mealIngredients.getIngredientId()), Float.toString(mealIngredients.getQuantityValue())};
+        String[] values = {Integer.toString(mealId), Integer.toString(ingredientId), Float.toString(quantity)};
         return manager.insertRecord("MealIngredient", columns, values);
+    }
+
+    @Override
+    public boolean deleteMealIngredients(int mealId, int ingredientId) {
+        return manager.deleteRecord("MealIngredient", new String[]{"mealid = " + mealId, "ingredientid = " + ingredientId});
     }
 
 }
@@ -141,6 +155,11 @@ class IdietLogClientTest implements DietLog {
     @Override
     public DietLogEntry getDietLogById(int id) {
         return null;
+    }
+
+    @Override
+    public int getDietLogIdByName(String name) {
+        return 0;
     }
 
     @Override
@@ -189,7 +208,14 @@ class IdietLogClientTest implements DietLog {
     }
 
     @Override
-    public boolean setMealIngredients(MealIngredients mealIngredients) {
+    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
         return false;
     }
+
+    @Override
+    public boolean deleteMealIngredients(int mealId, int ingredientId) {
+        return false;
+    }
+
+
 }

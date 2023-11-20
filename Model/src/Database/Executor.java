@@ -1,9 +1,12 @@
 package Database;
 
+import DietLogs.Ingredient;
+import DietLogs.MealIngredients;
+import DietLogs.NutrientInfo;
 import ExerciseLogs.ExerciseLog;
 import ExerciseLogs.Met;
 import userData.*;
-import userData.DietLogEntry;
+import DietLogs.DietLogEntry;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
