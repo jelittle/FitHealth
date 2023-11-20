@@ -1,11 +1,12 @@
 package Database;
 
-import ExerciseLogs.ExerciseLog;
-import ExerciseLogs.Met;
+import DietLogs.DietLogEntry;
 import DietLogs.Ingredient;
 import DietLogs.MealIngredients;
 import DietLogs.NutrientInfo;
-import userData.*;
+import ExerciseLogs.ExerciseLog;
+import ExerciseLogs.Met;
+import userData.User;
 
 import java.util.ArrayList;
 
