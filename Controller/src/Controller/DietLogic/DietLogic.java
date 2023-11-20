@@ -90,9 +90,7 @@ public class DietLogic implements IDietLogic{
             }
         }
 
-        for (String key : nutrientInfo.keySet()) {
-            nutrientInfo.put(key, nutrientInfo.get(key) / totalDays);
-        }
+        nutrientInfo.replaceAll((k, v) -> nutrientInfo.get(k) / totalDays);
 
         return nutrientInfo;
 
