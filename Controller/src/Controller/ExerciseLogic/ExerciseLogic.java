@@ -7,39 +7,47 @@ import java.util.HashMap;
 
 
 public class ExerciseLogic implements IExerciseLogic{
+    LogManager logManager=LogManager.getInstance();
+    ExerciseInput ExerciseInput= new ExerciseInput();
 
     public ArrayList<HashMap> getExerciseByDateRange(int userId, ArrayList<Integer> startDate, ArrayList<Integer> endDate) {
-        int StartTime= UnixTime.getUnixTime(startDate);
-        int EndTime= UnixTime.getUnixTime(endDate);
-        System.out.println(StartTime);
-        System.out.println(EndTime);
-
-        return null;
-
+        return logManager.getExerciseLogbyDateRange(userId,UnixTime.getUnixTime(startDate),UnixTime.getUnixTime(endDate));
     }
-
-    public ArrayList getGraphData(int userId, ArrayList<Integer> startDate, ArrayList<Integer> endDate) {
-        return null;
-    }
-
     public void deleteExerciseLog(int userId, int logId) throws Exception {
 
-    }
-
-    public void updateExerciseLog(int userId, int logId) throws Exception {
+        ExerciseInput.deleteExerciseLog(userId,logId);
 
     }
-
-    public void addExerciseLog(int userId, int logId) throws Exception {
-
+    /**
+     * @param startDate
+     * @param endDate
+     * @param Exercise
+     * @param Intensity
+     * @param userId
+     * @throws Exception
+     */
+    @Override
+    public void addExerciseLog(ArrayList<Integer> startDate, ArrayList<Integer> endDate, String Exercise, String Intensity, int userId) throws Exception {
+        ExerciseInput.insertExerciseLog(UnixTime.getUnixTime(startDate),UnixTime.getUnixTime(endDate),Exercise,Intensity,userId);
     }
 
-    public ArrayList<String> getExerciseTypes() {
-        return null;
+
+    /**
+     * returns a list of exercise types
+     * @return ExerciseList
+     */
+    public ArrayList<String> getExerciseOptions() {
+        return ExerciseInput.getExerciseOptions();
     }
 
-    public ArrayList<String> getIntensityOptions(int metId) {
-        return null;
+    /**
+     * Returns the intensity options for a given exercise
+     * @param exercise
+     * @return
+     */
+    public ArrayList<String> getIntensityOptions(String exercise) {
+
+        return ExerciseInput.getIntensityOptions(exercise);
     }
     public int predictFatLoss(int userId, ArrayList<Integer> predictionDate) {
         return 0;

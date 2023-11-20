@@ -6,11 +6,9 @@ public interface IExerciseLogic {
 //    public Command
 
     public ArrayList<HashMap> getExerciseByDateRange(int userId, ArrayList<Integer> startDate, ArrayList<Integer> endDate);
-    public ArrayList<HashMap> getGraphData(int userId,ArrayList<Integer> startDate, ArrayList<Integer> endDate);
     public void deleteExerciseLog(int userId,int logId) throws Exception;
-    public void updateExerciseLog(int userId,int logId) throws Exception;
-    public void addExerciseLog(int userId,int logId) throws Exception;
-    public ArrayList<String> getExerciseTypes();
-    public ArrayList<String> getIntensityOptions(int metId);
+    public void addExerciseLog(ArrayList<Integer> startDate, ArrayList<Integer> endDate,String Exercise,String Intensity,int userId) throws Exception;
+    public ArrayList<String> getExerciseOptions();
+    public ArrayList<String> getIntensityOptions(String exercise);
     public int predictFatLoss(int userId,ArrayList<Integer> predictionDate);
 }

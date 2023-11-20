@@ -22,7 +22,10 @@ public interface IExerciseClient {
 
     public Met getMetById(int id);
 
-    ArrayList<Met> getMetTable();
+    ArrayList<String> getMetExercises();
+    public ArrayList<String> getMetIntensities(String exercise);
+
+    Met getMetbyExerciseAndIntensity(String exercise, String intensity);
 }
 class ExerciseLogClient implements IExerciseClient {
         static Manager manager;
@@ -36,11 +39,16 @@ class ExerciseLogClient implements IExerciseClient {
 
             ExerciseLog exerciseLog = manager.getRecord("exercise_log", null, new String[]{"id = " + id});
             //impossible to get more than 1 with id
-            exerciseLog.setUserWeight(manager.getRecord("user", null, new String[]{"id = " + exerciseLog.getUserId()}));
-            exerciseLog.setMet(manager.getRecord("met", null, new String[]{"id = " + exerciseLog.getMetId()}));
+            try {
+
+                User user = manager.getRecord("user", null, new String[]{"id = " + exerciseLog.getUserId()});
+                exerciseLog.setUserWeight(user.getWeight());
+                exerciseLog.setMet(manager.getRecord("met", null, new String[]{"id = " + exerciseLog.getMetId()}));
 
             return exerciseLog;
-
+            }catch (Exception e){
+                throw new IllegalArgumentException("Invalid exerciseLog id");
+            }
         }
 
         public ArrayList<ExerciseLog> getExerciseLogsByDateRangeAndUserId(long startDate, long EndDate, int userId) {
@@ -61,7 +69,8 @@ class ExerciseLogClient implements IExerciseClient {
             String[] values = {Integer.toString(exerciseLog.getUserId()), Long.toString(exerciseLog.getStartTime()), Long.toString(exerciseLog.getEndTime()), Integer.toString(exerciseLog.getMetId())};
             manager.insertRecord("exercise_log", columns, values);
             //return id of inserted record
-            return manager.getRecord("exercise_log", null, new String[]{"userid = " + exerciseLog.getUserId(), "starttime = " + exerciseLog.getStartTime(), "endtime = " + exerciseLog.getEndTime(), "metid = " + exerciseLog.getMetId()});
+            ExerciseLog log = manager.getRecord("exercise_log", null, new String[]{"userid = " + exerciseLog.getUserId(), "starttime = " + exerciseLog.getStartTime(), "endtime = " + exerciseLog.getEndTime(), "metid = " + exerciseLog.getMetId()});
+            return log.getId();
         }
 
         public void DeleteExerciseLog(ExerciseLog exerciseLog) {
@@ -81,34 +90,56 @@ class ExerciseLogClient implements IExerciseClient {
         }
 
     /**
+     * @return list of all exercises
+     */
+    @Override
+    public ArrayList<String> getMetExercises() {
+        return manager.getRecordsSql("met", "SELECT DISTINCT exercise_type FROM met");
+    }
+
+    /**
+     * @param exercise, name of exercise
+     * @return list off all intensities for exercise
+     */
+    @Override
+    public ArrayList<String> getMetIntensities(String exercise) {
+        return manager.getRecordsSql("met", "SELECT DISTINCT intensity FROM met WHERE exercise_type = '" + exercise+"'");
+    }
+
+    /**
+     * @param exercise
+     * @param intensity
      * @return
      */
     @Override
-    public ArrayList<Met> getMetTable() {
-        return null;
+    public Met getMetbyExerciseAndIntensity(String exercise, String intensity) {
+        return manager.getRecord("met", null, new String[]{"exercise_type = '" + exercise+"'", "intensity = " + "'"+intensity+"'"});
     }
+
 
 }
-class ExerciseLogTestClient implements IExerciseClient{
+class ExerciseLogTestClient implements IExerciseClient {
+
     private static TestDatabase db;
+
     public ExerciseLogTestClient() {
-       if (db == null)
-           db = new TestDatabase();
+        if (db == null)
+            db = new TestDatabase();
     }
 
-    public    ExerciseLog getExerciseLogById(int id) {
+    public ExerciseLog getExerciseLogById(int id) {
         return (ExerciseLog) db.getTableEntityById("exercise_log", id);
     }
 
     public ArrayList<ExerciseLog> getExerciseLogsByDateRangeAndUserId(long startDate, long endDate, int userId) {
-        ArrayList<Object> array=  db.getObjectListByUserId("exercise_log", userId);
+        ArrayList<Object> array = db.getObjectListByUserId("exercise_log", userId);
         ArrayList<ExerciseLog> exerciseLogs = new ArrayList<>();
-        for(Object o: array){
+        for (Object o : array) {
             ExerciseLog e = (ExerciseLog) o;
-            if(e.getStartTime() >= startDate && e.getEndTime() <= endDate)
+            if (e.getStartTime() >= startDate && e.getEndTime() <= endDate)
                 e.setMet((Met) db.getTableEntityById("met", e.getMetId()));
-                e.setUserWeight(((User) db.getTableEntityById("user", e.getUserId())).getWeight());
-                exerciseLogs.add(e);
+            e.setUserWeight(((User) db.getTableEntityById("user", e.getUserId())).getWeight());
+            exerciseLogs.add(e);
         }
         return exerciseLogs;
 
@@ -116,14 +147,13 @@ class ExerciseLogTestClient implements IExerciseClient{
 
     public int InsertExerciseLog(ExerciseLog exerciseLog) {
         db.InsertTableEntity("exercise_log", exerciseLog);
-        ArrayList<ExerciseLog> table= db.getObjectListByUserId("exercise_log", exerciseLog.getUserId());
-        return table.get(table.size()-1).getId();
+        ArrayList<ExerciseLog> table = db.getObjectListByUserId("exercise_log", exerciseLog.getUserId());
+        return table.get(table.size() - 1).getId();
 
     }
 
     public void DeleteExerciseLog(ExerciseLog exerciseLog) {
         db.DeleteTableEntity("exercise_log", db.getTableEntityById("exercise_log", exerciseLog.getId()));
-
 
 
     }
@@ -136,10 +166,37 @@ class ExerciseLogTestClient implements IExerciseClient{
     public Met getMetById(int id) {
         return null;
     }
-    public ArrayList<Met> getMetTable(){
-        return (ArrayList<Met>) db.getTable("met");
+
+    /**
+     * @return
+     */
+    @Override
+    public ArrayList<String> getMetExercises() {
+        return null;
+    }
+
+    /**
+     * @param exercise
+     * @return
+     */
+    @Override
+    public ArrayList<String> getMetIntensities(String exercise) {
+        return null;
+    }
+
+    /**
+     * @param exercise
+     * @param intensity
+     * @return
+     */
+    @Override
+    public Met getMetbyExerciseAndIntensity(String exercise, String intensity) {
+        return null;
     }
 }
+
+
+
 
 
 

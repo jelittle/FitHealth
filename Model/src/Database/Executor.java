@@ -35,6 +35,7 @@ abstract class Executor {
             ResultSet resultSet;
 
             resultSet = statement.executeQuery(sql);
+
             //build object
 
             ArrayList<T> ret = buildObjects(resultSet);
@@ -103,6 +104,27 @@ abstract class Executor {
     static class MetExecutor extends Executor {
         @Override
         <T> ArrayList<T> buildObjects(ResultSet resultSet) throws SQLException {
+
+            //check if column intensity exists
+            try{
+                resultSet.findColumn("intensity");}
+           catch (SQLException e){
+                ArrayList<String> temp = new ArrayList<>();
+                while (resultSet.next()) {
+                    temp.add( resultSet.getString("exercise_type"));
+
+                }
+                return (ArrayList<T>) temp;
+            }
+            try{resultSet.findColumn("exercise_type"); }catch (SQLException e){
+
+                ArrayList<String> temp = new ArrayList<>();
+                while (resultSet.next()) {
+                    temp.add( resultSet.getString("intensity"));
+
+                }
+                return (ArrayList<T>) temp;
+            }
             ArrayList<Met> temp = new ArrayList<Met>();
             while(resultSet.next()){
                 String exercise = resultSet.getString("exercise_type");
