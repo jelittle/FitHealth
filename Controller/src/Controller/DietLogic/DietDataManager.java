@@ -71,6 +71,9 @@ public class DietDataManager {
         return dietTable.getIngredientIdByName(ingredientName);
     }
 
+    public ArrayList<Ingredient> getAllIngredientsAvailable(){
+        return dietTable.getAllIngredientsAvailable();
+    }
 
 
 }

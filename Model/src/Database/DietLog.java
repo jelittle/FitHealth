@@ -21,6 +21,7 @@ public interface DietLog{
     public Ingredient getIngredientById(int IngredientId);
 
     public int getIngredientIdByName(String IngredientName);
+    public ArrayList<Ingredient> getAllIngredientsAvailable();
 
 
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId);
@@ -100,6 +101,12 @@ class IDietLogClient implements DietLog {
     public int getIngredientIdByName(String name) {
         Ingredient ingredient = manager.getRecord("ingredient", null, new String[]{"name = " + name});
         return ingredient.getIngredientId();
+    }
+
+    @Override
+    public ArrayList<Ingredient> getAllIngredientsAvailable() {
+        ArrayList<Ingredient> array = manager.getRecordsSql("ingredient", "SELECT * FROM ingredient");
+        return array;
     }
 
 
@@ -190,6 +197,11 @@ class IdietLogClientTest implements DietLog {
     @Override
     public int getIngredientIdByName(String IngredientName) {
         return 0;
+    }
+
+    @Override
+    public ArrayList<Ingredient> getAllIngredientsAvailable() {
+        return null;
     }
 
     @Override

@@ -18,6 +18,10 @@ public interface IDietLogic {
 
     public HashMap<String, Float> addIngredient(int mealId, String ingredientName, float quantity) throws Exception;
 
-    public void deleteIngredient(int mealId, int ingredientId) throws Exception;
+    public void deleteIngredient(int mealId, String ingredientName) throws Exception;
+
+    public ArrayList<String> getAllIngredientsAvailable() throws Exception;
+
+    public HashMap<String, Float> alignmentWithCanadaFoodGuide(int mealId, int userId) throws Exception;
 
 }

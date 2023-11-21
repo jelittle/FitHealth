@@ -13,11 +13,14 @@ public class DietLogic implements IDietLogic{
     private ActiveIngredient activeIngredient;
     private DietInput dietInput;
 
+    private alignmentWithCanadaFoodGuide alignmentWithCanadaFoodGuide;
+
     public DietLogic() {
 
         dietInput = new DietInput();
         activeMealLogs = new ActiveMealLogs();
         activeIngredient = new ActiveIngredient();
+        alignmentWithCanadaFoodGuide = new alignmentWithCanadaFoodGuide();
     }
 
     @Override
@@ -117,6 +120,43 @@ public class DietLogic implements IDietLogic{
 
     }
 
+    private ArrayList<MealIngredients> getMealIngredients(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception {
+
+        if (!(dietInput.isDateValid(startDate) && dietInput.isDateValid(EndDate))) {
+            throw new Exception("Invalid date");
+        }
+
+        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
+        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+
+        ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
+
+        ArrayList<MealIngredients> mealIngredients = new ArrayList<>();
+
+        for (DietLogEntry dietLogEntry : dietLogEntries) {
+            mealIngredients.addAll(activeIngredient.GetActiveMealIngredientsByMealId(dietLogEntry.getDietId()));
+        }
+
+        return mealIngredients;
+    }
+
+    public HashMap<String, Float> averagePercentagesOfFoodGroupss(int mealId) throws Exception {
+
+        ArrayList<MealIngredients> mealIngredients =  db.getMealIngredientsByMealId(mealId);
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        int totalIngredients = 0;
+
+        for (MealIngredients mealIngredient : mealIngredients) {
+            ingredients.add(db.getIngredientById(mealIngredient.getIngredientId()));
+            totalIngredients = totalIngredients + 1;
+        }
+        HashMap<String, Float> averagefoodGroups = alignmentWithCanadaFoodGuide.averageOfFoodGroups(totalIngredients, ingredients);
+
+        return averagefoodGroups;
+
+    }
+
     @Override
     public HashMap<Integer, String > addMeal(String mealName, String mealType, ArrayList<Integer> dateTime, int userId) throws Exception {
         if (!(dietInput.isDateValid(dateTime))) {
@@ -177,15 +217,68 @@ public class DietLogic implements IDietLogic{
     }
 
     @Override
-    public void deleteIngredient(int mealId, int ingredientId) throws Exception {
+    public void deleteIngredient(int mealId, String ingredientName) throws Exception {
         if (db.getDietLogById(mealId) == null) {
             throw new Exception("Invalid meal id");
         }
-        if (db.getIngredientById(ingredientId) == null) {
-            throw new Exception("Invalid ingredient id");
+
+        if (ingredientName.equals("")) {
+            throw new IllegalArgumentException("ingredientName is empty");
         }
+
+        if (db.getIngredientIdByName(ingredientName) == 0) {
+            throw new Exception("Ingredient does not exists");
+        }
+
+        int ingredientId = db.getIngredientIdByName(ingredientName);
 
         db.deleteMealIngredients(mealId, ingredientId);
 
     }
+
+    @Override
+    public ArrayList<String> getAllIngredientsAvailable() throws Exception {
+        ArrayList<Ingredient> ingredients = db.getAllIngredientsAvailable();
+        ArrayList<String> ingredientsName = new ArrayList<>();
+
+        for (Ingredient ingredient : ingredients) {
+            ingredientsName.add(ingredient.getIngredientName());
+        }
+
+        return ingredientsName;
+    }
+
+    @Override
+    public HashMap<String, Float> alignmentWithCanadaFoodGuide(int mealId, int userId) throws Exception {
+        if (db.getDietLogById(mealId) == null) {
+            throw new Exception("Invalid meal id");
+        }
+
+        HashMap<String, Float> averagefoodGroups = averagePercentagesOfFoodGroupss(mealId);
+
+        float recomendedVegetablesAndFruits = alignmentWithCanadaFoodGuide.determineAge(userId, "Vegetables and Fruits");
+        float recomendedGrainProducts = alignmentWithCanadaFoodGuide.determineAge(userId, "Grain Products");
+        float recomendedMilkAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userId, "Milk and Alternatives");
+        float recomendedMeatAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userId, "Meat and Alternatives");
+
+        HashMap<String, Float> alignment = new HashMap<>();
+
+        for (String key : averagefoodGroups.keySet()) {
+            if (key.equals("Vegetables and Fruits")) {
+                alignment.put(key, averagefoodGroups.get(key) / recomendedVegetablesAndFruits * 100);
+            } else if (key.equals("Grain Products")) {
+                alignment.put(key, averagefoodGroups.get(key) / recomendedGrainProducts * 100);
+            } else if (key.equals("Milk and Alternatives")) {
+                alignment.put(key, averagefoodGroups.get(key) / recomendedMilkAndAlternatives * 100);
+            } else if (key.equals("Meat and Alternatives")) {
+                alignment.put(key, averagefoodGroups.get(key) / recomendedMeatAndAlternatives * 100);
+            } else {
+                alignment.put(key, averagefoodGroups.get(key));
+            }
+        }
+
+        return alignment;
+    }
+
+
 }
