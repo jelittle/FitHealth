@@ -2,6 +2,7 @@ package Controller.DietLogic;
 
 import Controller.UnixTime;
 import DietLogs.*;
+import userData.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -248,32 +249,43 @@ public class DietLogic implements IDietLogic{
         return ingredientsName;
     }
 
+    public int UserAge(int userId) throws Exception {
+        User user = db.getUserById(userId);
+        int userAge = user.getAge();
+        return userAge;
+    }
+
     @Override
-    public HashMap<String, Float> alignmentWithCanadaFoodGuide(int mealId, int userId) throws Exception {
-        if (db.getDietLogById(mealId) == null) {
-            throw new Exception("Invalid meal id");
+    public HashMap<String, Float> alignmentWithCanadaFoodGuide(ArrayList<Integer> startDate, ArrayList<Integer> endDate, int userId) throws Exception {
+
+        ArrayList<MealIngredients> mealIngredients = getMealIngredients(startDate, endDate, userId);
+
+        ArrayList<HashMap<String, Float>> averagefoodGroups = new ArrayList<>();
+
+        for (MealIngredients mealIngredient : mealIngredients) {
+            averagefoodGroups.add(averagePercentagesOfFoodGroupss(mealIngredient.getMealId()));
         }
 
-        HashMap<String, Float> averagefoodGroups = averagePercentagesOfFoodGroupss(mealId);
+        int userAge = UserAge(userId);
 
-        float recomendedVegetablesAndFruits = alignmentWithCanadaFoodGuide.determineAge(userId, "Vegetables and Fruits");
-        float recomendedGrainProducts = alignmentWithCanadaFoodGuide.determineAge(userId, "Grain Products");
-        float recomendedMilkAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userId, "Milk and Alternatives");
-        float recomendedMeatAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userId, "Meat and Alternatives");
+        float recomendedVegetablesAndFruits = alignmentWithCanadaFoodGuide.determineAge(userAge, "Vegetables and Fruits");
+        float recomendedGrainProducts = alignmentWithCanadaFoodGuide.determineAge(userAge, "Grain Products");
+        float recomendedMilkAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userAge, "Milk and Alternatives");
+        float recomendedMeatAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userAge, "Meat and Alternatives");
 
         HashMap<String, Float> alignment = new HashMap<>();
 
-        for (String key : averagefoodGroups.keySet()) {
-            if (key.equals("Vegetables and Fruits")) {
-                alignment.put(key, averagefoodGroups.get(key) / recomendedVegetablesAndFruits * 100);
-            } else if (key.equals("Grain Products")) {
-                alignment.put(key, averagefoodGroups.get(key) / recomendedGrainProducts * 100);
-            } else if (key.equals("Milk and Alternatives")) {
-                alignment.put(key, averagefoodGroups.get(key) / recomendedMilkAndAlternatives * 100);
-            } else if (key.equals("Meat and Alternatives")) {
-                alignment.put(key, averagefoodGroups.get(key) / recomendedMeatAndAlternatives * 100);
-            } else {
-                alignment.put(key, averagefoodGroups.get(key));
+        for (HashMap<String, Float> averagefoodGroup : averagefoodGroups) {
+            for (String key : averagefoodGroup.keySet()) {
+                if (key.equals("Vegetables and Fruits")) {
+                    alignment.put(key, averagefoodGroup.get(key) / recomendedVegetablesAndFruits * 100);
+                } else if (key.equals("Grain Products")) {
+                    alignment.put(key, averagefoodGroup.get(key) / recomendedGrainProducts * 100);
+                } else if (key.equals("Milk and Alternatives")) {
+                    alignment.put(key, averagefoodGroup.get(key) / recomendedMilkAndAlternatives * 100);
+                } else if (key.equals("Meat and Alternatives")) {
+                    alignment.put(key, averagefoodGroup.get(key) / recomendedMeatAndAlternatives * 100);
+                }
             }
         }
 

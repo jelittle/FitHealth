@@ -12,28 +12,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class IDietLogicTesting {
 
-    private IDietLogic dietLogic = new DietLogic();
+    public static void main(String[] args) {
 
-    @org.junit.jupiter.api.Test
-    void inputCorrectedMeal(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception {
-        //test case 1: input correct date
-        ArrayList<Integer> startDate1 = new ArrayList<>();
-        startDate1.add(2020);
-        startDate1.add(11);
-        startDate1.add(1);
-        startDate1.add(0);
-        startDate1.add(0);
-        ArrayList<Integer> endDate1 = new ArrayList<>();
-        endDate1.add(2023);
-        endDate1.add(11);
-        endDate1.add(30);
-        endDate1.add(23);
-        endDate1.add(59);
-        dietLogic.mealsByDateRange(startDate1, endDate1, 1);
+        IDietLogic dietLogic = new DietLogic();
 
-        for (int i = 0; i < startDate1.size(); i++) {
-            System.out.println(startDate1.get(i));
+        //test case 1: test get All Ingredients Available
+
+        ArrayList<String> allIngredientsAvailable = new ArrayList<>();
+        try {
+            allIngredientsAvailable = dietLogic.getAllIngredientsAvailable();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        for (String ingredient : allIngredientsAvailable) {
+            System.out.println(ingredient);
+        }
+
     }
 
 

@@ -2,7 +2,10 @@ package Controller.DietLogic;
 
 import Database.DietLog;
 import Database.IDietClientFactory;
+import Database.UserClient;
 import DietLogs.*;
+import userData.User;
+
 
 import java.util.ArrayList;
 
@@ -12,7 +15,10 @@ public class DietDataManager {
     private static DietDataManager instance = null;
     private static DietLog dietTable;
 
+    private static UserClient userTable;
+
     private DietDataManager() {
+        userTable = new UserClient();
         dietTable = IDietClientFactory.getIDietLogClient();
     }
 
@@ -20,7 +26,13 @@ public class DietDataManager {
         if (instance == null) {
             instance = new DietDataManager();
         }
+
         return instance;
+    }
+
+//    user
+    public User getUserById(int userId){
+        return userTable.getUserById(userId);
     }
 
 //    meal

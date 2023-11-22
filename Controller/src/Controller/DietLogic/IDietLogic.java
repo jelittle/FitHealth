@@ -22,6 +22,6 @@ public interface IDietLogic {
 
     public ArrayList<String> getAllIngredientsAvailable() throws Exception;
 
-    public HashMap<String, Float> alignmentWithCanadaFoodGuide(int mealId, int userId) throws Exception;
+    public HashMap<String, Float> alignmentWithCanadaFoodGuide(ArrayList<Integer> startDate, ArrayList<Integer> endDate, int userId) throws Exception;
 
 }

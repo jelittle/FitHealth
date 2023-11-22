@@ -1,5 +1,6 @@
 package Database;
 
+import DietLogs.DietLogs;
 import DietLogs.Ingredient;
 import DietLogs.MealIngredients;
 import DietLogs.NutrientInfo;
@@ -360,101 +361,61 @@ class MetStaticTable extends Table {
     }
 
 }
-//
-//class DietTable extends LogTable{
-//    private final String name="diet_log";
-//    private static int dietId = 4;
-//    private static ArrayList<DietLogEntry> dietList = new ArrayList<>();
-//
-//
-//    /**
-//     * @return
-//     */
-//    @Override
-//    String getTableName() {
-//       return name;
-//    }
-//
-//    @Override
-//    ArrayList<?> getTable() {
-//        return dietList;
-//    }
-//
-//    /**
-//     * @param id
-//     * @return
-//     */
-//    @Override
-//    Object getById(int id) {
-//        for (DietLogEntry dietLog : dietList) {
-//            if (dietLog.getDietId() == id) {
-//                return dietLog;
-//            }
-//        }
-//        throw new IllegalArgumentException("Diet not found");
-//    }
-//
-//    @Override
-//    void add(Object object) {
-//        dietList.add((DietLogEntry) object);
-//    }
-//
-//    @Override
-//    <T> ArrayList<T> getByUserId(int id) {
-//        ArrayList<DietLogEntry> returnList = new ArrayList<>();
-//        for (DietLogEntry dietLog : dietList) {
-//            if (dietLog.getUserId() == id) {
-//                returnList.add(dietLog);
-//            }
-//        }
-//        return (ArrayList<T>) returnList;
-//    }
-//
-//    @Override
-//    void BulkCreateforUser(int Id) {
-//
-//        dietList.add(new DietLogEntry(dietId++, "Apple", "Fruit", 10000, Id));
-//        dietList.add(new DietLogEntry(dietId++, "Banana", "Fruit", 50000, Id));
-//        dietList.add(new DietLogEntry(dietId++, "Orange", "Fruit", 100000, Id));
-//        dietList.add(new DietLogEntry(dietId++, "Pear", "Fruit", 150000, Id));
-//    }
-//
-//    /**
-//     * @param object
-//     */
-//    @Override
-//    void updateTable(Object object) {
-//        DietLogEntry dietLog = (DietLogEntry) object;
-//        for (DietLogEntry dietLog1 : dietList) {
-//            if (dietLog1.getDietId() == dietLog.getDietId()) {
-//                dietLog1.setDateTime(dietLog.getDateTime());
-//                dietLog1.setFoodGroup(dietLog.getFoodGroup());
-//                dietLog1.setName(dietLog.getName());
-//                dietLog1.setUserId(dietLog.getUserId());
-//                return;
-//            }
-//        }
-//        throw new IllegalArgumentException("Diet not found");
-//
-//    }
-//
-//    /**
-//     * @param object
-//     */
-//    @Override
-//    void deleteEntity(Object object) {
-//        DietLogEntry dietLog = (DietLogEntry) object;
-//        for (DietLogEntry dietLog1 : dietList) {
-//            if (dietLog1.getDietId() == dietLog.getDietId()) {
-//                dietList.remove(dietLog1);
-//                return;
-//            }
-//        }
-//        throw new IllegalArgumentException("Diet not found");
-//
-//    }
-//
-//}
+
+class DietTable extends LogTable{
+    private final String name="diet_log";
+    private static int dietId = 2;
+    private static ArrayList<DietLogEntry> dietList = new ArrayList<>();
+
+
+    @Override
+    String getTableName() {
+
+        return name;
+    }
+
+    @Override
+    ArrayList<?> getTable() {
+
+        return dietList;
+    }
+
+    @Override
+    Object getById(int id) {
+
+        for (DietLog dietLog : dietList) {
+            if (dietLog. == id) {
+                return dietLog;
+            }
+        }
+        throw new IllegalArgumentException("Diet not found");
+    }
+
+    @Override
+    void updateTable(Object object) {
+
+    }
+
+    @Override
+    void deleteEntity(Object object) {
+
+    }
+
+    @Override
+    void add(Object object) {
+
+    }
+
+    @Override
+    <T> ArrayList<T> getByUserId(int id) {
+        return null;
+    }
+
+    @Override
+    void BulkCreateforUser(int Id) {
+
+    }
+}
 
 class IngredientTable extends Table {
 
