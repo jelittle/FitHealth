@@ -6,18 +6,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ExerciseLogic implements IExerciseLogic{
-    LogManager logManager=LogManager.getInstance();
-    ExerciseInput ExerciseInput= new ExerciseInput();
+public class ExerciseLogic implements IExerciseLogic {
+    LogManager logManager = LogManager.getInstance();
+    ExerciseInput ExerciseInput = new ExerciseInput();
 
     public ArrayList<HashMap> getExerciseByDateRange(int userId, ArrayList<Integer> startDate, ArrayList<Integer> endDate) {
-        return logManager.getExerciseLogbyDateRange(userId,UnixTime.getUnixTime(startDate),UnixTime.getUnixTime(endDate));
+        return logManager.getExerciseLogbyDateRange(userId, UnixTime.getUnixTime(startDate), UnixTime.getUnixTime(endDate));
     }
+
     public void deleteExerciseLog(int userId, int logId) throws Exception {
 
-        ExerciseInput.deleteExerciseLog(userId,logId);
+        ExerciseInput.deleteExerciseLog(userId, logId);
 
     }
+
     /**
      * @param startDate
      * @param endDate
@@ -28,12 +30,13 @@ public class ExerciseLogic implements IExerciseLogic{
      */
     @Override
     public void addExerciseLog(ArrayList<Integer> startDate, ArrayList<Integer> endDate, String Exercise, String Intensity, int userId) throws Exception {
-        ExerciseInput.insertExerciseLog(UnixTime.getUnixTime(startDate),UnixTime.getUnixTime(endDate),Exercise,Intensity,userId);
+        ExerciseInput.insertExerciseLog(UnixTime.getUnixTime(startDate), UnixTime.getUnixTime(endDate), Exercise, Intensity, userId);
     }
 
 
     /**
      * returns a list of exercise types
+     *
      * @return ExerciseList
      */
     public ArrayList<String> getExerciseOptions() {
@@ -42,6 +45,7 @@ public class ExerciseLogic implements IExerciseLogic{
 
     /**
      * Returns the intensity options for a given exercise
+     *
      * @param exercise
      * @return
      */
@@ -49,7 +53,19 @@ public class ExerciseLogic implements IExerciseLogic{
 
         return ExerciseInput.getIntensityOptions(exercise);
     }
-    public int predictFatLoss(int userId, ArrayList<Integer> predictionDate) {
-        return 0;
+
+    /**
+     * @param userId
+     * @param startDate
+     * @param endDate
+
+     * @return
+     */
+    @Override
+    public int predictFatLoss(int userId, ArrayList<Integer> predictionDate) throws Exception {
+        FatLossPredictor predictor = new FatLossPredictor();
+        return predictor.predictFatLoss(userId, UnixTime.getUnixTime(predictionDate));
+
     }
 }
+

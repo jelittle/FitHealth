@@ -87,5 +87,24 @@ class IExerciseLogicTest {
 
     @org.junit.jupiter.api.Test
     void predictFatLoss() {
+        ArrayList<Integer> startDate= new ArrayList<Integer>();
+        startDate.add(1969);
+        startDate.add(1);
+        startDate.add(2);
+        startDate.add(1);
+        startDate.add(1);
+        ArrayList<Integer> endDate= new ArrayList<Integer>();
+        endDate.add(2025);
+        endDate.add(1);
+        endDate.add(2);
+        endDate.add(1);
+        endDate.add(1);
+        try {
+            System.out.println(exerciseLogic.predictFatLoss(1, endDate));
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+
+        }
     }
 }

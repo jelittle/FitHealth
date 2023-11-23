@@ -51,6 +51,7 @@ abstract class Executor {
             return ret;
 
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new RuntimeException(exception);
         }
 
@@ -196,7 +197,7 @@ abstract class Executor {
             while (resultSet.next()) {
                 Dietid = resultSet.getInt("diet_log.id");
                 name = resultSet.getString("name");
-                foodGroup = resultSet.getString("food_group");
+                foodGroup = resultSet.getString("foodgroup");
                 dateTime = resultSet.getInt("datetime");
                 userId = resultSet.getInt("diet_log.userid");
 

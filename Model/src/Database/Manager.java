@@ -40,7 +40,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
-        System.out.println(sql);
+
         ArrayList<T> Array=executor.processRequest(sql, connection);
 
         if(Array.size()>1){
@@ -89,7 +89,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlInsertBuilder(table, columns, Values);
-
+        System.out.println(sql);
         try {
             executor.processUpdate(sql, connection);
         }catch (Exception e){
@@ -101,6 +101,7 @@ class Manager extends DatabaseManager {
 
     //finds the correct executor for the columns
     private Executor getExecutor(String table){
+
         switch (table){
             case "user":
                 return new Executor.UserExecutor();
@@ -112,14 +113,14 @@ class Manager extends DatabaseManager {
                 return new Executor.SettingsExecutor();
             case "met":
                 return new Executor.MetExecutor();
-            case "Ingredient":
+            case "ingredient":
                 return new Executor.IngredientExecutor();
-            case "MealIngredient":
+            case "mealingredient":
                 return new Executor.MealIngredientExecutor();
-            case "NutrientInfo":
+            case "nutrientinfo":
                 return new Executor.NutrientInfoExecutor();
             default:
-                return null;
+                throw new RuntimeException("Table not found");
         }
     }
 
