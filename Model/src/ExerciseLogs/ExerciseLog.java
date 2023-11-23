@@ -60,6 +60,9 @@ public class ExerciseLog {
     public void setMet(Met met) {
         this.met = met;
     }
+    public Met getMet() {
+        return met;
+    }
 
     public void setUserid(int userid) {
         this.userid = userid;

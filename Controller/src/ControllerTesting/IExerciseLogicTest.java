@@ -4,8 +4,7 @@ import Controller.ExerciseLogic.ExerciseLogic;
 import Controller.ExerciseLogic.IExerciseLogic;
 
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashMap;
 
 class IExerciseLogicTest {
     private IExerciseLogic exerciseLogic= new ExerciseLogic();
@@ -15,45 +14,75 @@ class IExerciseLogicTest {
 
 
     @org.junit.jupiter.api.Test
-    void GetExercises_CorrectDate() {
-        ArrayList<Integer> startDate = new ArrayList<>();
-        startDate.add(2020);
-        startDate.add(11);
+    void GetExercisesByDateRange(){
+        ArrayList<Integer> startDate= new ArrayList<Integer>();
+        startDate.add(1969);
         startDate.add(1);
-        startDate.add(0);
-        startDate.add(0);
-        ArrayList<Integer> endDate = new ArrayList<>();
-        endDate.add(2023);
-        endDate.add(11);
-        endDate.add(30);
-        endDate.add(23);
-        endDate.add(59);
-        exerciseLogic.getExerciseByDateRange(1,startDate,endDate);
+        startDate.add(2);
+        startDate.add(1);
+        startDate.add(1);
+        ArrayList<Integer> endDate= new ArrayList<Integer>();
+        endDate.add(2025);
+        endDate.add(1);
+        endDate.add(2);
+        endDate.add(1);
+        endDate.add(1);
+
+        ArrayList<HashMap> exerciseLogs= exerciseLogic.getExerciseByDateRange(1,startDate,endDate);
+        // print list
+        System.out.println("exerciseLogs: " + exerciseLogs);
 
     }
 
-    @org.junit.jupiter.api.Test
-    void getGraphData() {
-    }
-
-    @org.junit.jupiter.api.Test
-    void deleteExerciseLog() {
-    }
 
     @org.junit.jupiter.api.Test
-    void updateExerciseLog() {
+    void addAndDeleteExerciseLog() {
+        ArrayList<Integer> startDate= new ArrayList<Integer>();
+        startDate.add(2020);
+        startDate.add(1);
+        startDate.add(2);
+        startDate.add(1);
+        startDate.add(1);
+        ArrayList<Integer> endDate= new ArrayList<Integer>();
+        endDate.add(2021);
+        endDate.add(1);
+        endDate.add(2);
+        endDate.add(1);
+        endDate.add(1);
+
+        try {
+            exerciseLogic.addExerciseLog(startDate,endDate,"Running","high",1);
+
+            ArrayList<HashMap> exerciseLogs= exerciseLogic.getExerciseByDateRange(1,startDate,endDate);
+        // print list
+             System.out.println("exerciseLogs: " + exerciseLogs);
+
+            exerciseLogic.deleteExerciseLog(1,23);
+            exerciseLogs= exerciseLogic.getExerciseByDateRange(1,startDate,endDate);
+            // print list
+            System.out.println("exerciseLogs: " + exerciseLogs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
-    @org.junit.jupiter.api.Test
-    void addExerciseLog() {
-    }
+
+
+
 
     @org.junit.jupiter.api.Test
     void getExerciseTypes() {
+
+        System.out.println(exerciseLogic.getExerciseOptions());
     }
 
     @org.junit.jupiter.api.Test
     void getIntensityOptions() {
+
+        System.out.println(exerciseLogic.getIntensityOptions("running"));
     }
 
     @org.junit.jupiter.api.Test

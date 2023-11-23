@@ -12,8 +12,8 @@ import java.sql.SQLException;
  */
 class Connector {
     //Khalifa had port issues, if not connecting, try changing port to 3306
-    //private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:8080/eecs3311";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/eecs3311";
+//    private static final String DATABASE_URL = "jdbc:mysql://localhost:8081/eecs3311";
     private static final String DATABASE_USER = "eecs3311";
     private static final String DATABASE_PASSWORD = "eecs3311";
 
@@ -24,6 +24,7 @@ class Connector {
             System.out.println("Successfully connected to the database.");
         } catch (SQLException e) {
             System.out.println("Error while connecting to the database, try changing the port to 3306 in connector file");
+            System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
         }
         return connection;
