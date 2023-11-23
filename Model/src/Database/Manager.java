@@ -30,6 +30,7 @@ class Manager extends DatabaseManager {
 
     public Manager(){
         if(connection ==null) {
+            System.out.println("Connecting to database");
             Connector connector = new Connector();
             connection = connector.connect();
         }
