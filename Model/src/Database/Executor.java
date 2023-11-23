@@ -218,12 +218,14 @@ abstract class Executor {
 
            int ingredientId;
            String ingredientName;
+           String foodGroup;
 
               while (resultSet.next()) {
                 ingredientId = resultSet.getInt("id");
                 ingredientName = resultSet.getString("name");
+                foodGroup = resultSet.getString("food_group");
 
-                Ingredient temp = new Ingredient(ingredientId, ingredientName);
+                Ingredient temp = new Ingredient(ingredientId, ingredientName, foodGroup);
                 ingredients.add((T) temp);
               }
 

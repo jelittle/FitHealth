@@ -21,6 +21,7 @@ public interface DietLog{
     public Ingredient getIngredientById(int IngredientId);
 
     public int getIngredientIdByName(String IngredientName);
+    public ArrayList<Ingredient> getAllIngredientsAvailable();
 
 
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId);
@@ -102,6 +103,12 @@ class IDietLogClient implements DietLog {
         return ingredient.getIngredientId();
     }
 
+    @Override
+    public ArrayList<Ingredient> getAllIngredientsAvailable() {
+        ArrayList<Ingredient> array = manager.getRecordsSql("ingredient", "SELECT * FROM ingredient");
+        return array;
+    }
+
 
     @Override
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
@@ -142,80 +149,85 @@ class IDietLogClient implements DietLog {
 }
 
 
-class IdietLogClientTest implements DietLog {
-
-    private static TestDatabase db;
-
-    public IdietLogClientTest() {
-        if (db == null)
-            db = new TestDatabase();
-    }
-
-
-    @Override
-    public DietLogEntry getDietLogById(int id) {
-        return null;
-    }
-
-    @Override
-    public int getDietLogIdByName(String name) {
-        return 0;
-    }
-
-    @Override
-    public boolean setDietLog(DietLogEntry dietLog) {
-        return false;
-    }
-
-    @Override
-    public void updateDietLog(DietLogEntry dietLog) {
-
-    }
-
-    @Override
-    public void deleteDietLog(DietLogEntry dietLog) {
-
-    }
-
-    @Override
-    public ArrayList<DietLogEntry> getDietLogsByDateRangeAndUserId(long startDate, long EndDate, int userId) {
-        return null;
-    }
-
-    @Override
-    public Ingredient getIngredientById(int IngredientId) {
-        return null;
-    }
-
-    @Override
-    public int getIngredientIdByName(String IngredientName) {
-        return 0;
-    }
-
-    @Override
-    public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
-        return null;
-    }
-
-    @Override
-    public MealIngredients getMealIngredientsById(int mealId, int ingredientId) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<MealIngredients> getMealIngredientsTable(int mealId) {
-        return null;
-    }
-
-    @Override
-    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
-        return false;
-    }
-
-    @Override
-    public boolean deleteMealIngredients(int mealId, int ingredientId) {
-        return false;
-    }
-
-
-}
+//class IdietLogClientTest implements DietLog {
+//
+//    private static TestDatabase db;
+//
+//    public IdietLogClientTest() {
+//        if (db == null)
+//            db = new TestDatabase();
+//    }
+//
+//
+//    @Override
+//    public DietLogEntry getDietLogById(int id) {
+//        return null;
+//    }
+//
+//    @Override
+//    public int getDietLogIdByName(String name) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public boolean setDietLog(DietLogEntry dietLog) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void updateDietLog(DietLogEntry dietLog) {
+//
+//    }
+//
+//    @Override
+//    public void deleteDietLog(DietLogEntry dietLog) {
+//
+//    }
+//
+//    @Override
+//    public ArrayList<DietLogEntry> getDietLogsByDateRangeAndUserId(long startDate, long EndDate, int userId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Ingredient getIngredientById(int IngredientId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public int getIngredientIdByName(String IngredientName) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public ArrayList<Ingredient> getAllIngredientsAvailable() {
+//        return null;
+//    }
+//
+//    @Override
+//    public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public MealIngredients getMealIngredientsById(int mealId, int ingredientId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public ArrayList<MealIngredients> getMealIngredientsTable(int mealId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean deleteMealIngredients(int mealId, int ingredientId) {
+//        return false;
+//    }
+//
+//
+//}
