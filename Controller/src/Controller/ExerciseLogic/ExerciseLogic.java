@@ -55,9 +55,9 @@ public class ExerciseLogic implements IExerciseLogic {
     }
 
     /**
+     *function to predict fat loss
      * @param userId
-     * @param startDate
-     * @param endDate
+     * @param predictionDate
 
      * @return
      */
