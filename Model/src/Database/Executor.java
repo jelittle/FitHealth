@@ -51,7 +51,9 @@ abstract class Executor {
             return ret;
 
         } catch (Exception exception) {
-            throw new RuntimeException(exception);
+            exception.printStackTrace();
+            System.out.println(exception);
+            return null;
         }
 
     }
@@ -216,12 +218,14 @@ abstract class Executor {
 
            int ingredientId;
            String ingredientName;
+           String foodGroup;
 
               while (resultSet.next()) {
                 ingredientId = resultSet.getInt("id");
                 ingredientName = resultSet.getString("name");
+                foodGroup = resultSet.getString("food_group");
 
-                Ingredient temp = new Ingredient(ingredientId, ingredientName);
+                Ingredient temp = new Ingredient(ingredientId, ingredientName, foodGroup);
                 ingredients.add((T) temp);
               }
 

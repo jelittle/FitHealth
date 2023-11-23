@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public interface IExerciseLogic {
 //    public Command
+//todo:calories
 
     public ArrayList<HashMap> getExerciseByDateRange(int userId, ArrayList<Integer> startDate, ArrayList<Integer> endDate);
     public void deleteExerciseLog(int userId,int logId) throws Exception;

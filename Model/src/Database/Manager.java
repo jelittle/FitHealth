@@ -39,7 +39,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
-        System.out.println(sql);
+
         ArrayList<T> Array=executor.processRequest(sql, connection);
 
         if(Array.size()>1){
