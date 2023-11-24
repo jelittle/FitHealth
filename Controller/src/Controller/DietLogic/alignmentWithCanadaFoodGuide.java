@@ -35,6 +35,10 @@ public class alignmentWithCanadaFoodGuide {
         foodGroupPercentages.put("Meat and Alternatives", meatAndAlternatives / totalIngredient);
         foodGroupPercentages.put("Other", other / totalIngredient);
 
+//        for (String key : foodGroupPercentages.keySet()) {
+//            System.out.println("heeeeeeeeeeeeelo   foodGroup: " + key + " percentage: " + foodGroupPercentages.get(key));
+//        }
+
         return foodGroupPercentages;
 
     }

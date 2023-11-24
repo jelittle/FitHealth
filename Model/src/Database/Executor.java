@@ -194,11 +194,11 @@ abstract class Executor {
             int userId;
 
             while (resultSet.next()) {
-                Dietid = resultSet.getInt("diet_log.id");
+                Dietid = resultSet.getInt("id");
                 name = resultSet.getString("name");
-                foodGroup = resultSet.getString("food_group");
+                foodGroup = resultSet.getString("foodgroup");
                 dateTime = resultSet.getInt("datetime");
-                userId = resultSet.getInt("diet_log.userid");
+                userId = resultSet.getInt("userid");
 
                 DietLogEntry temp = new DietLogEntry(Dietid, name, foodGroup, dateTime, userId);
                 dietLogs.add((T) temp);

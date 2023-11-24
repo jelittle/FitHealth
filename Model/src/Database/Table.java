@@ -512,15 +512,15 @@ class IngredientTable extends Table {
 
     @Override
     void add(Object object) {
-        Ingredient ingredient = (Ingredient) object;
-        Ingredient copy= new Ingredient(IngredientId++, ingredient.getIngredientName());
-        IngredientList.add(copy);
+//        Ingredient ingredient = (Ingredient) object;
+//        Ingredient copy= new Ingredient(IngredientId++, ingredient.getIngredientName());
+//        IngredientList.add(copy);
     }
 }
 
 class NutrientInfoTable extends Table {
 
-    private final String name = "Nutrient";
+    private final String name = "nutrient_info";
     //table starts at 2 to mimic deleted value in database
     private static int NutrientId = 5;
     private static int IngredientId = 5;

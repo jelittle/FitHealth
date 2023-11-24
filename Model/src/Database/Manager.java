@@ -62,6 +62,7 @@ class Manager extends DatabaseManager {
     }
      <T> ArrayList<T>  getRecordsSql(String table, String sql){
         Executor executor= getExecutor(table);
+        System.out.println(sql);
 
 
         return executor.processRequest(sql, connection);
@@ -89,6 +90,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlInsertBuilder(table, columns, Values);
+        System.out.println(sql);
 
         try {
             executor.processUpdate(sql, connection);
@@ -112,11 +114,11 @@ class Manager extends DatabaseManager {
                 return new Executor.SettingsExecutor();
             case "met":
                 return new Executor.MetExecutor();
-            case "Ingredient":
+            case "ingredient":
                 return new Executor.IngredientExecutor();
-            case "MealIngredient":
+            case "meal_ingredient":
                 return new Executor.MealIngredientExecutor();
-            case "NutrientInfo":
+            case "nutrient_info":
                 return new Executor.NutrientInfoExecutor();
             default:
                 return null;

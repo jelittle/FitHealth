@@ -20,6 +20,7 @@ public class DietInput {
 
     public boolean isDateValid(ArrayList<Integer> dateTime) {
 
+//        System.out.println(dateTime.size());
         if (dateTime.size() != 5) {
             return false;
         }
