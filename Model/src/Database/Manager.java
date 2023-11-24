@@ -91,7 +91,6 @@ class Manager extends DatabaseManager {
 
         String sql = QueryBuilder.sqlInsertBuilder(table, columns, Values);
         System.out.println(sql);
-
         try {
             executor.processUpdate(sql, connection);
         }catch (Exception e){
@@ -103,6 +102,7 @@ class Manager extends DatabaseManager {
 
     //finds the correct executor for the columns
     private Executor getExecutor(String table){
+
         switch (table){
             case "user":
                 return new Executor.UserExecutor();
@@ -116,12 +116,12 @@ class Manager extends DatabaseManager {
                 return new Executor.MetExecutor();
             case "ingredient":
                 return new Executor.IngredientExecutor();
-            case "meal_ingredient":
+            case "mealingredient":
                 return new Executor.MealIngredientExecutor();
-            case "nutrient_info":
+            case "nutrientinfo":
                 return new Executor.NutrientInfoExecutor();
             default:
-                return null;
+                throw new RuntimeException("Table not found");
         }
     }
 

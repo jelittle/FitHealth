@@ -113,7 +113,7 @@ class IDietLogClient implements DietLog {
     @Override
     public ArrayList<NutrientInfo> getAllNutrientInfoByIngredientId(int ingredientId) {
 
-            ArrayList<NutrientInfo> nutrientInfos = manager.getRecordsSql("nutrient_info", "SELECT * FROM nutrient_info WHERE ingredientid = " + "'" + ingredientId+ "'");
+            ArrayList<NutrientInfo> nutrientInfos = manager.getRecordsSql("nutrientinfo", "SELECT * FROM nutrientinfo WHERE ingredientid = " + ingredientId);
 
             return nutrientInfos;
     }
@@ -121,7 +121,7 @@ class IDietLogClient implements DietLog {
     @Override
     public MealIngredients getMealIngredientsById(int mealId, int ingredientId) {
 
-        MealIngredients mealIngredient = manager.getRecord("meal_ingredient", null, new String[]{"mealid = " + mealId, "ingredientid = " + "'"+ingredientId + "'"});
+        MealIngredients mealIngredient = manager.getRecord("mealingredient", null, new String[]{"mealid = " + mealId, "ingredientid = " + ingredientId});
 
         return mealIngredient;
     }
@@ -129,7 +129,7 @@ class IDietLogClient implements DietLog {
     @Override
     public ArrayList<MealIngredients> getMealIngredientsTable(int mealId) {
 
-        ArrayList<MealIngredients> mealIngredients = manager.getRecordsSql("meal_ingredient", "SELECT * FROM meal_ingredient WHERE mealid = " + "'" + mealId+"'" );
+        ArrayList<MealIngredients> mealIngredients = manager.getRecordsSql("mealingredient", "SELECT * FROM mealingredient WHERE mealid = " + mealId);
 
         return mealIngredients;
     }
@@ -137,13 +137,13 @@ class IDietLogClient implements DietLog {
     @Override
     public boolean setMealIngredients(int mealId, int ingredientId, float quantity) {
         String[] columns = {"mealid", "ingredientid", "quantity"};
-        String[] values = {"'" +Integer.toString(mealId)+"'", "'"+Integer.toString(ingredientId)+"'", "'"+Float.toString(quantity)+"'"};
-        return manager.insertRecord("meal_ingredient", columns, values);
+        String[] values = {Integer.toString(mealId), Integer.toString(ingredientId), Float.toString(quantity)};
+        return manager.insertRecord("mealingredient", columns, values);
     }
 
     @Override
     public boolean deleteMealIngredients(int mealId, int ingredientId) {
-        return manager.deleteRecord("meal_ingredient", new String[]{"mealid = " + mealId, "ingredientid = " + ingredientId});
+        return manager.deleteRecord("mealingredient", new String[]{"mealid = " + mealId, "ingredientid = " + ingredientId});
     }
 
 }

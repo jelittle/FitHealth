@@ -1,11 +1,16 @@
 package Controller.ExerciseLogic;
 
+import Controller.DietLogic.DietLogic;
+import Controller.DietLogic.IDietLogic;
 import Database.IExerciseClient;
 import Database.IExerciseClientFactory;
+import Database.UserClient;
 import ExerciseLogs.ExerciseLog;
 import ExerciseLogs.Met;
+import userData.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * dataManager class manages data for the exercise logic class
@@ -15,6 +20,8 @@ import java.util.ArrayList;
 public class DataManager {
     private static DataManager instance = null;
     private static IExerciseClient exerciseTable;
+    private static UserClient userTable= new UserClient();
+    private static IDietLogic dietLogic = new DietLogic();
     private DataManager() {
         exerciseTable = IExerciseClientFactory.getIExerciseClient();
 
@@ -66,7 +73,20 @@ public class DataManager {
         return exerciseTable.getMetIntensities(exercise);
     }
 
-    public Met getMetId(String exercise, String intensity) {
+    Met getMetId(String exercise, String intensity) {
         return exerciseTable.getMetbyExerciseAndIntensity(exercise,intensity);
+    }
+
+    HashMap<String, Float> getNutritionLogbyDateRangeandUserId(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) {
+        try {
+            return dietLogic.AverageDailyNutrientInfo(startDate, EndDate, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("");
+
+        }
+    }
+    User getUserById(int userId){
+        return userTable.getUserById(userId);
     }
 }

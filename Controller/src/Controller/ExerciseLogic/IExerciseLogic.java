@@ -11,5 +11,5 @@ public interface IExerciseLogic {
     public void addExerciseLog(ArrayList<Integer> startDate, ArrayList<Integer> endDate,String Exercise,String Intensity,int userId) throws Exception;
     public ArrayList<String> getExerciseOptions();
     public ArrayList<String> getIntensityOptions(String exercise);
-    public int predictFatLoss(int userId,ArrayList<Integer> predictionDate);
+    public int predictFatLoss(int userId,ArrayList<Integer> predictionDate) throws Exception;
 }

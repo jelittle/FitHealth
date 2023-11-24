@@ -52,8 +52,7 @@ abstract class Executor {
 
         } catch (Exception exception) {
             exception.printStackTrace();
-            System.out.println(exception);
-            return null;
+            throw new RuntimeException(exception);
         }
 
     }

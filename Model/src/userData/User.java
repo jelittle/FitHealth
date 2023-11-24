@@ -88,6 +88,8 @@ public class User{
 
     public void setHeight(int height){
         this.height = height;
+        //recalculating BMR with the new parameter
+        calculateBMR();
     }
     public int getHeight(){
         return height;
@@ -95,6 +97,8 @@ public class User{
 
     public void setWeight(float weight){
         this.weight = weight;
+        //recalculating BMR with the new parameter
+        calculateBMR();
     }
     public float getWeight(){
         return weight;
@@ -102,6 +106,8 @@ public class User{
 
     public void setAge(int age){
         this.age = age;
+        //recalculating BMR with the new parameter
+        calculateBMR();
     }
     public int getAge(){
         return age;
