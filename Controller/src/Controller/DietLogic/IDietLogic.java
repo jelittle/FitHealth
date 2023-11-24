@@ -1,12 +1,14 @@
 package Controller.DietLogic;
 
+import DietLogs.DietLogEntry;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface IDietLogic {
 
 
-    public HashMap<String, ArrayList<String>> mealsByDateRange(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception;
+    public ArrayList<DietLogEntry> mealsByDateRange(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception;
 
     public HashMap<String, Float> AverageDailyNutrientInfo(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception;
 
