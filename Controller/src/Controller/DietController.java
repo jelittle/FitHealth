@@ -18,7 +18,7 @@ public class DietController {
     private static DietLog dietTable;
     private static UserTestClient userTable;
 
-    private ArrayList<DietLogEntry> ActiveddietLogs = new ArrayList<>();
+    private ArrayList<DietLogEntry> ActiveddietLogs = new ArrayList<DietLogEntry>();
 
     private ArrayList<Ingredient> Activedingredients = new ArrayList<>();
     private ArrayList<MealIngredients> ActivedmealIngredients = new ArrayList<>();

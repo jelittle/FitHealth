@@ -25,5 +25,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="Controller" />
+    <orderEntry type="module" module-name="Model" />
   </component>
 </module>
