@@ -62,7 +62,7 @@ class Manager extends DatabaseManager {
     }
      <T> ArrayList<T>  getRecordsSql(String table, String sql){
         Executor executor= getExecutor(table);
-        System.out.println(sql);
+
 
 
         return executor.processRequest(sql, connection);
@@ -90,7 +90,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlInsertBuilder(table, columns, Values);
-        System.out.println(sql);
+
         try {
             executor.processUpdate(sql, connection);
         }catch (Exception e){

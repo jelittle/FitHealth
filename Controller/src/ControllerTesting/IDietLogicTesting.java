@@ -25,57 +25,57 @@ public class IDietLogicTesting {
         DietLog dietTable = IDietClientFactory.getIDietLogClient();
 
         //test addMeal
-//        try {
-//
-//            ArrayList<Integer> date = new ArrayList<Integer>();
-//            date.add(2020);
-//            date.add(1);
-//            date.add(2);
-//            date.add(1);
-//            date.add(1);
-//            HashMap<Integer, String> meal = dietLogic.addMeal("Burger", "Lunch", date, 1);
-////            for (Integer key : meal.keySet()) {
-////                System.out.println("mealId: " + key + " mealName: " + meal.get(key));
-////            }
-//        } catch (Exception e) {
-//            System.out.println("addMeal failed");
-//        }
+        try {
 
-        //test addMeal
-//        try {
-//
-//                ArrayList<Integer> date = new ArrayList<Integer>();
-//                date.add(2021);
-//                date.add(1);
-//                date.add(2);
-//                date.add(1);
-//                date.add(1);
-//                HashMap<Integer, String> meal = dietLogic.addMeal("Pasta", "Breakfast", date, 1);
-//        }
-//        catch (Exception e) {
-//            System.out.println("addMeal failed");
-//        }
-//
-//        //test addIngredient
-//        try {
-//            HashMap<String, Float> ingredient = dietLogic.addIngredient(4, "Milk", 44);
-//            HashMap<String, Float> ingredient1 = dietLogic.addIngredient(6, "Egg", 11);
-//            HashMap<String, Float> ingredient2 = dietLogic.addIngredient(7, "Apple", 33);
-//        }
-//        catch (Exception e) {
-//            System.out.println("addIngredient failed");
-//
-//        }
-//
-//        try {
-//            HashMap<String, Float> ingredient = dietLogic.addIngredient(8, "Milk", 44);
-//            HashMap<String, Float> ingredient1 = dietLogic.addIngredient(4, "Egg", 11);
-//            HashMap<String, Float> ingredient2 = dietLogic.addIngredient(7, "Apple", 33);
-//        }
-//        catch (Exception e) {
-//            System.out.println("addIngredient failed");
-//
-//        }
+            ArrayList<Integer> date = new ArrayList<Integer>();
+            date.add(2020);
+            date.add(1);
+            date.add(2);
+            date.add(1);
+            date.add(1);
+            HashMap<Integer, String> meal = dietLogic.addMeal("Burger", "Lunch", date, 1);
+//            for (Integer key : meal.keySet()) {
+//                System.out.println("mealId: " + key + " mealName: " + meal.get(key));
+//            }
+        } catch (Exception e) {
+            System.out.println("addMeal failed");
+        }
+
+        test addMeal
+        try {
+
+                ArrayList<Integer> date = new ArrayList<Integer>();
+                date.add(2021);
+                date.add(1);
+                date.add(2);
+                date.add(1);
+                date.add(1);
+                HashMap<Integer, String> meal = dietLogic.addMeal("Pasta", "Breakfast", date, 1);
+        }
+        catch (Exception e) {
+            System.out.println("addMeal failed");
+        }
+
+        //test addIngredient
+        try {
+            HashMap<String, Float> ingredient = dietLogic.addIngredient(4, "Milk", 44);
+            HashMap<String, Float> ingredient1 = dietLogic.addIngredient(6, "Egg", 11);
+            HashMap<String, Float> ingredient2 = dietLogic.addIngredient(7, "Apple", 33);
+        }
+        catch (Exception e) {
+            System.out.println("addIngredient failed");
+
+        }
+
+        try {
+            HashMap<String, Float> ingredient = dietLogic.addIngredient(8, "Milk", 44);
+            HashMap<String, Float> ingredient1 = dietLogic.addIngredient(4, "Egg", 11);
+            HashMap<String, Float> ingredient2 = dietLogic.addIngredient(7, "Apple", 33);
+        }
+        catch (Exception e) {
+            System.out.println("addIngredient failed");
+
+        }
 // fdnmsnrnje
         try {
 

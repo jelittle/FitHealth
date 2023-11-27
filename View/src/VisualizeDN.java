@@ -114,7 +114,7 @@ public class VisualizeDN extends JPanel{
                 }
 
                 if (i == 1) {
-                    JOptionPane.showMessageDialog(null, "TODO: Display Visualization", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    // JOptionPane.showMessageDialog(null, "TODO: Display Visualization", "Success", JOptionPane.INFORMATION_MESSAGE);
                     // cardLayout.show(cards, "MainMenu");
                     resetForm();
                     }

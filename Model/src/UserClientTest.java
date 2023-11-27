@@ -13,6 +13,7 @@ class UserClientTest {
         if (userA.getName().equals(userB.getName()) && userA.getPassword().equals(userB.getPassword()) &&
                 userA.getHeight() == userB.getHeight() && userA.getWeight() == userB.getWeight() &&
                 userA.getAge() == userB.getAge())
+
             return true;
         else
             return false;
@@ -21,17 +22,25 @@ class UserClientTest {
     @Test
     void getUserById() {
         User userB = db.getUserById(2);
+        System.out.println(userB.getName());
+        System.out.println(userB.getPassword());
+        System.out.println(userB.getHeight());
+        System.out.println(userB.getWeight());
+        System.out.println(userB.getAge());
         assertTrue(compareUsers(userA, userB));
     }
 
     @Test
     void setAndDeleteUser() {
-        User userC = new User("Tods", "Logs", 320, 6f, 14, 3);
-        db.setUser(userC);
-        User userD = db.getUserByUserName(userC.getName());
-        assertTrue(compareUsers(userC, userD));
+
+        User userB = new User("Tods", "Logs", 320, 6f, 14, 3);
+        System.out.println("setting user"+ userB.getName());
+        db.setUser(userB);
+        User userD = db.getUserByUserName(userB.getName());
+        assertTrue(compareUsers(userB, userD));
         db.deleteUser(userD);
-        assertTrue(!db.checkforExistingUsername(userC.getName()));
+        System.out.println("deleting user"+ userD.getName());
+        assertTrue(!db.checkforExistingUsername(userB.getName()));
 
     }
 
@@ -55,6 +64,7 @@ class UserClientTest {
 
     @Test
     void checkforExistingUsername() {
+        System.out.println("checking for existing username");
         assertTrue(db.checkforExistingUsername("Joshua"));
     }
 

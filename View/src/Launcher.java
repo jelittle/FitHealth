@@ -240,7 +240,7 @@ public class Launcher extends JFrame {
         ProfileDataEntryPanel profileDataEntryPanel = new ProfileDataEntryPanel(cardLayout, cards);
         DietDataEntryPanel dietDataEntryPanel = new DietDataEntryPanel(cardLayout, cards);
         ExerciseDataEntryPanel exerciseDataEntryPanel = new ExerciseDataEntryPanel(cardLayout, cards);
-//        VisualizeCE visualizeCE = new VisualizeCE(cardLayout, cards);
+        VisualizeCE visualizeCE = new VisualizeCE(cardLayout, cards);
         VisualizeDN visualizeDN = new VisualizeDN(cardLayout, cards);
         VisualizeFL visualizeFL = new VisualizeFL(cardLayout, cards);
         VisualizeCFG visualizeCFG = new VisualizeCFG(cardLayout, cards);
@@ -251,7 +251,7 @@ public class Launcher extends JFrame {
         cards.add(dietDataEntryPanel, "DietDataEntryPanel");
         cards.add(mainMenu, "MainMenu");
         cards.add(exerciseDataEntryPanel, "ExerciseDataEntryPanel");
-//        cards.add(visualizeCE, "VisualizeCE");
+        cards.add(visualizeCE, "VisualizeCE");
         cards.add(visualizeDN, "VisualizeDN");
         cards.add(visualizeFL, "VisualizeFL");
         cards.add(visualizeCFG, "VisualizeCFG");

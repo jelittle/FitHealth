@@ -86,7 +86,7 @@ public class VisualizeFL extends JPanel{
                 }
 
                 if (i == 1) {
-                    JOptionPane.showMessageDialog(null, "TODO: Display Visualization", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    // JOptionPane.showMessageDialog(null, "TODO: Display Visualization", "Success", JOptionPane.INFORMATION_MESSAGE);
                     resetForm();
                     }
             }

@@ -142,52 +142,65 @@ public class MainMenu extends JPanel {
         visualizeCEDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
-                    cardLayout.show(cards, "VisualizeCE");
-                } else {
-                    JOptionPane.showMessageDialog(MainMenu.this, 
-                        "Please log your diet and exercise data before visualizing it", 
-                        "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
-                }
+            //     if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
+            //         cardLayout.show(cards, "VisualizeCE");
+            //     } else {
+            //         JOptionPane.showMessageDialog(MainMenu.this, 
+            //             "Please log your diet and exercise data before visualizing it", 
+            //             "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
+            //     }
+            // }
+
+            cardLayout.show(cards, "VisualizeCE");
+
             }
         });
 
         visualizeDNDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
-                    cardLayout.show(cards, "VisualizeDN");
-                } else {
-                    JOptionPane.showMessageDialog(MainMenu.this, 
-                        "Please log your diet and exercise data before visualizing it", 
-                        "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
-                }
+            //     if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
+            //         cardLayout.show(cards, "VisualizeDN");
+            //     } else {
+            //         JOptionPane.showMessageDialog(MainMenu.this, 
+            //             "Please log your diet and exercise data before visualizing it", 
+            //             "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
+            //     }
+            // }
+
+            cardLayout.show(cards, "VisualizeDN");
             }
         });
 
         visualizeFLDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
-                    cardLayout.show(cards, "VisualizeFL");
-                } else {
-                    JOptionPane.showMessageDialog(MainMenu.this, 
-                        "Please log your diet and exercise data before visualizing it", 
-                        "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
-                }
+            //     if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
+            //         cardLayout.show(cards, "VisualizeFL");
+            //     } else {
+            //         JOptionPane.showMessageDialog(MainMenu.this, 
+            //             "Please log your diet and exercise data before visualizing it", 
+            //             "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
+            //     }
+            // }
+
+            cardLayout.show(cards, "VisualizeFL");
             }
         });
 
         visualizeCFGDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
-                    cardLayout.show(cards, "VisualizeCFG");
-                } else {
-                    JOptionPane.showMessageDialog(MainMenu.this, 
-                        "Please log your diet and exercise data before visualizing it", 
-                        "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
-                }
+            //     if ((Launcher.getDateOfMeal() != null) && (Launcher.getDateOfExercise() != null)) { 
+            //         cardLayout.show(cards, "VisualizeCFG");
+            //     } else {
+            //         JOptionPane.showMessageDialog(MainMenu.this, 
+            //             "Please log your diet and exercise data before visualizing it", 
+            //             "Diet & Exercise Data Error", JOptionPane.ERROR_MESSAGE);
+            //     }
+            // }
+
+            cardLayout.show(cards, "VisualizeCFG");
             }
         });
 
