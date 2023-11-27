@@ -34,14 +34,14 @@ public class IDietLogicTesting {
             date.add(1);
             date.add(1);
             HashMap<Integer, String> meal = dietLogic.addMeal("Burger", "Lunch", date, 1);
-//            for (Integer key : meal.keySet()) {
-//                System.out.println("mealId: " + key + " mealName: " + meal.get(key));
-//            }
+            for (Integer key : meal.keySet()) {
+                System.out.println("mealId: " + key + " mealName: " + meal.get(key));
+            }
         } catch (Exception e) {
             System.out.println("addMeal failed");
         }
 
-        test addMeal
+//        test addMeal
         try {
 
                 ArrayList<Integer> date = new ArrayList<Integer>();
@@ -106,51 +106,51 @@ public class IDietLogicTesting {
         }
 
 
-//        ArrayList<MealIngredients> mealIngredients = dietTable.getMealIngredientsTable(1);
-//        for (MealIngredients mealIngredient : mealIngredients) {
-//            System.out.println(mealIngredient.getMealId() + " " + mealIngredient.getIngredientId() );
-//        }
+        ArrayList<MealIngredients> mealIngredients = dietTable.getMealIngredientsTable(1);
+        for (MealIngredients mealIngredient : mealIngredients) {
+            System.out.println(mealIngredient.getMealId() + " " + mealIngredient.getIngredientId() );
+        }
 
 
         //test addNutrientInfo
 
-//            ArrayList<Integer> date = new ArrayList<Integer>();
-//            date.add(2020);
-//            date.add(1);
-//            date.add(2);
-//            date.add(1);
-//            date.add(1);
-//
-//            int year=date.get(0);
-//            int month=date.get(1);
-//            int day=date.get(2);
-//            int hour=date.get(3);
-//            int minute=date.get(4);
-//
-//            long dateUnixTime = UnixTime.getUnixTime(year,month,day,hour,minute);
-//
-//
-//            ArrayList<Integer> date1 = new ArrayList<Integer>();
-//            date1.add(2021);
-//            date1.add(1);
-//            date1.add(2);
-//            date1.add(1);
-//            date1.add(1);
-//
-//            int year1=date1.get(0);
-//            int month1=date1.get(1);
-//            int day1=date1.get(2);
-//            int hour1=date1.get(3);
-//            int minute1=date1.get(4);
-//
-//            long dateUnixTime1 = UnixTime.getUnixTime(year1, month1, day1, hour1, minute1);
-//
-//            ArrayList<DietLogEntry> food = dietTable.getDietLogsByDateRangeAndUserId(dateUnixTime, dateUnixTime1, 1);
-//
-//            System.out.println(food.size());
-//            for (DietLogEntry dietLogEntry : food) {
-//                System.out.println(dietLogEntry.getName());
-//            }
+            ArrayList<Integer> date = new ArrayList<Integer>();
+            date.add(2020);
+            date.add(1);
+            date.add(2);
+            date.add(1);
+            date.add(1);
+
+            int year=date.get(0);
+            int month=date.get(1);
+            int day=date.get(2);
+            int hour=date.get(3);
+            int minute=date.get(4);
+
+            long dateUnixTime = UnixTime.getUnixTime(year,month,day,hour,minute);
+
+
+            ArrayList<Integer> date1 = new ArrayList<Integer>();
+            date1.add(2021);
+            date1.add(1);
+            date1.add(2);
+            date1.add(1);
+            date1.add(1);
+
+            int year1=date1.get(0);
+            int month1=date1.get(1);
+            int day1=date1.get(2);
+            int hour1=date1.get(3);
+            int minute1=date1.get(4);
+
+            long dateUnixTime1 = UnixTime.getUnixTime(year1, month1, day1, hour1, minute1);
+
+            ArrayList<DietLogEntry> food = dietTable.getDietLogsByDateRangeAndUserId(dateUnixTime, dateUnixTime1, 1);
+
+            System.out.println(food.size());
+            for (DietLogEntry dietLogEntry : food) {
+                System.out.println(dietLogEntry.getName());
+            }
 
 
 

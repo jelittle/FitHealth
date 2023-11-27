@@ -50,7 +50,7 @@ class IDietLogClient implements DietLog {
     }
 
     public int getDietLogIdByName(String name) {
-        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"name = " + name});
+        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"name = '" + name+"'"});
         return dietLog.getDietId();
     }
 
