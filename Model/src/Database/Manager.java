@@ -40,7 +40,7 @@ class Manager extends DatabaseManager {
         Executor executor= getExecutor(table);
 
         String sql = QueryBuilder.sqlSelectBuilder(table, columns, conditions);
-        System.out.println(sql);
+//        System.out.println(sql);
         ArrayList<T> Array=executor.processRequest(sql, connection);
 
         if(Array.size()>1){
@@ -62,7 +62,7 @@ class Manager extends DatabaseManager {
     }
      <T> ArrayList<T>  getRecordsSql(String table, String sql){
         Executor executor= getExecutor(table);
-        System.out.println(sql);
+//        System.out.println(sql);
 
 
         return executor.processRequest(sql, connection);
