@@ -15,36 +15,6 @@ public class User{
     private ExerciseLog exerciseLogs;
     private DietLogs dietLogs;
 
-    public User(){
-        name = "";
-        password = "";
-        height = 0;
-        weight = 0;
-        age = 0;
-        id = 0;
-    }
-
-    public User(String name){
-        this.name = name;
-        password = "";
-        height = 0;
-        weight = 0;
-        age = 0;
-        id = 0;
-        calculateBMR();
-    }
-
-    public User(String name, String password, int height, float weight, int age, int id){
-        this.name = name;
-        this.password = password;
-        this.sex = "";
-        this.height = height;
-        this.weight = weight;
-        this.age = age;
-        this.id = id;
-        calculateBMR();
-    }
-
     public User(String name, String password, String sex, int height, float weight, int age, int id){
         this.name = name;
         this.password = password;
@@ -125,5 +95,4 @@ public class User{
     }
 
 //    public void addExercise(ExerciseLog exerciseLog){ this.exerciseLogs}
-
 }

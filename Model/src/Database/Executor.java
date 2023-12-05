@@ -65,14 +65,10 @@ abstract class Executor {
             if (success == 0) {
                 throw new RuntimeException("Update failed");
             }
-
             statement.close();
-
         } catch (Exception exception) {
             System.out.println(exception);
         }
-
-
     }
 
 
@@ -159,6 +155,7 @@ abstract class Executor {
 
             String name;
             String password;
+            String sex;
             int height;
             float weight;
             int age;
@@ -167,12 +164,13 @@ abstract class Executor {
 
                 name = resultSet.getString("username");
                 password = resultSet.getString("password");
+                sex = resultSet.getString("sex");
                 height = resultSet.getInt("height");
                 weight = resultSet.getFloat("weight");
                 age = resultSet.getInt("age");
                 id = resultSet.getInt("id");
 
-                User temp = new User(name, password, height, weight, age, id);
+                User temp = new User(name, password, sex, height, weight, age, id);
                 users.add((T) temp);
             }
 

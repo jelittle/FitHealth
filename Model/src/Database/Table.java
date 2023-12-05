@@ -10,6 +10,7 @@ import ExerciseLogs.Met;
 import userData.User;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 abstract class Table {
     abstract String getTableName();
@@ -35,16 +36,16 @@ class UserTable extends Table {
     private static boolean bulkcreateUsed = false;
     private static ArrayList<User> userList = new ArrayList<>();
 
-    void add(String name, String password, int height, float weight, int age) {
-        userList.add(new User(name, password, height, weight, age, userId++));
+    void add(String name, String password, String sex, int height, float weight, int age) {
+        userList.add(new User(name, password, sex, height, weight, age, userId++));
     }
     void bulkCreate(){
         if(!bulkcreateUsed) {
 
-            userList.add(new User("Bob", "Password", 183, 72.3F, 23, userId++));
-            userList.add(new User("Lenny", "12345", 156, 82.4F, 26, userId++));
-            userList.add(new User("John", "No", 166, 72.1F, 23, userId++));
-            userList.add(new User("Todington", "y4gbp87bqt", 201, 7230.45F, 23, userId++));
+            userList.add(new User("Bob", "Password", "Male",183, 72.3F, 23, userId++));
+            userList.add(new User("Lenny", "12345", "Female",156, 82.4F, 26, userId++));
+            userList.add(new User("John", "No", "Male",166, 72.1F, 23, userId++));
+            userList.add(new User("Todington", "y4gbp87bqt", "Female",201, 7230.45F, 23, userId++));
             bulkcreateUsed = true;
         }else {
             System.out.println("BulkCreate already used");
@@ -256,30 +257,16 @@ class MetStaticTable extends Table {
 
     MetStaticTable() {
 
-
         if (metList.isEmpty()) {
-            String Ex =getExerciseFromTable(1);
-
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(1), 2.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(2), 3.5F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(3), 5.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(4), 8.0F));
-            Ex =getExerciseFromTable(2);
-
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(1), 6.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(2), 11.50F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(3), 14.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(4), 20.0F));
-            Ex =getExerciseFromTable(3);
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(1), 5.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(2), 7.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(3), 9.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(4), 13.0F));
-            Ex =getExerciseFromTable(4);
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(1), 5.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(2), 8.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(3), 12.0F));
-            metList.add(new Met(metId++, Ex, getIntensityFromTable(4), 15.0F));
+            Random r = new Random();
+            for (int i = 1; i < 5; i++){
+                String Ex =getExerciseFromTable(i);
+                for (int j = 1; j < 5; j++){
+                    //random float between 1 and 20
+                    float randomF = 1 + 19 * r.nextFloat();
+                    metList.add(new Met(metId++, Ex, getIntensityFromTable(j), randomF));
+                }
+            }
         }
 
     }
