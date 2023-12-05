@@ -9,12 +9,12 @@ import java.util.HashMap;
 
 public class DietLogic implements IDietLogic{
 
-    private DietDataManager db = DietDataManager.getInstance();
-    private ActiveMealLogs activeMealLogs;
-    private ActiveIngredient activeIngredient;
-    private DietInput dietInput;
-
-    private alignmentWithCanadaFoodGuide alignmentWithCanadaFoodGuide;
+    private final DietDataManager db = DietDataManager.getInstance();
+    private final ActiveMealLogs activeMealLogs;
+    private final ActiveIngredient activeIngredient;
+    private final DietInput dietInput;
+    private final DaysCalculation daysCalculation;
+    private final alignmentWithCanadaFoodGuide alignmentWithCanadaFoodGuide;
 
     public DietLogic() {
 
@@ -22,6 +22,7 @@ public class DietLogic implements IDietLogic{
         activeMealLogs = new ActiveMealLogs();
         activeIngredient = new ActiveIngredient();
         alignmentWithCanadaFoodGuide = new alignmentWithCanadaFoodGuide();
+        daysCalculation = new DaysCalculation();
     }
 
     @Override
@@ -30,8 +31,8 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid date");
         }
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
         return activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
 
@@ -43,10 +44,10 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid date");
         }
 
-        int totalDays = dietInput.totalDays(startDate, EndDate);
+        int totalDays = daysCalculation.totalDays(startDate, EndDate);
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
         ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
         ArrayList<MealIngredients> mealIngredients = new ArrayList<>();
@@ -105,8 +106,8 @@ public class DietLogic implements IDietLogic{
         }
 
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
 
         ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
@@ -148,7 +149,7 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid meal type");
         }
 
-        int dateUnixTime = dietInput.fromArrayListToUnixTime(dateTime);
+        int dateUnixTime = daysCalculation.fromArrayListToUnixTime(dateTime);
 
         dietInput.addDietLog(mealName, mealType, dateUnixTime, userId);
 
@@ -216,9 +217,7 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Ingredient does not exists");
         }
 
-        int ingredientId = db.getIngredientIdByName(ingredientName);
-
-        db.deleteMealIngredients(mealId, ingredientId);
+        db.deleteMealIngredients(mealId, db.getIngredientIdByName(ingredientName));
 
     }
 
