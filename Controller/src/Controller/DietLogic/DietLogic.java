@@ -9,12 +9,12 @@ import java.util.HashMap;
 
 public class DietLogic implements IDietLogic{
 
-    private DietDataManager db = DietDataManager.getInstance();
-    private ActiveMealLogs activeMealLogs;
-    private ActiveIngredient activeIngredient;
-    private DietInput dietInput;
-
-    private alignmentWithCanadaFoodGuide alignmentWithCanadaFoodGuide;
+    private final DietDataManager db = DietDataManager.getInstance();
+    private final ActiveMealLogs activeMealLogs;
+    private final ActiveIngredient activeIngredient;
+    private final DietInput dietInput;
+    private final DaysCalculation daysCalculation;
+    private final alignmentWithCanadaFoodGuide alignmentWithCanadaFoodGuide;
 
     public DietLogic() {
 
@@ -22,6 +22,7 @@ public class DietLogic implements IDietLogic{
         activeMealLogs = new ActiveMealLogs();
         activeIngredient = new ActiveIngredient();
         alignmentWithCanadaFoodGuide = new alignmentWithCanadaFoodGuide();
+        daysCalculation = new DaysCalculation();
     }
 
     @Override
@@ -30,34 +31,10 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid date");
         }
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
-
-        ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
-
-//        HashMap<String, ArrayList<MealIngredients>> mealIngredients = new HashMap<>();
-//
-//        for (DietLogEntry dietLogEntry : dietLogEntries) {
-//            mealIngredients.put(dietLogEntry.getName(), activeIngredient.GetActiveMealIngredientsByMealId(dietLogEntry.getDietId()));
-//        }
-//
-//        HashMap<String, ArrayList<Ingredient>> mealWithIngredient = new HashMap<>();
-//
-//        for (String key : mealIngredients.keySet()) {
-//            ArrayList<Ingredient> ingredients = new ArrayList<>();
-//            for (MealIngredients mealIngredient : mealIngredients.get(key)) {
-//                ingredients.add(db.getIngredientById(mealIngredient.getIngredientId()));
-//            }
-//            mealWithIngredient.put(key, ingredients);
-//        }
-
-//        ArrayList<String> mealNames = new ArrayList<>();
-//        for (DietLogEntry dietLogEntry : dietLogEntries) {
-//            System.out.println(dietLogEntry.getName());
-//        }
-
-        return dietLogEntries;
+        return activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
 
     }
 
@@ -67,10 +44,10 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid date");
         }
 
-        int totalDays = dietInput.totalDays(startDate, EndDate);
+        int totalDays = daysCalculation.totalDays(startDate, EndDate);
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
         ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
         ArrayList<MealIngredients> mealIngredients = new ArrayList<>();
@@ -123,31 +100,23 @@ public class DietLogic implements IDietLogic{
     }
 
     private ArrayList<MealIngredients> getMealIngredients(ArrayList<Integer> startDate, ArrayList<Integer> EndDate, int userId) throws Exception {
-//
-//        System.out.println(startDate.size());
+
         if (!(dietInput.isDateValid(startDate) && dietInput.isDateValid(EndDate))) {
             throw new Exception("Invalid date");
         }
 
 
-        int startUnixTime = dietInput.fromArrayListToUnixTime(startDate);
-        int endUnixTime = dietInput.fromArrayListToUnixTime(EndDate);
+        int startUnixTime = daysCalculation.fromArrayListToUnixTime(startDate);
+        int endUnixTime = daysCalculation.fromArrayListToUnixTime(EndDate);
 
 
         ArrayList<DietLogEntry> dietLogEntries = activeMealLogs.GetActiveDietLogsByDateRangeAndUserId(startUnixTime, endUnixTime, userId);
 
-        for (DietLogEntry dietLogEntry : dietLogEntries) {
-            System.out.println("booooooo: " + dietLogEntry.getName());
-        }
         ArrayList<MealIngredients> mealIngredients = new ArrayList<>();
 
         for (DietLogEntry dietLogEntry : dietLogEntries) {
             mealIngredients.addAll(activeIngredient.GetActiveMealIngredientsByMealId(dietLogEntry.getDietId()));
         }
-
-//        for (MealIngredients mealIngredient : mealIngredients) {
-//            System.out.println(mealIngredient.getMealId());
-//        }
 
         return mealIngredients;
     }
@@ -156,10 +125,6 @@ public class DietLogic implements IDietLogic{
 
         ArrayList<MealIngredients> mealIngredients =  db.getMealIngredientsByMealId(mealId);
 
-//        for (MealIngredients mealIngredient : mealIngredients) {
-//            System.out.println( "meeaaaal: "+ mealIngredient.getIngredientId());
-//        }
-
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         int totalIngredients = 0;
 
@@ -167,8 +132,6 @@ public class DietLogic implements IDietLogic{
             ingredients.add(db.getIngredientById(mealIngredient.getIngredientId()));
             totalIngredients = totalIngredients + 1;
         }
-
-//        System.out.println("meeeeeaaaal: "+ingredients.get(0).getFoodGroup());
 
         HashMap<String, Float> averagefoodGroups = alignmentWithCanadaFoodGuide.averageOfFoodGroups(totalIngredients, ingredients);
 
@@ -186,14 +149,16 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Invalid meal type");
         }
 
-        int dateUnixTime = dietInput.fromArrayListToUnixTime(dateTime);
+        int dateUnixTime = daysCalculation.fromArrayListToUnixTime(dateTime);
 
         dietInput.addDietLog(mealName, mealType, dateUnixTime, userId);
 
-        int mealId = db.getDietLogIdByName(mealName);
+        ArrayList<DietLogEntry> mealId = db.getDietLogIdByName(mealName);
 
         HashMap<Integer, String> meal = new HashMap<>();
-        meal.put(mealId, mealName);
+        for (DietLogEntry dietLogEntry : mealId) {
+            meal.put(dietLogEntry.getDietId(), dietLogEntry.getName());
+        }
 
         return meal;
     }
@@ -252,9 +217,7 @@ public class DietLogic implements IDietLogic{
             throw new Exception("Ingredient does not exists");
         }
 
-        int ingredientId = db.getIngredientIdByName(ingredientName);
-
-        db.deleteMealIngredients(mealId, ingredientId);
+        db.deleteMealIngredients(mealId, db.getIngredientIdByName(ingredientName));
 
     }
 
@@ -273,31 +236,19 @@ public class DietLogic implements IDietLogic{
     public int UserAge(int userId) throws Exception {
         User user = db.getUserById(userId);
         int userAge = user.getAge();
-        System.out.println(userAge);
         return userAge;
     }
 
     @Override
     public HashMap<String, Float> alignmentWithCanadaFoodGuide(ArrayList<Integer> startDate, ArrayList<Integer> endDate, int userId) throws Exception {
 
-//        System.out.println(startDate.size());
         ArrayList<MealIngredients> mealIngredients = getMealIngredients(startDate, endDate, userId);
 
-//        for (MealIngredients mealIngredient : mealIngredients) {
-//            System.out.println("foooooooo " +mealIngredient.getMealId());
-//        }
-
-//        System.out.println("heeeey: " + mealIngredients.size());
-
         ArrayList<HashMap<String, Float>> averagefoodGroups = new ArrayList<>();
-
-//        System.out.println("heeeey: " + mealIngredients.size());
 
         for (MealIngredients mealIngredient : mealIngredients) {
             averagefoodGroups.add(averagePercentagesOfFoodGroupss(mealIngredient.getMealId()));
         }
-//
-//        System.out.println("heeeey: " + averagefoodGroups.get(3) );
 
         int userAge = UserAge(userId);
 
@@ -307,7 +258,6 @@ public class DietLogic implements IDietLogic{
         float recomendedMeatAndAlternatives = alignmentWithCanadaFoodGuide.determineAge(userAge, "Meat and Alternatives");
 
         HashMap<String, Float> alignment = new HashMap<>();
-
 
         for (HashMap<String, Float> averagefoodGroup : averagefoodGroups) {
             for (String key : averagefoodGroup.keySet()) {

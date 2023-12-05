@@ -48,7 +48,7 @@ public class DietDataManager {
         return dietTable.getDietLogById(dietLogId);
     }
 
-    public int getDietLogIdByName(String dietLogName ){
+    public ArrayList<DietLogEntry> getDietLogIdByName(String dietLogName ){
         return dietTable.getDietLogIdByName(dietLogName );
     }
 

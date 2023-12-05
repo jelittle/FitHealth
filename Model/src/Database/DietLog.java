@@ -4,6 +4,7 @@ import DietLogs.DietLogEntry;
 import DietLogs.MealIngredients;
 import DietLogs.Ingredient;
 import DietLogs.NutrientInfo;
+import userData.User;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public interface DietLog{
 
     public DietLogEntry getDietLogById(int id);
-    public  int getDietLogIdByName(String name);
+    public  ArrayList<DietLogEntry> getDietLogIdByName(String name);
     public boolean setDietLog(DietLogEntry dietLog);
     public void updateDietLog(DietLogEntry dietLog);
     public void deleteDietLog(DietLogEntry dietLog);
@@ -42,16 +43,17 @@ class IDietLogClient implements DietLog {
 
     public DietLogEntry getDietLogById(int id) {
 
-        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"id = " + id});
+        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"id = " + "'" + id + "'"});
         //impossible to get more than 1 with id
-//        dietLog.setUserId(manager.getRecord("user", null, new String[]{"id = " + dietLog.getUserId()}));
+        User user = manager.getRecord("user", null, new String[]{"id = " + "'" + dietLog.getUserId() + "'"});
+        dietLog.setUserId(user.getID());
 
         return dietLog;
     }
 
-    public int getDietLogIdByName(String name) {
-        DietLogEntry dietLog = manager.getRecord("diet_log", null, new String[]{"name = " + name});
-        return dietLog.getDietId();
+    public ArrayList<DietLogEntry> getDietLogIdByName(String name) {
+        ArrayList<DietLogEntry> dietLog = manager.getRecordsSql("diet_log", "SELECT * FROM diet_log WHERE name = " + "'" + name + "'");
+        return dietLog;
     }
 
     @Override
@@ -165,8 +167,8 @@ class IdietLogClientTest implements DietLog {
     }
 
     @Override
-    public int getDietLogIdByName(String name) {
-        return 0;
+    public ArrayList<DietLogEntry> getDietLogIdByName(String name) {
+    return null;
     }
 
     @Override
