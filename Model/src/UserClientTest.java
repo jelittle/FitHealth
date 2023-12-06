@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserClientTest {
     UserClient db = new UserClient();
 
-    User userA = new User("Joshua", "joshua", 300, 10f, 0, 2);
+    User userA = new User("Joshua", "joshua", "Male",300, 10f, 0, 2);
 
     boolean compareUsers(User userA, User userB){
         if (userA.getName().equals(userB.getName()) && userA.getPassword().equals(userB.getPassword()) &&
@@ -26,7 +26,7 @@ class UserClientTest {
 
     @Test
     void setAndDeleteUser() {
-        User userC = new User("Tods", "Logs", 320, 6f, 14, 3);
+        User userC = new User("Tods", "Logs", "Male",320, 6f, 14, 3);
         db.setUser(userC);
         User userD = db.getUserByUserName(userC.getName());
         assertTrue(compareUsers(userC, userD));
@@ -38,7 +38,7 @@ class UserClientTest {
     @Test
     void updateUser() {
         User original = db.getUserById(2);
-        User userC = new User("Tods", "Logs", 320, 6f, 14, 2);
+        User userC = new User("Tods", "Logs", "Male",320, 6f, 14, 2);
         db.updateUser(userC);
         User userD = db.getUserByUserName(userC.getName());
         assertTrue(compareUsers(userC, userD));
